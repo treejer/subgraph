@@ -8,6 +8,7 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "windeploy": "graph.cmd deploy SinaHo/treejer-thegraph-v1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-local": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
