@@ -1,0 +1,11 @@
+type Planter @entity {
+  id: ID!
+  planterType: BigInt!
+  status: BigInt!
+  countryCode: String
+  score: BigInt
+  capacity: BigInt
+  plantedCount: BigInt
+  longitude: BigInt
+  latitude: BigInt
+}

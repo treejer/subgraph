@@ -1,0 +1,125 @@
+specVersion: 0.0.2
+description: Treejer V1
+repository: https://github.com/SinaHo/treejer-thegraph-v1
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Planter
+    network: rinkeby
+    source:
+      address: "0xECe7ccA9Bdd940D10F472Ad36F61115cdb8Cf07F"
+      abi: Planter
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Planter
+      abis:
+        - name: AccessControlUpgradeable
+          file: Planter\abis\AccessControlUpgradeable.json
+        - name: AccessRestriction
+          file: Planter\abis\AccessRestriction.json
+        - name: AddressUpgradeable
+          file: Planter\abis\AddressUpgradeable.json
+        - name: BasePaymaster
+          file: Planter\abis\BasePaymaster.json
+        - name: BaseRelayRecipient
+          file: Planter\abis\BaseRelayRecipient.json
+        - name: Context
+          file: Planter\abis\Context.json
+        - name: ContextUpgradeable
+          file: Planter\abis\ContextUpgradeable.json
+        - name: CountersUpgradeable
+          file: Planter\abis\CountersUpgradeable.json
+        - name: ERC165Upgradeable
+          file: Planter\abis\ERC165Upgradeable.json
+        - name: ERC721Upgradeable
+          file: Planter\abis\ERC721Upgradeable.json
+        - name: ERC721URIStorageUpgradeable
+          file: Planter\abis\ERC721URIStorageUpgradeable.json
+        - name: GsnEip712Library
+          file: Planter\abis\GsnEip712Library.json
+        - name: GsnTypes
+          file: Planter\abis\GsnTypes.json
+        - name: GsnUtils
+          file: Planter\abis\GsnUtils.json
+        - name: IAccessControlUpgradeable
+          file: Planter\abis\IAccessControlUpgradeable.json
+        - name: IAccessRestriction
+          file: Planter\abis\IAccessRestriction.json
+        - name: IERC165Upgradeable
+          file: Planter\abis\IERC165Upgradeable.json
+        - name: IERC721MetadataUpgradeable
+          file: Planter\abis\IERC721MetadataUpgradeable.json
+        - name: IERC721ReceiverUpgradeable
+          file: Planter\abis\IERC721ReceiverUpgradeable.json
+        - name: IERC721Upgradeable
+          file: Planter\abis\IERC721Upgradeable.json
+        - name: IForwarder
+          file: Planter\abis\IForwarder.json
+        - name: IIncrementalSell
+          file: Planter\abis\IIncrementalSell.json
+        - name: IncrementalSell
+          file: Planter\abis\IncrementalSell.json
+        - name: Initializable
+          file: Planter\abis\Initializable.json
+        - name: IPaymaster
+          file: Planter\abis\IPaymaster.json
+        - name: IPlanter
+          file: Planter\abis\IPlanter.json
+        - name: IRegularSell
+          file: Planter\abis\IRegularSell.json
+        - name: IRelayHub
+          file: Planter\abis\IRelayHub.json
+        - name: IRelayRecipient
+          file: Planter\abis\IRelayRecipient.json
+        - name: IStakeManager
+          file: Planter\abis\IStakeManager.json
+        - name: ITreasury
+          file: Planter\abis\ITreasury.json
+        - name: ITree
+          file: Planter\abis\ITree.json
+        - name: ITreeAttribute
+          file: Planter\abis\ITreeAttribute.json
+        - name: ITreeAuction
+          file: Planter\abis\ITreeAuction.json
+        - name: ITreeFactory
+          file: Planter\abis\ITreeFactory.json
+        - name: Migrations
+          file: Planter\abis\Migrations.json
+        - name: MinLibBytes
+          file: Planter\abis\MinLibBytes.json
+        - name: Ownable
+          file: Planter\abis\Ownable.json
+        - name: PausableUpgradeable
+          file: Planter\abis\PausableUpgradeable.json
+        - name: Planter
+          file: Planter\abis\Planter.json
+        - name: RegularSell
+          file: Planter\abis\RegularSell.json
+        - name: RelayRecipient
+          file: Planter\abis\RelayRecipient.json
+        - name: SafeCastUpgradeable
+          file: Planter\abis\SafeCastUpgradeable.json
+        - name: SafeMath
+          file: Planter\abis\SafeMath.json
+        - name: StringsUpgradeable
+          file: Planter\abis\StringsUpgradeable.json
+        - name: Treasury
+          file: Planter\abis\Treasury.json
+        - name: Tree
+          file: Planter\abis\Tree.json
+        - name: TreeAttribute
+          file: Planter\abis\TreeAttribute.json
+        - name: TreeAuction
+          file: Planter\abis\TreeAuction.json
+        - name: TreeFactory
+          file: Planter\abis\TreeFactory.json
+        - name: WhitelistPaymaster
+          file: Planter\abis\WhitelistPaymaster.json
+      eventHandlers:
+        - event: PlanterJoin(address)
+          handler: handlePlanterJoin
+      file: Planter\Planter.wasm

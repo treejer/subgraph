@@ -1,0 +1,180 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "rank",
+        "type": "uint8"
+      }
+    ],
+    "name": "BuyerRankSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "treeId",
+        "type": "uint256"
+      }
+    ],
+    "name": "TreeAttributesGenerated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "treeId",
+        "type": "uint256"
+      }
+    ],
+    "name": "TreeAttributesNotGenerated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "setTreeFactoryAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isTreeAttribute",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "treeId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "paidAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "createTreeAttributes",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "treejerSpent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "walletSpent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "treesOwned",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "walletSpentCount",
+        "type": "uint64"
+      }
+    ],
+    "name": "setBuyerRank",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "treeId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "generatedCode",
+        "type": "uint32"
+      }
+    ],
+    "name": "setTreeAttributesByAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "generatedCode",
+        "type": "uint32"
+      }
+    ],
+    "name": "reserveTreeAttributes",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_buyer",
+        "type": "address"
+      }
+    ],
+    "name": "rankOf",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
