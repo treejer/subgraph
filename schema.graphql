@@ -1,6 +1,11 @@
-type Gravatar @entity {
+type Planter @entity {
   id: ID!
-  owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  planterType: BigInt!
+  status: BigInt!
+  countryCode: String
+  score: BigInt
+  capacity: BigInt
+  plantedCount: BigInt
+  longitude: BigInt
+  latitude: BigInt
 }
