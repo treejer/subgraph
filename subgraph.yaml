@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 description: Treejer V1
-repository: https://github.com/graphprotocol/example-subgraph
+repository: https://github.com/SinaHo/treejer-thegraph-v1
 schema:
   file: ./schema.graphql
 dataSources:
