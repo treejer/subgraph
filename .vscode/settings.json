@@ -1,0 +1,8 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.semi": true,
+  "typescript.format.semicolons": "insert"
+}
