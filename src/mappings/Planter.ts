@@ -38,6 +38,8 @@ export function handlePlanterJoin(event: PlanterJoin): void {
     planter.plantedCount = pl.value5 as BigInt;
     planter.longitude = pl.value6 as BigInt;
     planter.latitude = pl.value7 as BigInt;
+    // planter.status = new BigInt(1);
+    // planter.planterType = new BigInt(0);
     // log.info("Planter is {} {} {} {} {} {} {} {} ", [pl.value0.toString(), pl.value1.toString(), pl.value2.toString(), pl.value3.toString(), pl.value4.toString(), pl.value5.toString(), pl.value6.toString(), pl.value7.toString() ]);
     planter.save();
 }
