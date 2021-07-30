@@ -123,4 +123,15 @@ dataSources:
       eventHandlers:
         - event: PlanterJoin(address)
           handler: handlePlanterJoin
+        - event: OrganizationJoin(address)
+          handler: handleOrganizationJoin
+        - event: PlanterUpdated(address)
+          handler: handlePlanterUpdated
+        - event: AcceptedByOrganization(address)
+          handler: handleAcceptedByOrganization
+        - event: RejectedByOrganization(address)
+          handler: handleRejectedByOrganization
+        - event: PortionUpdated(address)
+          handler: handlePortionUpdated
+
       file: ./src/mappings/Planter.ts

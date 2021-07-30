@@ -1,6 +1,7 @@
 import { Planter } from '../../generated/schema';
-import { PlanterJoin, Planter as PlanterContract } from '../../generated/Planter/Planter';
-import { BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
+import { PlanterJoin, Planter as PlanterContract, OrganizationJoin, PlanterUpdated, Planter__plantersResult, AcceptedByOrganization, RejectedByOrganization, PortionUpdated } from '../../generated/Planter/Planter';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
+import { ZERO_ADDRESS } from '../helpers';
 
 /**
  * 
@@ -16,30 +17,74 @@ import { BigDecimal, BigInt, log } from '@graphprotocol/graph-ts';
     }
     Planter is 1 1 12 0 100 0 30 50 , data_source: Planter, block_hash: 0x573877e2fb2a214e136d4268217035b7e5dc83f4af432292f2c01fca26810b31, block_number: 9016695
  */
-export function handlePlanterJoin(event: PlanterJoin): void {
+
+function setPlanterFields(planter: Planter | null, net_planter: Planter__plantersResult): void {
+    if (planter === null) return;
+    planter.planterType = BigInt.fromString(net_planter.value0.toString());
+    planter.status = BigInt.fromString(net_planter.value1.toString());
+    planter.countryCode = net_planter.value2.toString();
+    planter.score = net_planter.value3 as BigInt;
+    planter.capacity = net_planter.value4 as BigInt;
+    planter.plantedCount = net_planter.value5 as BigInt;
+    planter.longitude = net_planter.value6 as BigInt;
+    planter.latitude = net_planter.value7 as BigInt;
+}
+
+export function handlePlanterJoin(event: PlanterJoin): Planter {
     let planter = new Planter(event.params.planterId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.planterId);
     // pl.toMap()<>;
-    // pl.toMap()
-    // planter.planterType = pl.value0 as BigInt;
-    // planter.status = pl.value1 as BigInt;
-    // planter.countryCode  = pl.value2.toString();
-    // planter.score = pl.value3 as BigInt;
-    // planter.capacity = pl.value4 as BigInt;
-    // planter.plantedCount = pl.value5 as BigInt;
-    // planter.longitude  = pl.value6 as BigInt;
-    // planter.latitude = pl.value7 as BigInt;
-    planter.planterType = BigInt.fromString(pl.value0.toString());
-    planter.status = BigInt.fromString(pl.value1.toString());
-    planter.countryCode = pl.value2.toString();
-    planter.score = pl.value3 as BigInt;
-    planter.capacity = pl.value4 as BigInt;
-    planter.plantedCount = pl.value5 as BigInt;
-    planter.longitude = pl.value6 as BigInt;
-    planter.latitude = pl.value7 as BigInt;
-    // planter.status = new BigInt(1);
-    // planter.planterType = new BigInt(0);
+    setPlanterFields(planter, pl);
     // log.info("Planter is {} {} {} {} {} {} {} {} ", [pl.value0.toString(), pl.value1.toString(), pl.value2.toString(), pl.value3.toString(), pl.value4.toString(), pl.value5.toString(), pl.value6.toString(), pl.value7.toString() ]);
     planter.save();
+    return planter as Planter;
+}
+export function handleOrganizationJoin(event: OrganizationJoin): Planter {
+    let planter = new Planter(event.params.organizationId.toHex());
+    let planterContract = PlanterContract.bind(event.address);
+    let pl = planterContract.planters(event.params.organizationId);
+    setPlanterFields(planter, pl);
+    planter.save();
+    return planter as Planter;
+}
+
+export function handlePlanterUpdated(event: PlanterUpdated): Planter {
+    let planter = Planter.load(event.params.planterId.toHex());
+    let planterContract = PlanterContract.bind(event.address);
+    let pl = planterContract.planters(event.params.planterId);
+    setPlanterFields(planter, pl);
+    planter.save();
+    return planter as Planter;
+}
+
+export function handleAcceptedByOrganization(event: AcceptedByOrganization): Planter {
+    let planter = Planter.load(event.params.planterId.toHex());
+    let planterContract = PlanterContract.bind(event.address);
+    let mof: Address = planterContract.memberOf(event.params.planterId);
+    planter.memberOf = mof.toHexString();
+    let pl = planterContract.planters(event.params.planterId);
+    setPlanterFields(planter, pl);
+    planter.save();
+    return planter as Planter;
+}
+
+export function handleRejectedByOrganization(event: RejectedByOrganization): Planter {
+    let planter = Planter.load(event.params.planterId.toHex());
+    let planterContract = PlanterContract.bind(event.address);
+    planter.memberOf = ZERO_ADDRESS;
+    let pl = planterContract.planters(event.params.planterId);
+    setPlanterFields(planter, pl);
+    planter.save();
+    return planter as Planter;
+}
+
+export function handlePortionUpdated(event: PortionUpdated): Planter {
+    let planter = Planter.load(event.params.planterId.toHex());
+    let planterContract = PlanterContract.bind(event.address);
+    planter.organizationRule = planterContract.organizationRules(Address.fromString(planter.memberOf), Address.fromString(planter.id)) as BigInt;
+    let pl = planterContract.planters(event.params.planterId);
+    setPlanterFields(planter, pl);
+    planter.save();
+    return planter as Planter;
 }

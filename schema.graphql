@@ -8,4 +8,9 @@ type Planter @entity {
   plantedCount: BigInt
   longitude: BigInt
   latitude: BigInt
+  memberOf: Planter
+  members: [Planter!] @derivedFrom(field: "memberOf")
+  refferedBy: Planter
+  refferers: [Planter!] @derivedFrom(field: "refferedBy")
+  organizationRule: BigInt
 }
