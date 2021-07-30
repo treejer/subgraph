@@ -8,8 +8,9 @@ dataSources:
     name: Planter
     network: rinkeby
     source:
-      address: "0xECe7ccA9Bdd940D10F472Ad36F61115cdb8Cf07F"
+      address: '0xECe7ccA9Bdd940D10F472Ad36F61115cdb8Cf07F'
       abi: Planter
+      startBlock: 9012618
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

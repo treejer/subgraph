@@ -21,14 +21,16 @@ export function handlePlanterJoin(event:PlanterJoin): void{
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.planterId);
     // pl.toMap()<>;
-    planter.planterType = pl.value0;
-    planter.status = pl.value1;
-    planter.countryCode  = pl.value2;
-    planter.score = pl.value3;
-    planter.capacity = pl.value4;
-    planter.plantedCount = pl.value5;
-    planter.longitude  = pl.value6;
-    planter.latitude = pl.value7;
+    // pl.toMap()
+    planter.planterType = pl.value0 as BigInt;
+    planter.status = pl.value1 as BigInt;
+    planter.countryCode  = pl.value2.toString();
+    planter.score = pl.value2 as BigInt;
+    // planter.capacity = pl.value3 as BigInt;
+    planter.capacity = pl.value3 as BigInt;
+    planter.plantedCount = pl.value4 as BigInt;
+    planter.longitude  = pl.value5 as BigInt;
+    planter.latitude = pl.value6 as BigInt;
     // log.info("Planter is {} {} {} {} {} {} {} {} ", [pl.value0.toString(), pl.value1.toString(), pl.value2.toString(), pl.value3.toString(), pl.value4.toString(), pl.value5.toString(), pl.value6.toString(), pl.value7.toString() ]);
     planter.save();
     

@@ -8,8 +8,9 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "windeploy": "graph.cmd deploy SinaHo/treejer-thegraph-v1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+    "windeploy": "graph.cmd deploy --studio treejer-thegraph-v1",
+    "deploy-local": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "watch-local": "graph deploy graphprotocol/Uniswap2 --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.1",
