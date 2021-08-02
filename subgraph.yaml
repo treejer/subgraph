@@ -80,14 +80,10 @@ dataSources:
           file: ./abis/IStakeManager.json
         - name: ITreasury
           file: ./abis/ITreasury.json
-        - name: ITree
-          file: ./abis/ITree.json
         - name: ITreeAttribute
           file: ./abis/ITreeAttribute.json
         - name: ITreeAuction
           file: ./abis/ITreeAuction.json
-        - name: ITreeFactory
-          file: ./abis/ITreeFactory.json
         - name: Migrations
           file: ./abis/Migrations.json
         - name: MinLibBytes
@@ -110,14 +106,10 @@ dataSources:
           file: ./abis/StringsUpgradeable.json
         - name: Treasury
           file: ./abis/Treasury.json
-        - name: Tree
-          file: ./abis/Tree.json
         - name: TreeAttribute
           file: ./abis/TreeAttribute.json
         - name: TreeAuction
           file: ./abis/TreeAuction.json
-        - name: TreeFactory
-          file: ./abis/TreeFactory.json
         - name: WhitelistPaymaster
           file: ./abis/WhitelistPaymaster.json
       eventHandlers:
@@ -133,5 +125,44 @@ dataSources:
           handler: handleRejectedByOrganization
         - event: PortionUpdated(address)
           handler: handlePortionUpdated
-
       file: ./src/mappings/Planter.ts
+
+  - kind: ethereum/contract
+    name: TreeFactory
+    network: rinkeby
+    source:
+      address: '0xC860618Cb5f23FacB87ceA7C501cad6F033854Dc'
+      abi: TreeFactory
+      startBlock: 9012600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+      abis:
+        - name: TreeFactory
+          file: ./abis/TreeFactory.json
+        - name: Tree
+          file: ./abis/Tree.json
+        - name: ITree
+          file: ./abis/ITree.json
+        - name: ITreeFactory
+          file: ./abis/ITreeFactory.json
+
+      eventHandlers:
+        - event: TreePlanted(uint256)
+          handler: handleTreePlanted
+        - event: PlantVerified(uint256)
+          handler: handlePlantVerified
+        - event: PlantRejected(uint256)
+          handler: handlePlantRejected
+        - event: RegularTreePlanted(uint256)
+          handler: handleRegularTreePlanted
+
+      callHandlers:
+        - function: addTree(uint256,string)
+          handler: handleAddTree
+        - function: assignTreeToPlanter(uint256,address)
+          handler: handleAssignTreeToPlanter
+      file: ./src/mappings/TreeFactory.ts

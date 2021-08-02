@@ -13,4 +13,105 @@ type Planter @entity {
   refferedBy: Planter
   refferers: [Planter!] @derivedFrom(field: "refferedBy")
   organizationRule: BigInt
+  trees: [Tree!] @derivedFrom(field: "planter")
+}
+
+# type Tree @entity {
+#   id: ID!
+#   planter: Planter
+#   treeType: BigInt!
+#   mintStatus: BigInt
+#   countryCode: BigInt
+#   provideStatus: BigInt
+#   treeStatus: BigInt
+#   plantDate: BigInt
+#   birthDate: BigInt
+#   treeSpecs: String
+# }
+
+type Tree @entity {
+  id: ID!
+  planter: Planter!
+  owner: Owner!
+  treeType: BigInt!
+  mintStatus: BigInt!
+  countryCode: BigInt!
+  provideStatus: BigInt!
+  treeStatus: BigInt
+  plantDate: BigInt!
+  birthDate: BigInt
+  treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
+  treeAttribute: TreeAttribute
+  treeSpecs: String
+}
+
+type UpdateTree @entity {
+  id: ID!
+  tree: Tree!
+  updateDate: BigInt
+  status: BigInt
+  treeSpecs: String
+  type: Boolean
+}
+
+type RegularTree @entity {
+  id: ID!
+  planterId: Planter!
+  countryCode: BigInt
+  status: BigInt
+  plantDate: BigInt
+  birthDate: BigInt
+  treeSpecs: String
+}
+
+type Auction @entity {
+  id: ID!
+  treeId: Tree!
+  initialPrice: BigInt
+  priceInterval: BigInt
+  startDate: BigInt
+  expireDate: BigInt
+  winner: Owner!
+  highestBid: Bid
+  isActive: Boolean
+}
+
+type Bid @entity {
+  id: ID!
+  auction: Auction!
+  bidder: Planter!
+  bid: BigInt
+  date: BigInt
+}
+
+type Owner @entity {
+  id: ID!
+  trees: [Tree!] @derivedFrom(field: "owner")
+  treeCount: BigInt
+  spentWeth: BigInt
+  rank: BigInt
+}
+
+type TreeAttribute @entity {
+  id: ID!
+  buyerRank: BigInt
+}
+
+type TreeWithAttributeProblem @entity {
+  id: ID!
+  tree: Tree!
+}
+
+type IncermentalSell @entity {
+  id: ID!
+  startTree: Tree!
+  endTree: Tree!
+  initialPrice: BigInt
+  increaseStep: BigInt
+  increaseRatio: BigInt
+}
+
+type Counter @entity {
+  id: ID!
+  updateSpec: BigInt!
 }

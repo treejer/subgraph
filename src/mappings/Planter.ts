@@ -30,7 +30,7 @@ function setPlanterFields(planter: Planter | null, net_planter: Planter__planter
     planter.latitude = net_planter.value7 as BigInt;
 }
 
-export function handlePlanterJoin(event: PlanterJoin): Planter {
+export function handlePlanterJoin(event: PlanterJoin): void {
     let planter = new Planter(event.params.planterId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.planterId);
@@ -38,27 +38,24 @@ export function handlePlanterJoin(event: PlanterJoin): Planter {
     setPlanterFields(planter, pl);
     // log.info("Planter is {} {} {} {} {} {} {} {} ", [pl.value0.toString(), pl.value1.toString(), pl.value2.toString(), pl.value3.toString(), pl.value4.toString(), pl.value5.toString(), pl.value6.toString(), pl.value7.toString() ]);
     planter.save();
-    return planter as Planter;
 }
-export function handleOrganizationJoin(event: OrganizationJoin): Planter {
+export function handleOrganizationJoin(event: OrganizationJoin): void {
     let planter = new Planter(event.params.organizationId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.organizationId);
     setPlanterFields(planter, pl);
     planter.save();
-    return planter as Planter;
 }
 
-export function handlePlanterUpdated(event: PlanterUpdated): Planter {
+export function handlePlanterUpdated(event: PlanterUpdated): void {
     let planter = Planter.load(event.params.planterId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.planterId);
     setPlanterFields(planter, pl);
     planter.save();
-    return planter as Planter;
 }
 
-export function handleAcceptedByOrganization(event: AcceptedByOrganization): Planter {
+export function handleAcceptedByOrganization(event: AcceptedByOrganization): void {
     let planter = Planter.load(event.params.planterId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     let mof: Address = planterContract.memberOf(event.params.planterId);
@@ -66,25 +63,22 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): Pla
     let pl = planterContract.planters(event.params.planterId);
     setPlanterFields(planter, pl);
     planter.save();
-    return planter as Planter;
 }
 
-export function handleRejectedByOrganization(event: RejectedByOrganization): Planter {
+export function handleRejectedByOrganization(event: RejectedByOrganization): void {
     let planter = Planter.load(event.params.planterId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     planter.memberOf = ZERO_ADDRESS;
     let pl = planterContract.planters(event.params.planterId);
     setPlanterFields(planter, pl);
     planter.save();
-    return planter as Planter;
 }
 
-export function handlePortionUpdated(event: PortionUpdated): Planter {
+export function handlePortionUpdated(event: PortionUpdated): void {
     let planter = Planter.load(event.params.planterId.toHex());
     let planterContract = PlanterContract.bind(event.address);
     planter.organizationRule = planterContract.organizationRules(Address.fromString(planter.memberOf), Address.fromString(planter.id)) as BigInt;
     let pl = planterContract.planters(event.params.planterId);
     setPlanterFields(planter, pl);
     planter.save();
-    return planter as Planter;
 }
