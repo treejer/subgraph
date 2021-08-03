@@ -8,9 +8,9 @@ dataSources:
     name: Planter
     network: rinkeby
     source:
-      address: '0xECe7ccA9Bdd940D10F472Ad36F61115cdb8Cf07F'
+      address: '0xeF959005acE75f305f006C7e0297e3B3C8AdA7b9'
       abi: Planter
-      startBlock: 9012610
+      startBlock: 9042600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -126,14 +126,13 @@ dataSources:
         - event: PortionUpdated(address)
           handler: handlePortionUpdated
       file: ./src/mappings/Planter.ts
-
   - kind: ethereum/contract
     name: TreeFactory
     network: rinkeby
     source:
-      address: '0xC860618Cb5f23FacB87ceA7C501cad6F033854Dc'
+      address: '0x85113dD197F8198458844DDEbB452d616cb28275'
       abi: TreeFactory
-      startBlock: 9012600
+      startBlock: 9042600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -149,17 +148,25 @@ dataSources:
           file: ./abis/ITree.json
         - name: ITreeFactory
           file: ./abis/ITreeFactory.json
-
-      eventHandlers:
-        - event: TreePlanted(uint256)
-          handler: handleTreePlanted
-        - event: PlantVerified(uint256)
-          handler: handlePlantVerified
-        - event: PlantRejected(uint256)
-          handler: handlePlantRejected
-        - event: RegularTreePlanted(uint256)
-          handler: handleRegularTreePlanted
-
+      # eventHandlers:
+      # - event: TreePlanted(uint256)
+      #   handler: handleTreePlanted
+      # - event: PlantVerified(uint256)
+      #   handler: handlePlantVerified
+      # - event: PlantRejected(uint256)
+      #   handler: handlePlantRejected
+      # - event: RegularTreePlanted(uint256)
+      #   handler: handleRegularTreePlanted
+      # - event: RegularPlantVerified(uint256)
+      #   handler: handleRegularPlantVerified
+      # - event: RegularPlantRejected(uint256)
+      #   handler: handleRegularPlantRejected
+      # - event: TreeUpdated(uint256)
+      #   handler: handleTreeUpdated
+      # - event: UpdateVerified(uint256)
+      #   handler: handleUpdateVerified
+      # - event: UpdateRejected(uint256)
+      #   handler: handleUpdateRejected
       callHandlers:
         - function: addTree(uint256,string)
           handler: handleAddTree

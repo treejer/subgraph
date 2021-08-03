@@ -9,11 +9,11 @@ type Planter @entity {
   longitude: BigInt
   latitude: BigInt
   memberOf: Planter
-  members: [Planter!] @derivedFrom(field: "memberOf")
+  members: [Planter!]! @derivedFrom(field: "memberOf")
   refferedBy: Planter
-  refferers: [Planter!] @derivedFrom(field: "refferedBy")
+  refferers: [Planter!]! @derivedFrom(field: "refferedBy")
   organizationRule: BigInt
-  trees: [Tree!] @derivedFrom(field: "planter")
+  trees: [Tree!]! @derivedFrom(field: "planter")
 }
 
 # type Tree @entity {
@@ -40,7 +40,7 @@ type Tree @entity {
   treeStatus: BigInt
   plantDate: BigInt!
   birthDate: BigInt
-  treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
+  treeUpdates: [UpdateTree!]! @derivedFrom(field: "tree")
   treeAttribute: TreeAttribute
   treeSpecs: String
 }
@@ -56,7 +56,7 @@ type UpdateTree @entity {
 
 type RegularTree @entity {
   id: ID!
-  planterId: Planter!
+  planter: Planter!
   countryCode: BigInt
   status: BigInt
   plantDate: BigInt
@@ -86,7 +86,7 @@ type Bid @entity {
 
 type Owner @entity {
   id: ID!
-  trees: [Tree!] @derivedFrom(field: "owner")
+  trees: [Tree!]! @derivedFrom(field: "owner")
   treeCount: BigInt
   spentWeth: BigInt
   rank: BigInt
