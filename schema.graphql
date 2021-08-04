@@ -32,15 +32,15 @@ type Planter @entity {
 type Tree @entity {
   id: ID!
   planter: Planter!
-  owner: Owner!
-  treeType: BigInt!
-  mintStatus: BigInt!
-  countryCode: BigInt!
-  provideStatus: BigInt!
+  owner: Owner
+  treeType: BigInt
+  mintStatus: String
+  countryCode: String
+  provideStatus: BigInt
   treeStatus: BigInt
-  plantDate: BigInt!
+  plantDate: BigInt
   birthDate: BigInt
-  treeUpdates: [UpdateTree!]! @derivedFrom(field: "tree")
+  treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
   treeAttribute: TreeAttribute
   treeSpecs: String
 }
@@ -86,7 +86,7 @@ type Bid @entity {
 
 type Owner @entity {
   id: ID!
-  trees: [Tree!]! @derivedFrom(field: "owner")
+  # trees: [Tree!]! @derivedFrom(field: "owner")
   treeCount: BigInt
   spentWeth: BigInt
   rank: BigInt
@@ -111,7 +111,7 @@ type IncermentalSell @entity {
   increaseRatio: BigInt
 }
 
-type Counter @entity {
-  id: ID!
-  updateSpec: BigInt!
-}
+# type Counter @entity {
+#   id: ID!
+#   updateSpec: BigInt!
+# }

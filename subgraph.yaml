@@ -18,100 +18,8 @@ dataSources:
       entities:
         - Planter
       abis:
-        - name: AccessControlUpgradeable
-          file: ./abis/AccessControlUpgradeable.json
-        - name: AccessRestriction
-          file: ./abis/AccessRestriction.json
-        - name: AddressUpgradeable
-          file: ./abis/AddressUpgradeable.json
-        - name: BasePaymaster
-          file: ./abis/BasePaymaster.json
-        - name: BaseRelayRecipient
-          file: ./abis/BaseRelayRecipient.json
-        - name: Context
-          file: ./abis/Context.json
-        - name: ContextUpgradeable
-          file: ./abis/ContextUpgradeable.json
-        - name: CountersUpgradeable
-          file: ./abis/CountersUpgradeable.json
-        - name: ERC165Upgradeable
-          file: ./abis/ERC165Upgradeable.json
-        - name: ERC721Upgradeable
-          file: ./abis/ERC721Upgradeable.json
-        - name: ERC721URIStorageUpgradeable
-          file: ./abis/ERC721URIStorageUpgradeable.json
-        - name: GsnEip712Library
-          file: ./abis/GsnEip712Library.json
-        - name: GsnTypes
-          file: ./abis/GsnTypes.json
-        - name: GsnUtils
-          file: ./abis/GsnUtils.json
-        - name: IAccessControlUpgradeable
-          file: ./abis/IAccessControlUpgradeable.json
-        - name: IAccessRestriction
-          file: ./abis/IAccessRestriction.json
-        - name: IERC165Upgradeable
-          file: ./abis/IERC165Upgradeable.json
-        - name: IERC721MetadataUpgradeable
-          file: ./abis/IERC721MetadataUpgradeable.json
-        - name: IERC721ReceiverUpgradeable
-          file: ./abis/IERC721ReceiverUpgradeable.json
-        - name: IERC721Upgradeable
-          file: ./abis/IERC721Upgradeable.json
-        - name: IForwarder
-          file: ./abis/IForwarder.json
-        - name: IIncrementalSell
-          file: ./abis/IIncrementalSell.json
-        - name: IncrementalSell
-          file: ./abis/IncrementalSell.json
-        - name: Initializable
-          file: ./abis/Initializable.json
-        - name: IPaymaster
-          file: ./abis/IPaymaster.json
-        - name: IPlanter
-          file: ./abis/IPlanter.json
-        - name: IRegularSell
-          file: ./abis/IRegularSell.json
-        - name: IRelayHub
-          file: ./abis/IRelayHub.json
-        - name: IRelayRecipient
-          file: ./abis/IRelayRecipient.json
-        - name: IStakeManager
-          file: ./abis/IStakeManager.json
-        - name: ITreasury
-          file: ./abis/ITreasury.json
-        - name: ITreeAttribute
-          file: ./abis/ITreeAttribute.json
-        - name: ITreeAuction
-          file: ./abis/ITreeAuction.json
-        - name: Migrations
-          file: ./abis/Migrations.json
-        - name: MinLibBytes
-          file: ./abis/MinLibBytes.json
-        - name: Ownable
-          file: ./abis/Ownable.json
-        - name: PausableUpgradeable
-          file: ./abis/PausableUpgradeable.json
         - name: Planter
           file: ./abis/Planter.json
-        - name: RegularSell
-          file: ./abis/RegularSell.json
-        - name: RelayRecipient
-          file: ./abis/RelayRecipient.json
-        - name: SafeCastUpgradeable
-          file: ./abis/SafeCastUpgradeable.json
-        - name: SafeMath
-          file: ./abis/SafeMath.json
-        - name: StringsUpgradeable
-          file: ./abis/StringsUpgradeable.json
-        - name: Treasury
-          file: ./abis/Treasury.json
-        - name: TreeAttribute
-          file: ./abis/TreeAttribute.json
-        - name: TreeAuction
-          file: ./abis/TreeAuction.json
-        - name: WhitelistPaymaster
-          file: ./abis/WhitelistPaymaster.json
       eventHandlers:
         - event: PlanterJoin(address)
           handler: handlePlanterJoin
@@ -139,37 +47,35 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Tree
+        - Planter
+        - UpdateTree
+        - RegularTree
+        - Owner
       abis:
         - name: TreeFactory
           file: ./abis/TreeFactory.json
-        - name: Tree
-          file: ./abis/Tree.json
-        - name: ITree
-          file: ./abis/ITree.json
-        - name: ITreeFactory
-          file: ./abis/ITreeFactory.json
-      # eventHandlers:
-      # - event: TreePlanted(uint256)
-      #   handler: handleTreePlanted
-      # - event: PlantVerified(uint256)
-      #   handler: handlePlantVerified
-      # - event: PlantRejected(uint256)
-      #   handler: handlePlantRejected
-      # - event: RegularTreePlanted(uint256)
-      #   handler: handleRegularTreePlanted
-      # - event: RegularPlantVerified(uint256)
-      #   handler: handleRegularPlantVerified
-      # - event: RegularPlantRejected(uint256)
-      #   handler: handleRegularPlantRejected
-      # - event: TreeUpdated(uint256)
-      #   handler: handleTreeUpdated
-      # - event: UpdateVerified(uint256)
-      #   handler: handleUpdateVerified
-      # - event: UpdateRejected(uint256)
-      #   handler: handleUpdateRejected
-      callHandlers:
-        - function: addTree(uint256,string)
-          handler: handleAddTree
-        - function: assignTreeToPlanter(uint256,address)
-          handler: handleAssignTreeToPlanter
+      eventHandlers:
+        - event: TreePlanted(uint256)
+          handler: handleTreePlanted
+        # - event: PlantVerified(uint256)
+        #   handler: handlePlantVerified
+      #   - event: PlantRejected(uint256)
+      #     handler: handlePlantRejected
+      #   - event: RegularTreePlanted(uint256)
+      #     handler: handleRegularTreePlanted
+      #   - event: RegularPlantVerified(uint256)
+      #     handler: handleRegularPlantVerified
+      #   - event: RegularPlantRejected(uint256)
+      #     handler: handleRegularPlantRejected
+      #   - event: TreeUpdated(uint256)
+      #     handler: handleTreeUpdated
+      #   - event: UpdateVerified(uint256)
+      #     handler: handleUpdateVerified
+      #   - event: UpdateRejected(uint256)
+      #     handler: handleUpdateRejected
+      # callHandlers:
+      #   - function: addTree(uint256,string)
+      #     handler: handleAddTree
+      #   - function: assignTreeToPlanter(uint256,address)
+      #     handler: handleAssignTreeToPlanter
       file: ./src/mappings/TreeFactory.ts

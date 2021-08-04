@@ -2,7 +2,7 @@ import { Planter } from '../../generated/schema';
 import { PlanterJoin, Planter as PlanterContract, OrganizationJoin, PlanterUpdated, Planter__plantersResult, AcceptedByOrganization, RejectedByOrganization, PortionUpdated } from '../../generated/Planter/Planter';
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { ZERO_ADDRESS } from '../helpers';
-
+export * from "./TreeFactory";
 /**
  * 
  struct PlanterData {
