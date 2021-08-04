@@ -113,16 +113,16 @@ export function handleTreePlanted(event: TreePlanted): void {
     planter.save();
 }
 
-// export function handleAddTree(call: AddTreeCall): void {
-//     let tree = new Tree(call.inputs._treeId.toHexString());
-//     // let treeFactoryContract = TreeFactoryContract.bind(call.transaction.from);
-//     // let c_tree = treeFactoryContract.treeData(call.inputs._treeId);
-//     // setTreeData(tree, c_tree);
-//     tree.planter = "0x28d1371e797cc869afc9c5b3b279868e15412e2f";
-//     tree.treeStatus = BigInt.fromI32(2);
-//     tree.treeSpecs = call.inputs._treeDescription;
-//     tree.save();
-// }
+export function handleAddTree(call: AddTreeCall): void {
+    let tree = new Tree(call.inputs._treeId.toHexString());
+    // let treeFactoryContract = TreeFactoryContract.bind(call.transaction.from);
+    // let c_tree = treeFactoryContract.treeData(call.inputs._treeId);
+    // setTreeData(tree, c_tree);
+    tree.planter = "0x28d1371e797cc869afc9c5b3b279868e15412e2f";
+    tree.treeStatus = BigInt.fromI32(2);
+    tree.treeSpecs = call.inputs._treeDescription;
+    tree.save();
+}
 
 // export function handleAssignTreeToPlanter(call: AssignTreeToPlanterCall): void {
 //     let tree = Tree.load(call.inputs._treeId.toHexString());
@@ -146,130 +146,133 @@ export function handlePlantVerified(event: PlantVerified): void {
 }
 
 export function handlePlantRejected(event: PlantRejected): void {
-    // let tree = Tree.load(event.params.treeId.toHexString());
-    // if (!tree) return;
-    // let planter = Planter.load(tree.planter);
-    // if (planter) {
-    //     planter.plantedCount = planter.plantedCount.minus(BigInt.fromI32(1));
-    //     if (planter.status.equals(BigInt.fromI32(2))) {
-    //         planter.status = BigInt.fromI32(1);
-    //     }
-    //     planter.save();
-    // }
+    let tree = Tree.load(event.params.treeId.toHexString());
+    if (!tree) return;
+    let planter = Planter.load(tree.planter);
+    if (planter) {
+        planter.plantedCount = planter.plantedCount.minus(BigInt.fromI32(1));
+        if (planter.status.equals(BigInt.fromI32(2))) {
+            planter.status = BigInt.fromI32(1);
+        }
+        planter.save();
+    }
     // let uptree = UpdateTree.load(tree.treeUpdates[tree.treeUpdates.length - 1]);
     // uptree.status = BigInt.fromI32(2);
     // uptree.save();
-    // tree.treeStatus = BigInt.fromI32(2);
-    // tree.save();
+    tree.treeStatus = BigInt.fromI32(2);
+    tree.save();
 }
 
-// export function handleRegularTreePlanted(event: RegularTreePlanted): void {
-//     let rtree = new RegularTree(event.params.treeId.toHexString());
-//     let treeFactoryContract = TreeFactoryContract.bind(event.address);
-//     let c_rtree = treeFactoryContract.regularTrees(event.params.treeId);
-//     setRegularTreeData(rtree, c_rtree);
-//     rtree.status = BigInt.fromI32(0);
-//     rtree.save();
-//     let planter = Planter.load(rtree.planter);
-//     planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
-//     if (planter.plantedCount.equals(planter.capacity as BigInt)) {
-//         planter.status = BigInt.fromI32(2);
-//     }
-//     planter.save();
-// }
+export function handleRegularTreePlanted(event: RegularTreePlanted): void {
+    let rtree = new RegularTree(event.params.treeId.toHexString());
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+    let c_rtree = treeFactoryContract.regularTrees(event.params.treeId);
+    setRegularTreeData(rtree, c_rtree);
+    rtree.status = BigInt.fromI32(0);
+    rtree.save();
+    let planter = Planter.load(rtree.planter);
+    log.warning("planter {} ", [planter.id]);
+    planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
+    if (planter.plantedCount.equals(planter.capacity as BigInt)) {
+        planter.status = BigInt.fromI32(2);
+    }
+    planter.save();
+}
 
-// export function handleRegularPlantVerified(event: RegularPlantVerified): void {
-//     let rtree = new RegularTree(event.params.treeId.toHexString());
-//     let treeFactoryContract = TreeFactoryContract.bind(event.address);
-//     let c_rtree = treeFactoryContract.regularTrees(event.params.treeId);
-//     setRegularTreeData(rtree, c_rtree);
-//     rtree.status = BigInt.fromI32(4);
-//     let tree = Tree.load(event.params.treeId.toHexString());
-//     if (!tree) {
-//         tree = new Tree(event.params.treeId.toHexString());
-//     }
-//     tree.planter = rtree.planter;
-//     tree.birthDate = rtree.birthDate;
-//     tree.plantDate = rtree.plantDate as BigInt;
-//     tree.countryCode = rtree.countryCode as BigInt;
-//     tree.treeSpecs = rtree.treeSpecs;
-//     tree.treeStatus = BigInt.fromI32(4);
-//     if (tree.owner == ZERO_ADDRESS) {
-//         tree.provideStatus = BigInt.fromI32(4);
-//     }
-//     // let uptree = new UpdateTree(getCount_updateSpec(COUNTER_ID, true).toHexString());
-//     // uptree.tree = tree.id;
-//     // uptree.updateDate = tree.plantDate;
-//     // uptree.status = BigInt.fromI32(3);
-//     // uptree.treeSpecs = tree.treeSpecs;
-//     // uptree.type = true;
-//     // uptree.save();
-//     tree.save();
-//     rtree.save();
-// }
+export function handleRegularPlantVerified(event: RegularPlantVerified): void {
+    let rtree = new RegularTree(event.params.treeId.toHexString());
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+    let c_rtree = treeFactoryContract.regularTrees(event.params.treeId);
+    setRegularTreeData(rtree, c_rtree);
+    rtree.status = BigInt.fromI32(4);
+    let tree = Tree.load(event.params.treeId.toHexString());
+    if (!tree) {
+        tree = new Tree(event.params.treeId.toHexString());
+    }
+    log.warning("planter {} ", [rtree.planter]);
+    tree.planter = rtree.planter;
+    tree.birthDate = rtree.birthDate;
+    tree.plantDate = rtree.plantDate as BigInt;
+    tree.countryCode = rtree.countryCode.toString();
+    tree.treeSpecs = rtree.treeSpecs;
+    tree.treeStatus = BigInt.fromI32(4);
+    tree.treeType = BigInt.fromI32(0);
+    if (tree.owner == ZERO_ADDRESS) {
+        tree.provideStatus = BigInt.fromI32(4);
+    }
+    // let uptree = new UpdateTree(getCount_updateSpec(COUNTER_ID, true).toHexString());
+    // uptree.tree = tree.id;
+    // uptree.updateDate = tree.plantDate;
+    // uptree.status = BigInt.fromI32(3);
+    // uptree.treeSpecs = tree.treeSpecs;
+    // uptree.type = true;
+    // uptree.save();
+    tree.save();
+    rtree.save();
+}
 
-// export function handleRegularPlantRejected(event: RegularPlantRejected): void {
-//     let rtree = RegularTree.load(event.params.treeId.toHexString());
-//     let planter = Planter.load(rtree.planter);
-//     planter.plantedCount = planter.plantedCount.minus(BigInt.fromI32(1));
-//     if (planter.status.equals(BigInt.fromI32(2))) {
-//         planter.status = BigInt.fromI32(1);
-//     }
-//     planter.save();
-//     rtree.status = BigInt.fromI32(1);
-//     rtree.save();
-// }
+export function handleRegularPlantRejected(event: RegularPlantRejected): void {
+    let rtree = RegularTree.load(event.params.treeId.toHexString());
+    let planter = Planter.load(rtree.planter);
+    planter.plantedCount = planter.plantedCount.minus(BigInt.fromI32(1));
+    if (planter.status.equals(BigInt.fromI32(2))) {
+        planter.status = BigInt.fromI32(1);
+    }
+    planter.save();
+    rtree.status = BigInt.fromI32(1);
+    rtree.save();
+}
 
-// export function handleTreeUpdated(event: TreeUpdated): void {
-//     let tree = Tree.load(event.params.treeId.toHexString());
-//     let treeFactoryContract = TreeFactoryContract.bind(event.address);
-//     // let c_rtree = treeFactoryContract.regularTrees(event.params.treeId);
-//     // let c_uptree = treeFactoryContract.updateTrees(event.params.treeId);
-//     // let uptree = new UpdateTree(getCount_updateSpec(COUNTER_ID, true).toHexString());
-//     // uptree.tree = tree.id;
-//     // uptree.updateDate = event.block.timestamp;
-//     // uptree.status = BigInt.fromI32(1);
-//     // uptree.treeSpecs = c_uptree.value0;
-//     // uptree.type = false;
-//     // uptree.save();
-// }
+export function handleTreeUpdated(event: TreeUpdated): void {
+    let tree = Tree.load(event.params.treeId.toHexString());
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+    // let c_rtree = treeFactoryContract.regularTrees(event.params.treeId);
+    // let c_uptree = treeFactoryContract.updateTrees(event.params.treeId);
+    // let uptree = new UpdateTree(getCount_updateSpec(COUNTER_ID, true).toHexString());
+    // uptree.tree = tree.id;
+    // uptree.updateDate = event.block.timestamp;
+    // uptree.status = BigInt.fromI32(1);
+    // uptree.treeSpecs = c_uptree.value0;
+    // uptree.type = false;
+    // uptree.save();
+}
 
 
-// export function handleUpdateVerified(event: UpdateVerified): void {
-//     let tree = Tree.load(event.params.treeId.toHexString());
-//     // let upTree: UpdateTree;
-//     // let uts = tree.treeUpdates.reverse();
-//     // let ut: string;
-//     // for (let i = 0; i < uts.length; i++) {
-//     //     ut = uts[i];
-//     //     let _u = UpdateTree.load(ut);
-//     //     if (_u.status.equals(BigInt.fromI32(1))) {
-//     //         upTree = _u;
-//     //         break;
-//     //     }
-//     // }
-//     // upTree.status = BigInt.fromI32(3);
-//     let treeFactoryContract = TreeFactoryContract.bind(event.address);
-//     let c_tree = treeFactoryContract.treeData(event.params.treeId);
-//     tree.treeSpecs = c_tree.value8;
-//     tree.treeStatus = c_tree.value4 as BigInt;
-//     tree.save();
-//     // upTree.save();
-// }
+export function handleUpdateVerified(event: UpdateVerified): void {
+    let tree = Tree.load(event.params.treeId.toHexString());
+    // let upTree: UpdateTree;
+    // let uts = tree.treeUpdates.reverse();
+    // let ut: string;
+    // for (let i = 0; i < uts.length; i++) {
+    //     ut = uts[i];
+    //     let _u = UpdateTree.load(ut);
+    //     if (_u.status.equals(BigInt.fromI32(1))) {
+    //         upTree = _u;
+    //         break;
+    //     }
+    // }
+    // upTree.status = BigInt.fromI32(3);
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+    let c_tree = treeFactoryContract.treeData(event.params.treeId);
+    tree.treeSpecs = c_tree.value8;
+    tree.treeStatus = c_tree.value4 as BigInt;
+    tree.save();
+    // upTree.save();
+}
 
-// export function handleUpdateRejected(event: UpdateRejected): void {
-//     let tree = Tree.load(event.params.treeId.toHexString());
-//     // let upTree: UpdateTree;
-//     // let uts = tree.treeUpdates.reverse();
-//     // let ut: string;
-//     // for (let i = 0; i < uts.length; i++) {
-//     //     ut = uts[i];
-//     //     let _u = UpdateTree.load(ut);
-//     //     if (_u.status.equals(BigInt.fromI32(1))) {
-//     //         upTree = _u;
-//     //         break;
-//     //     }
-//     // }
-//     // upTree.status = BigInt.fromI32(2);
-//     // upTree.save();
-// }
+export function handleUpdateRejected(event: UpdateRejected): void {
+    let tree = Tree.load(event.params.treeId.toHexString());
+    // let upTree: UpdateTree;
+    // let uts = tree.treeUpdates.reverse();
+    // let ut: string;
+    // for (let i = 0; i < uts.length; i++) {
+    //     ut = uts[i];
+    //     let _u = UpdateTree.load(ut);
+    //     if (_u.status.equals(BigInt.fromI32(1))) {
+    //         upTree = _u;
+    //         break;
+    //     }
+    // }
+    // upTree.status = BigInt.fromI32(2);
+    // upTree.save();
+}

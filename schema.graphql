@@ -31,7 +31,7 @@ type Planter @entity {
 
 type Tree @entity {
   id: ID!
-  planter: Planter!
+  planter: Planter
   owner: Owner
   treeType: BigInt
   mintStatus: String

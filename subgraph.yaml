@@ -57,22 +57,22 @@ dataSources:
       eventHandlers:
         - event: TreePlanted(uint256)
           handler: handleTreePlanted
-        # - event: PlantVerified(uint256)
-        #   handler: handlePlantVerified
-      #   - event: PlantRejected(uint256)
-      #     handler: handlePlantRejected
-      #   - event: RegularTreePlanted(uint256)
-      #     handler: handleRegularTreePlanted
-      #   - event: RegularPlantVerified(uint256)
-      #     handler: handleRegularPlantVerified
-      #   - event: RegularPlantRejected(uint256)
-      #     handler: handleRegularPlantRejected
-      #   - event: TreeUpdated(uint256)
-      #     handler: handleTreeUpdated
-      #   - event: UpdateVerified(uint256)
-      #     handler: handleUpdateVerified
-      #   - event: UpdateRejected(uint256)
-      #     handler: handleUpdateRejected
+        - event: PlantVerified(uint256)
+          handler: handlePlantVerified
+        - event: PlantRejected(uint256)
+          handler: handlePlantRejected
+        - event: RegularTreePlanted(uint256)
+          handler: handleRegularTreePlanted
+        - event: RegularPlantVerified(uint256)
+          handler: handleRegularPlantVerified
+        - event: RegularPlantRejected(uint256)
+          handler: handleRegularPlantRejected
+        - event: TreeUpdated(uint256)
+          handler: handleTreeUpdated
+        - event: UpdateVerified(uint256)
+          handler: handleUpdateVerified
+        - event: UpdateRejected(uint256)
+          handler: handleUpdateRejected
       # callHandlers:
       #   - function: addTree(uint256,string)
       #     handler: handleAddTree
