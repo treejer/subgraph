@@ -41,6 +41,7 @@ type Tree @entity {
   plantDate: BigInt
   birthDate: BigInt
   treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
+  lastUpdate: UpdateTree
   treeAttribute: TreeAttribute
   treeSpecs: String
 }
