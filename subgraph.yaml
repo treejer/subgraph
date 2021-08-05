@@ -100,6 +100,7 @@ dataSources:
         - Planter
         - Auction
         - Bid
+        - Owner
       abis:
         - name: TreeAuction
           file: ./abis/TreeAuction.json
@@ -116,25 +117,29 @@ dataSources:
           handler: handleAuctionEndTimeIncreased
 
       file: ./src/mappings/Auction.ts
-  # - kind: ethereum/contract
-  #   name: TreeAttribute
-  #   network: rinkeby
-  #   source:
-  #     address: '0x7f26979d52035A26a21E0F70D84FF170DA003eA3'
-  #     abi: TreeAttribute
-  #     startBlock: 9042650
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - TreeAttribute
-  #       - TreeWithAttributeProblem
-  #     abis:
-  #       - name: TreeAttribute
-  #         file: ./abis/TreeAttribute.json
-  #     eventHandlers:
-  #       - event: HighestBidIncreased(uint256,uint256,address,uint256)
-  #         handler: handleHighestBidIncreased
-  #     file: ./src/mappings/TreeAttribute.ts
+  - kind: ethereum/contract
+    name: TreeAttribute
+    network: rinkeby
+    source:
+      address: '0x7f26979d52035A26a21E0F70D84FF170DA003eA3'
+      abi: TreeAttribute
+      startBlock: 9042650
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - TreeAttribute
+        - TreeWithAttributeProblem
+      abis:
+        - name: TreeAttribute
+          file: ./abis/TreeAttribute.json
+      eventHandlers:
+        - event: BuyerRankSet(address,uint8)
+          handler: handleBuyerRankSet
+        - event: TreeAttributesGenerated(uint256)
+          handler: handleTreeAttributesGenerated
+        - event: TreeAttributesNotGenerated(uint256)
+          handler: handleTreeAttributesNotGenerated
+      file: ./src/mappings/TreeAttribute.ts
