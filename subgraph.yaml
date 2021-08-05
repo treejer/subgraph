@@ -110,6 +110,11 @@ dataSources:
           handler: handleHighestBidIncreased
         - event: AuctionSettled(uint256,uint256,address,uint256)
           handler: handleAuctionSettled
+        - event: AuctionEnded(uint256,uint256)
+          handler: handleAuctionEnded
+        - event: AuctionEndTimeIncreased(uint256,uint256)
+          handler: handleAuctionEndTimeIncreased
+
       file: ./src/mappings/Auction.ts
   # - kind: ethereum/contract
   #   name: TreeAttribute

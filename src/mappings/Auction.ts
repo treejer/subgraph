@@ -1,7 +1,7 @@
-import { AuctionCreated, AuctionCreated__Params, AuctionSettled, HighestBidIncreased, TreeAuction as AuctionContract, TreeAuction__auctionsResult } from "../../generated/Auction/TreeAuction";
-import { Auction, Bid, Tree } from "../../generated/schema";
+import { AuctionCreated, AuctionCreated__Params, AuctionEnded, AuctionEndTimeIncreased, AuctionSettled, HighestBidIncreased, TreeAuction as AuctionContract, TreeAuction__auctionsResult } from "../../generated/Auction/TreeAuction";
+import { Auction, Bid, Owner, Tree } from "../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts";
-import { COUNTER_ID, getCount_bid } from "../helpers";
+import { COUNTER_ID, getCount_bid, ZERO_ADDRESS } from "../helpers";
 
 /**
      struct Auction {
@@ -15,11 +15,28 @@ import { COUNTER_ID, getCount_bid } from "../helpers";
  */
 
 function setAuctionData(auction: Auction, c_auction: TreeAuction__auctionsResult): void {
-    auction.treeId = c_auction.value0.toHexString();
+    auction.tree = c_auction.value0.toHexString();
     auction.startDate = c_auction.value2 as BigInt;
     auction.expireDate = c_auction.value3 as BigInt;
     auction.initialPrice = c_auction.value4 as BigInt;
     auction.priceInterval = c_auction.value5 as BigInt;
+}
+// function upsertOwner(owner: Owner){
+//     let pown = Owner.load(owner.id);
+//     if (pown){
+//         pown.spentWeth = owner.spentWeth;
+//         pown.treeCount = owner.treeCount
+//         pown.rank = owner.rank
+//         pown.save();
+//     }else {
+//         owner.save();
+//     }
+// }
+function newOwner(id: string): Owner {
+    let owner = new Owner(id);
+    owner.treeCount = BigInt.fromI32(0);
+    owner.spentWeth = BigInt.fromI32(0);
+    return owner;
 }
 export function handleAuctionCreated(event: AuctionCreated): void {
     let auction = new Auction(event.params.auctionId.toHexString());
@@ -28,7 +45,7 @@ export function handleAuctionCreated(event: AuctionCreated): void {
     setAuctionData(auction, c_auction);
     auction.isActive = true;
     auction.save();
-    let tree = Tree.load(auction.treeId);
+    let tree = Tree.load(auction.tree);
     tree.provideStatus = BigInt.fromI32(1);;
     tree.save();
 }
@@ -45,8 +62,45 @@ export function handleHighestBidIncreased(event: HighestBidIncreased): void {
     bid.bid = amount as BigInt;
     bid.date = event.block.timestamp as BigInt;
     bid.save();
+    // let auction = Auction.load(auctionId.toHexString());
+    // auction.highestBid = amount as BigInt;
+    // auction.save();
 }
 
 export function handleAuctionSettled(event: AuctionSettled): void {
+    let winner = event.params.winner;
+    let treeId = event.params.treeId;
+    let auctionId = event.params.auctionId;
+    let amount = event.params.amount;
+    let auction = Auction.load(auctionId.toHexString());
+    auction.winner = winner.toHexString();
+    auction.highestBid = amount;
+    auction.isActive = false;
+    let winnerId: string = winner.toHexString();
+    let owner: Owner | null = Owner.load(winnerId);
+    if (!owner) owner = newOwner(winner.toHexString());
+    owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
+    owner.spentWeth = owner.spentWeth.plus(amount as BigInt);
+    let tree = Tree.load(treeId.toHexString());
+    tree.owner = owner.id;
+    tree.provideStatus = BigInt.fromI32(0);
+    auction.save();
+    tree.save();
+    owner.save();
+}
 
+export function handleAuctionEnded(event: AuctionEnded): void {
+    let tree = Tree.load(event.params.treeId.toHexString());
+    tree.provideStatus = BigInt.fromI32(0);
+    tree.mintStatus = "1";
+    let auction = Auction.load(event.params.auctionId.toHexString());
+    auction.isActive = false;
+    tree.save();
+    auction.save();
+}
+
+export function handleAuctionEndTimeIncreased(event: AuctionEndTimeIncreased): void {
+    let auction = Auction.load(event.params.auctionId.toHexString());
+    auction.expireDate = event.params.newAuctionEndTime as BigInt;
+    auction.save();
 }
