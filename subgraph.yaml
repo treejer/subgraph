@@ -73,6 +73,11 @@ dataSources:
           handler: handleUpdateVerified
         - event: UpdateRejected(uint256)
           handler: handleUpdateRejected
+        - event: TreeAdded(uint256)
+          handler: handleTreeAdded
+        - event: TreeAssigned(uint256)
+          handler: handleTreeAssigned
+
       # callHandlers:
       #   - function: addTree(uint256,string)
       #     handler: handleAddTree
@@ -103,8 +108,8 @@ dataSources:
           handler: handleAuctionCreated
         - event: HighestBidIncreased(uint256,uint256,address,uint256)
           handler: handleHighestBidIncreased
-        # - event: AuctionSettled(uint256,uint256,address,uint256)
-        #   handler: handleAuctionSettled
+        - event: AuctionSettled(uint256,uint256,address,uint256)
+          handler: handleAuctionSettled
       file: ./src/mappings/Auction.ts
   # - kind: ethereum/contract
   #   name: TreeAttribute

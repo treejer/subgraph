@@ -1,5 +1,5 @@
 import { Planter, RegularTree, Tree, UpdateTree } from '../../generated/schema';
-import { AddTreeCall, AssignTreeToPlanterCall, PlantRejected, PlantVerified, RegularPlantRejected, RegularPlantVerified, RegularTreePlanted, TreeFactory as TreeFactoryContract, TreeFactory__regularTreesResult, TreeFactory__treeDataResult, TreeFactory__updateTreesResult, TreePlanted, TreeUpdated, UpdateRejected, UpdateVerified } from '../../generated/TreeFactory/TreeFactory';
+import { AddTreeCall, AssignTreeToPlanterCall, PlantRejected, PlantVerified, RegularPlantRejected, RegularPlantVerified, RegularTreePlanted, TreeAdded, TreeAssigned, TreeFactory as TreeFactoryContract, TreeFactory__regularTreesResult, TreeFactory__treeDataResult, TreeFactory__updateTreesResult, TreePlanted, TreeUpdated, UpdateRejected, UpdateVerified } from '../../generated/TreeFactory/TreeFactory';
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_updateSpec, ZERO_ADDRESS } from '../helpers';
 
@@ -114,24 +114,24 @@ export function handleTreePlanted(event: TreePlanted): void {
     planter.save();
 }
 
-export function handleAddTree(call: AddTreeCall): void {
-    let tree = new Tree(call.inputs._treeId.toHexString());
-    // let treeFactoryContract = TreeFactoryContract.bind(call.transaction.from);
-    // let c_tree = treeFactoryContract.treeData(call.inputs._treeId);
-    // setTreeData(tree, c_tree);
-    tree.planter = "0x28d1371e797cc869afc9c5b3b279868e15412e2f";
+export function handleTreeAdded(event: TreeAdded): void {
+    let tree = new Tree(event.params.treeId.toHexString());
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+    let c_tree = treeFactoryContract.treeData(event.params.treeId);
+    setTreeData(tree, c_tree);
     tree.treeStatus = BigInt.fromI32(2);
-    tree.treeSpecs = call.inputs._treeDescription;
+    // tree.treeSpecs = call.inputs._treeDescription;
     tree.save();
 }
 
-// export function handleAssignTreeToPlanter(call: AssignTreeToPlanterCall): void {
-//     let tree = Tree.load(call.inputs._treeId.toHexString());
-//     if (!tree) return;
-//     // let planter = Planter.load(call.inputs._treeId.toHexString());
-//     tree.planter = call.inputs._treeId.toHexString();
-//     tree.save();
-// }
+export function handleTreeAssigned(event: TreeAssigned): void {
+    let tree = Tree.load(event.params.treeId.toHexString());
+    if (!tree) return;
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+    let c_tree = treeFactoryContract.treeData(event.params.treeId);
+    setTreeData(tree, c_tree);
+    tree.save();
+}
 
 export function handlePlantVerified(event: PlantVerified): void {
     let tree = Tree.load(event.params.treeId.toHexString());
