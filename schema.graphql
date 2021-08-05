@@ -72,7 +72,7 @@ type Auction @entity {
   priceInterval: BigInt
   startDate: BigInt
   expireDate: BigInt
-  winner: Owner!
+  winner: Owner
   highestBid: Bid
   isActive: Boolean
 }
@@ -87,7 +87,7 @@ type Bid @entity {
 
 type Owner @entity {
   id: ID!
-  # trees: [Tree!]! @derivedFrom(field: "owner")
+  trees: [Tree!] @derivedFrom(field: "owner")
   treeCount: BigInt
   spentWeth: BigInt
   rank: BigInt

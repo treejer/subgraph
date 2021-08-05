@@ -8,7 +8,7 @@ dataSources:
     name: Planter
     network: rinkeby
     source:
-      address: '0xeF959005acE75f305f006C7e0297e3B3C8AdA7b9'
+      address: '0xbD02C7909E9202FAb44a2d0b8F8da68d468815C1'
       abi: Planter
       startBlock: 9042600
     mapping:
@@ -38,7 +38,7 @@ dataSources:
     name: TreeFactory
     network: rinkeby
     source:
-      address: '0x85113dD197F8198458844DDEbB452d616cb28275'
+      address: '0x88AB6dc80199051E484bAB618e7a051100361F0d'
       abi: TreeFactory
       startBlock: 9042600
     mapping:
@@ -79,35 +79,39 @@ dataSources:
       #   - function: assignTreeToPlanter(uint256,address)
       #     handler: handleAssignTreeToPlanter
       file: ./src/mappings/TreeFactory.ts
-  # - kind: ethereum/contract
-  #   name: Auction
-  #   network: rinkeby
-  #   source:
-  #     address: '0xac38e0afa0345eab93103895c7784bc53368562d'
-  #     abi: TreeAuction
-  #     startBlock: 9042600
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - Planter
-  #       - Auction
-  #       - Bid
-  #     abis:
-  #       - name: TreeAuction
-  #         file: ./abis/TreeAuction.json
-  #     eventHandlers:
-  #       - event: HighestBidIncreased(uint256,uint256,address,uint256)
-  #         handler: handleHighestBidIncreased
-  #     file: ./src/mappings/Auction.ts
+  - kind: ethereum/contract
+    name: Auction
+    network: rinkeby
+    source:
+      address: '0xB8869238E0F0e9AB9b57C98662d22eb49ddEDdF8'
+      abi: TreeAuction
+      startBlock: 9042600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - Planter
+        - Auction
+        - Bid
+      abis:
+        - name: TreeAuction
+          file: ./abis/TreeAuction.json
+      eventHandlers:
+        - event: AuctionCreated(uint256)
+          handler: handleAuctionCreated
+        - event: HighestBidIncreased(uint256,uint256,address,uint256)
+          handler: handleHighestBidIncreased
+        # - event: AuctionSettled(uint256,uint256,address,uint256)
+        #   handler: handleAuctionSettled
+      file: ./src/mappings/Auction.ts
   # - kind: ethereum/contract
   #   name: TreeAttribute
   #   network: rinkeby
   #   source:
-  #     address: '0x7A9565228693555e2513966a36A8853Eaa643Bce'
-  #     abi: TreeAuction
+  #     address: '0x7f26979d52035A26a21E0F70D84FF170DA003eA3'
+  #     abi: TreeAttribute
   #     startBlock: 9042650
   #   mapping:
   #     kind: ethereum/events
@@ -118,9 +122,9 @@ dataSources:
   #       - TreeAttribute
   #       - TreeWithAttributeProblem
   #     abis:
-  #       - name: TreeAuction
-  #         file: ./abis/TreeAuction.json
+  #       - name: TreeAttribute
+  #         file: ./abis/TreeAttribute.json
   #     eventHandlers:
   #       - event: HighestBidIncreased(uint256,uint256,address,uint256)
   #         handler: handleHighestBidIncreased
-  #     file: ./src/mappings/Auction.ts
+  #     file: ./src/mappings/TreeAttribute.ts
