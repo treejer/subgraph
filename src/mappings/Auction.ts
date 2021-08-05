@@ -21,17 +21,8 @@ function setAuctionData(auction: Auction, c_auction: TreeAuction__auctionsResult
     auction.initialPrice = c_auction.value4 as BigInt;
     auction.priceInterval = c_auction.value5 as BigInt;
 }
-// function upsertOwner(owner: Owner){
-//     let pown = Owner.load(owner.id);
-//     if (pown){
-//         pown.spentWeth = owner.spentWeth;
-//         pown.treeCount = owner.treeCount
-//         pown.rank = owner.rank
-//         pown.save();
-//     }else {
-//         owner.save();
-//     }
-// }
+
+
 function newOwner(id: string): Owner {
     let owner = new Owner(id);
     owner.treeCount = BigInt.fromI32(0);
