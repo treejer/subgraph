@@ -91,19 +91,19 @@ export function handleTreePlanted(event: TreePlanted): void {
     // log.debug("BIGINT treeId {}", [BigInt.fromString(treeId)])
     let c_tree = treeFactoryContract.treeData(event.params.treeId);
     // log.debug("ctree planter: {}", [c_tree.value0.toHexString()]);
-    // let c_uptree = treeFactoryContract.updateTrees(BigInt.fromString(treeId));
+    let c_uptree = treeFactoryContract.updateTrees(event.params.treeId);
     setTreeData(tree, c_tree);
 
     upsertTree(tree);
-    // let uptree = new UpdateTree(getCount_updateSpec(COUNTER_ID, true).toHexString());
-    // uptree.treeSpecs = c_uptree.value0;
-    // uptree.tree = treeId;
-    // uptree.updateDate = event.block.timestamp;
-    // uptree.status = c_uptree.value1;
-    // uptree.type = true;
-    // tree.treeStatus = BigInt.fromI32(3);
-    // uptree.save();
-    // tree.save();
+    let uptree = new UpdateTree(getCount_updateSpec(COUNTER_ID).toHexString());
+    uptree.treeSpecs = c_uptree.value0.toString();
+    uptree.tree = treeId;
+    uptree.updateDate = event.block.timestamp as BigInt;
+    uptree.status = BigInt.fromString(c_uptree.value1.toString());
+    uptree.type = true;
+    tree.treeStatus = BigInt.fromI32(3);
+    uptree.save();
+    tree.save();
     let planter = Planter.load(tree.planter);
     if (!planter) return;
     planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));

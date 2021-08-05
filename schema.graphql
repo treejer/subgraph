@@ -111,7 +111,8 @@ type IncermentalSell @entity {
   increaseRatio: BigInt
 }
 
-# type Counter @entity {
-#   id: ID!
-#   updateSpec: BigInt!
-# }
+type Counter @entity {
+  id: ID!
+  updateSpec: BigInt
+  bid: BigInt
+}
