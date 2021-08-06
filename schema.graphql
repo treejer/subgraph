@@ -44,6 +44,7 @@ type Tree @entity {
   lastUpdate: UpdateTree
   treeAttribute: TreeAttribute
   treeSpecs: String
+  requestId: String
 }
 
 type UpdateTree @entity {
@@ -91,6 +92,7 @@ type Owner @entity {
   treeCount: BigInt
   spentWeth: BigInt
   rank: BigInt
+  lastRequestId: String
 }
 
 type TreeAttribute @entity {
@@ -103,7 +105,7 @@ type TreeWithAttributeProblem @entity {
   tree: Tree!
 }
 
-type IncermentalSell @entity {
+type IncrementalSell @entity {
   id: ID!
   startTree: Tree!
   endTree: Tree!
@@ -112,8 +114,17 @@ type IncermentalSell @entity {
   increaseRatio: BigInt
 }
 
+type BatchRegularTreeRequest @entity {
+  id: ID!
+  count: BigInt
+  buyer: Owner!
+  amount: BigInt
+  trees: [Tree!]
+}
+
 type Counter @entity {
   id: ID!
   updateSpec: BigInt
   bid: BigInt
+  batchRegularTreeRequest: BigInt
 }

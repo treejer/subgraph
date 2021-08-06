@@ -4,6 +4,7 @@ import { Counter } from "../generated/schema";
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
+export const INCREMENTAL_SELL_ID = "0001";
 
 // let COUNTER_FIELDS = {
 //     UPDATE_SPECS: "updateSpec"
@@ -33,6 +34,7 @@ function newCounter(id: string): Counter {
     let _zero = BigInt.fromI32(0);
     counter.updateSpec = _zero;
     counter.bid = _zero;
+    counter.batchRegularTreeRequest = _zero;
     return counter;
 }
 export function getCount_updateSpec(id: string): BigInt {
@@ -59,6 +61,20 @@ export function getCount_bid(id: string): BigInt {
     }
     counter = newCounter(id);
     counter.bid = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+export function getCount_batchRegularTreeRequest(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.batchRegularTreeRequest as BigInt;
+        counter.batchRegularTreeRequest = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.batchRegularTreeRequest = BigInt.fromI32(1);
     counter.save();
     return BigInt.fromI32(0);
 }
