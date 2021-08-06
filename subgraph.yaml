@@ -143,30 +143,30 @@ dataSources:
         - event: TreeAttributesNotGenerated(uint256)
           handler: handleTreeAttributesNotGenerated
       file: ./src/mappings/TreeAttribute.ts
-  # - kind: ethereum/contract
-  #   name: IncrementalSell
-  #   network: rinkeby
-  #   source:
-  #     address: '0x271F823A56952419ff1C2770F332D3856D0eeA47'
-  #     abi: IncrementalSell
-  #     startBlock: 9061500
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - IncrementalSell
-  #       - Owner
-  #     abis:
-  #       - name: IncrementalSell
-  #         file: ./abis/IncrementalSell.json
-  #     eventHandlers:
-  #       - event: IncrementalSellUpdated()
-  #         handler: handleIncrementalSellUpdated
-  #       - event: IncrementalTreeSold(uint256,address,uint256)
-  #         handler: handleIncrementalTreeSold
-  #     file: ./src/mappings/IncrementalSell.ts
+  - kind: ethereum/contract
+    name: IncrementalSell
+    network: rinkeby
+    source:
+      address: '0x271F823A56952419ff1C2770F332D3856D0eeA47'
+      abi: IncrementalSell
+      startBlock: 9061500
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - IncrementalSell
+        - Owner
+      abis:
+        - name: IncrementalSell
+          file: ./abis/IncrementalSell.json
+      eventHandlers:
+        - event: IncrementalSellUpdated()
+          handler: handleIncrementalSellUpdated
+        - event: IncrementalTreeSold(uint256,address,uint256)
+          handler: handleIncrementalTreeSold
+      file: ./src/mappings/IncrementalSell.ts
 ##
 
 ##

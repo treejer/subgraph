@@ -58,14 +58,14 @@ export function handleIncrementalSellUpdated(event: IncrementalSellUpdated): voi
 
 
 export function handleIncrementalTreeSold(event: IncrementalTreeSold): void {
-    let buyer = event.params.buyer;
     let tree = Tree.load(event.params.treeId.toHexString());
-    tree.owner = buyer.toHexString();
-    let owner = Owner.load(buyer.toHexString());
-    if (!owner) owner = newOwner(buyer.toHexString());
+    if (!tree) tree = new Tree(event.params.treeId.toHexString()); // TODO: set tree params
+    tree.owner = event.params.buyer.toHexString();
+    tree.save();
+    let owner = Owner.load(event.params.buyer.toHexString());
+    if (!owner) owner = newOwner(event.params.buyer.toHexString());
     owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
     owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt);
     owner.save();
-    tree.save();
 }
 
