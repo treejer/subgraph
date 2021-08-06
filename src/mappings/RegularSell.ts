@@ -12,6 +12,7 @@ export function handleRegularTreeRequsted(event: RegularTreeRequsted): void {
     brgtr.amount = event.params.amount as BigInt;
     brgtr.save();
     let owner = Owner.load(brgtr.buyer);
+    if (!owner) owner = newOwner(brgtr.buyer);
     owner.lastRequestId = brgtr.id;
     owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
     owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
@@ -20,6 +21,7 @@ export function handleRegularTreeRequsted(event: RegularTreeRequsted): void {
 
 export function handleRegularMint(event: RegularMint): void {
     let owner = Owner.load(event.params.buyer.toHexString());
+    if (!owner) owner = newOwner(event.params.buyer.toHexString());
     let tree = Tree.load(event.params.treeId.toHexString());
     tree.owner = owner.id;
     tree.requestId = owner.lastRequestId;

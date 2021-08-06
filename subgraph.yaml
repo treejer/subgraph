@@ -167,33 +167,29 @@ dataSources:
         - event: IncrementalTreeSold(uint256,address,uint256)
           handler: handleIncrementalTreeSold
       file: ./src/mappings/IncrementalSell.ts
-##
-
-##
-
-# - kind: ethereum/contract
-#   name: RegularSell
-#   network: rinkeby
-#   source:
-#     address: '0x80409b88A92E5Ee66F18Ad43dCfb2F87cddc41Ca'
-#     abi: RegularSell
-#     startBlock: 9061500
-#   mapping:
-#     kind: ethereum/events
-#     apiVersion: 0.0.4
-#     language: wasm/assemblyscript
-#     entities:
-#       - Tree
-#       - RegularSell
-#       - Owner
-#     abis:
-#       - name: RegularSell
-#         file: ./abis/RegularSell.json
-#     eventHandlers:
-#       - event: RegularTreeRequsted(uint256,address,uint256)
-#         handler: handleRegularTreeRequsted
-#       - event: RegularMint(address,uint256)
-#         handler: handleRegularMint
-#       - event: RegularTreeRequstedById(uint256,address,uint256)
-#         handler: handleRegularTreeRequstedById
-#     file: ./src/mappings/RegularSell.ts
+  - kind: ethereum/contract
+    name: RegularSell
+    network: rinkeby
+    source:
+      address: '0x80409b88A92E5Ee66F18Ad43dCfb2F87cddc41Ca'
+      abi: RegularSell
+      startBlock: 9061500
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - RegularSell
+        - Owner
+      abis:
+        - name: RegularSell
+          file: ./abis/RegularSell.json
+      eventHandlers:
+        - event: RegularTreeRequsted(uint256,address,uint256)
+          handler: handleRegularTreeRequsted
+        # - event: RegularMint(address,uint256)
+        #   handler: handleRegularMint
+        # - event: RegularTreeRequstedById(uint256,address,uint256)
+        #   handler: handleRegularTreeRequstedById
+      file: ./src/mappings/RegularSell.ts
