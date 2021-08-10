@@ -35,6 +35,11 @@ function newCounter(id: string): Counter {
     counter.updateSpec = _zero;
     counter.bid = _zero;
     counter.batchRegularTreeRequest = _zero;
+    counter.treeFund = _zero;
+    counter.dme = _zero;
+    counter.withdraws = _zero;
+    counter.planterPayments = _zero;
+    counter.assignedFunds = _zero;
     return counter;
 }
 export function getCount_updateSpec(id: string): BigInt {
@@ -78,3 +83,70 @@ export function getCount_batchRegularTreeRequest(id: string): BigInt {
     counter.save();
     return BigInt.fromI32(0);
 }
+
+export function getCount_dme(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.dme as BigInt;
+        counter.dme = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.dme = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+export function getCount_planterPayment(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.planterPayments as BigInt;
+        counter.planterPayments = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.planterPayments = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+export function getCount_withdraws(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.withdraws as BigInt;
+        counter.withdraws = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.withdraws = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+export function getCount_treeFund(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.treeFund as BigInt;
+        counter.treeFund = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.treeFund = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+
+// export enum withdrawTypes {
+//     TREE_RESEARCH = "treeReseach",
+//     LOCAL_DEVELOP = "localDevelop",
+//     RESCUE = "rescue",
+//     TREEJER_DEVELOP = "treejerDevelop",
+//     OTHER_BALANCE1 = "otherBalance1",
+//     OTHER_BALANCE2 = "otherBalance2",
+//     PLANTER = "planter",
+// }

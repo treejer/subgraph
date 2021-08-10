@@ -127,4 +127,71 @@ type Counter @entity {
   updateSpec: BigInt
   bid: BigInt
   batchRegularTreeRequest: BigInt
+  assignedFunds: BigInt
+  dme: BigInt
+  planterPayments: BigInt
+  withdraws: BigInt
+  treeFund: BigInt
+}
+
+type FundDistribution @entity {
+  id: ID!
+  planterFund: BigInt
+  referralFund: BigInt
+  treeResearch: BigInt
+  localDevelop: BigInt
+  rescueFund: BigInt
+  treejerDevelop: BigInt
+  reserveFund1: BigInt
+  reserveFund2: BigInt
+  exists: BigInt
+}
+
+type AssignedFundDistribution @entity {
+  id: ID!
+  distributionModel: FundDistribution!
+}
+
+type TotalFunds @entity {
+  id: ID!
+  planterFund: BigInt
+  referralFund: BigInt
+  treeResearch: BigInt
+  localDevelop: BigInt
+  rescueFund: BigInt
+  treejerDevelop: BigInt
+  reserveFund1: BigInt
+  reserveFund2: BigInt
+}
+
+type TreeFunds @entity {
+  id: ID!
+  tree: Tree!
+  distributionModel: FundDistribution!
+  amount: BigInt!
+  date: BigInt!
+}
+
+type DistributionModelErrors @entity {
+  id: ID!
+  description: String
+  date: BigInt
+}
+
+type PlanterPayments @entity {
+  id: ID!
+  tree: Tree!
+  planter: Planter!
+  date: BigInt
+  amount: BigInt!
+  isRefferal: Boolean!
+}
+
+type Withdraws @entity {
+  id: ID!
+  type: String!
+  reason: String
+  destAddress: String!
+  amount: BigInt!
+  date: BigInt
 }

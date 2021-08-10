@@ -112,6 +112,7 @@ export function handleTreePlanted(event: TreePlanted): void {
         planter.status = BigInt.fromI32(2);
     }
     planter.save();
+
 }
 
 export function handleTreeAdded(event: TreeAdded): void {
@@ -172,7 +173,7 @@ export function handleRegularTreePlanted(event: RegularTreePlanted): void {
     rtree.status = BigInt.fromI32(0);
     rtree.save();
     let planter = Planter.load(rtree.planter);
-    log.warning("planter {} ", [planter.id]);
+    // log.warning("planter {} ", [planter.id]);
     planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
     if (planter.plantedCount.equals(planter.capacity as BigInt)) {
         planter.status = BigInt.fromI32(2);
@@ -190,7 +191,7 @@ export function handleRegularPlantVerified(event: RegularPlantVerified): void {
     if (!tree) {
         tree = new Tree(event.params.treeId.toHexString());
     }
-    log.warning("planter {} ", [rtree.planter]);
+    // log.warning("planter {} ", [rtree.planter]);
     tree.planter = rtree.planter;
     tree.birthDate = rtree.birthDate;
     tree.plantDate = rtree.plantDate as BigInt;
