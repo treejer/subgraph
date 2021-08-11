@@ -1,5 +1,5 @@
 import { DistributionModelAdded, DistributionModelOfTreeNotExist, FundDistributionModelAssigned, LocalDevelopBalanceWithdrawn, OtherBalanceWithdrawn1, OtherBalanceWithdrawn2, PlanterBalanceWithdrawn, PlanterFunded, RescueBalanceWithdrawn, Treasury as TreasuryContract, Treasury__fundDistributionsResult, TreeFunded, TreejerDevelopBalanceWithdrawn, TreeResearchBalanceWithdrawn } from "../../generated/Treasury/Treasury";
-import { AssignedFundDistribution, Counter, DistributionModelErrors, FundDistribution, Planter, PlanterPayments, TreeFunds, Withdraws } from "../../generated/schema";
+import { AssignedFundDistribution, Counter, DistributionModelError, FundDistribution, Planter, PlanterPayment, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_batchRegularTreeRequest, getCount_dme, getCount_planterPayment, getCount_treeFund, getCount_updateSpec, getCount_withdraws, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
 // let withdrawTypes: object = {
@@ -14,7 +14,7 @@ import { COUNTER_ID, getCount_batchRegularTreeRequest, getCount_dme, getCount_pl
 /*
 
 
-    struct TotalFunds {
+    struct TotalFund {
         uint256 planterFund;
         uint256 referralFund;
         uint256 treeResearch;
@@ -88,14 +88,14 @@ export function handleFundDistributionModelAssigned(event: FundDistributionModel
 
 
 export function handleDistributionModelOfTreeNotExist(event: DistributionModelOfTreeNotExist): void {
-    let dme = new DistributionModelErrors(getCount_dme(COUNTER_ID).toHexString());
+    let dme = new DistributionModelError(getCount_dme(COUNTER_ID).toHexString());
     dme.description = event.params.description;
     dme.date = event.block.timestamp as BigInt;
     dme.save();
 }
 
 export function handlePlanterFunded(event: PlanterFunded): void {
-    let fund = new PlanterPayments(getCount_planterPayment(COUNTER_ID).toHexString());
+    let fund = new PlanterPayment(getCount_planterPayment(COUNTER_ID).toHexString());
     fund.amount = event.params.amount as BigInt;
     fund.planter = event.params.planterId.toHexString();
     fund.date = event.block.timestamp as BigInt;
@@ -111,7 +111,7 @@ export function handlePlanterFunded(event: PlanterFunded): void {
 
 
 export function handleTreeResearchBalanceWithdrawn(event: TreeResearchBalanceWithdrawn): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "treeReseach";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -121,7 +121,7 @@ export function handleTreeResearchBalanceWithdrawn(event: TreeResearchBalanceWit
 }
 
 export function handleLocalDevelopBalanceWithdrawn(event: LocalDevelopBalanceWithdrawn): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "localDevelop";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -131,7 +131,7 @@ export function handleLocalDevelopBalanceWithdrawn(event: LocalDevelopBalanceWit
 }
 
 export function handleRescueBalanceWithdrawn(event: RescueBalanceWithdrawn): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "rescue";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -141,7 +141,7 @@ export function handleRescueBalanceWithdrawn(event: RescueBalanceWithdrawn): voi
 }
 
 export function handleTreejerDevelopBalanceWithdrawn(event: TreejerDevelopBalanceWithdrawn): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "treejerDevelop";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -151,7 +151,7 @@ export function handleTreejerDevelopBalanceWithdrawn(event: TreejerDevelopBalanc
 }
 
 export function handleOtherBalanceWithdrawn1(event: OtherBalanceWithdrawn1): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "otherBalance1";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -160,7 +160,7 @@ export function handleOtherBalanceWithdrawn1(event: OtherBalanceWithdrawn1): voi
     withdraw.save();
 }
 export function handleOtherBalanceWithdrawn2(event: OtherBalanceWithdrawn2): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "otherBalance2";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -172,7 +172,7 @@ export function handleOtherBalanceWithdrawn2(event: OtherBalanceWithdrawn2): voi
 
 
 export function handlePlanterBalanceWithdrawn(event: PlanterBalanceWithdrawn): void {
-    let withdraw = new Withdraws(getCount_withdraws(COUNTER_ID).toHexString());
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
     withdraw.type = "planter";
     withdraw.amount = event.params.amount as BigInt;
     withdraw.date = event.block.timestamp as BigInt;
@@ -182,7 +182,8 @@ export function handlePlanterBalanceWithdrawn(event: PlanterBalanceWithdrawn): v
 }
 
 export function handleTreeFunded(event: TreeFunded): void {
-    let treefund = new TreeFunds(getCount_treeFund(COUNTER_ID).toHexString());
+    let treefund = new TreeFund(getCount_treeFund(COUNTER_ID).toHexString());
+    log.warning("treefund id = {}", [treefund.id]);
     treefund.tree = event.params.treeId.toHexString();
     treefund.date = event.block.timestamp as BigInt;
     treefund.distributionModel = event.params.modelId.toHexString();

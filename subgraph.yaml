@@ -77,13 +77,8 @@ dataSources:
           handler: handleTreeAdded
         - event: TreeAssigned(uint256)
           handler: handleTreeAssigned
-
-      # callHandlers:
-      #   - function: addTree(uint256,string)
-      #     handler: handleAddTree
-      #   - function: assignTreeToPlanter(uint256,address)
-      #     handler: handleAssignTreeToPlanter
       file: ./src/mappings/TreeFactory.ts
+
   - kind: ethereum/contract
     name: Auction
     network: rinkeby
@@ -180,7 +175,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Tree
-        - TreeFunds
+        - TreeFund
         - Owner
         - FundDistribution
       abis:

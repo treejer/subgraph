@@ -42,16 +42,9 @@ export function handleIncrementalSellUpdated(event: IncrementalSellUpdated): voi
     let incSell = IncrementalSell.load(INCREMENTAL_SELL_ID);
     if (!incSell) incSell = new IncrementalSell(INCREMENTAL_SELL_ID);
     setIncSellData(incSell, c_incSell);
-    // for (let i = BigInt.fromString(incSell.startTree);
-    //     i.le(BigInt.fromString(incSell.endTree));
-    //     i = i.plus(BigInt.fromI32(1))) {
-    //     // upsertTreeIncremental(i.toHexString());
-    // }
-    // let i = BigInt.fromString(incSell.startTree);
-    // while (i.le(BigInt.fromString(incSell.endTree))) {
-
-    //     i = i.plus(BigInt.fromI32(1));
-    // }
+    for (let i = parseInt(incSell.startTree); i < parseInt(incSell.endTree); i++) {
+        upsertTreeIncremental(BigInt.fromString(i.toString().split(".")[0]).toHexString());
+    }
 
     incSell.save();
 }

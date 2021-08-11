@@ -16,19 +16,6 @@ type Planter @entity {
   trees: [Tree!]! @derivedFrom(field: "planter")
 }
 
-# type Tree @entity {
-#   id: ID!
-#   planter: Planter
-#   treeType: BigInt!
-#   mintStatus: BigInt
-#   countryCode: BigInt
-#   provideStatus: BigInt
-#   treeStatus: BigInt
-#   plantDate: BigInt
-#   birthDate: BigInt
-#   treeSpecs: String
-# }
-
 type Tree @entity {
   id: ID!
   planter: Planter
@@ -152,7 +139,7 @@ type AssignedFundDistribution @entity {
   distributionModel: FundDistribution!
 }
 
-type TotalFunds @entity {
+type TotalFund @entity {
   id: ID!
   planterFund: BigInt
   referralFund: BigInt
@@ -164,7 +151,7 @@ type TotalFunds @entity {
   reserveFund2: BigInt
 }
 
-type TreeFunds @entity {
+type TreeFund @entity {
   id: ID!
   tree: Tree!
   distributionModel: FundDistribution!
@@ -172,13 +159,13 @@ type TreeFunds @entity {
   date: BigInt!
 }
 
-type DistributionModelErrors @entity {
+type DistributionModelError @entity {
   id: ID!
   description: String
   date: BigInt
 }
 
-type PlanterPayments @entity {
+type PlanterPayment @entity {
   id: ID!
   tree: Tree!
   planter: Planter!
@@ -187,7 +174,7 @@ type PlanterPayments @entity {
   isRefferal: Boolean!
 }
 
-type Withdraws @entity {
+type Withdraw @entity {
   id: ID!
   type: String!
   reason: String
