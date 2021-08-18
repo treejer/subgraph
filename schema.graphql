@@ -6,6 +6,7 @@ type Planter @entity {
   score: BigInt
   capacity: BigInt
   plantedCount: BigInt
+  verifiedPlantedCount: BigInt
   longitude: BigInt
   latitude: BigInt
   memberOf: Planter
@@ -13,6 +14,9 @@ type Planter @entity {
   refferedBy: Planter
   refferers: [Planter!]! @derivedFrom(field: "refferedBy")
   organizationRule: BigInt
+  memberCount: BigInt
+  referrerCount: BigInt
+  balance: BigInt
   trees: [Tree!]! @derivedFrom(field: "planter")
 }
 
@@ -136,7 +140,7 @@ type FundDistribution @entity {
 
 type AssignedFundDistribution @entity {
   id: ID!
-  distributionModel: FundDistribution!
+  distributionModel: FundDistribution
 }
 
 type TotalFund @entity {
@@ -149,6 +153,7 @@ type TotalFund @entity {
   treejerDevelop: BigInt
   reserveFund1: BigInt
   reserveFund2: BigInt
+  totalBalance: BigInt
 }
 
 type TreeFund @entity {
@@ -170,7 +175,7 @@ type PlanterPayment @entity {
   tree: Tree!
   planter: Planter!
   date: BigInt
-  amount: BigInt!
+  amount: BigInt
   isRefferal: Boolean!
 }
 
@@ -181,4 +186,20 @@ type Withdraw @entity {
   destAddress: String!
   amount: BigInt!
   date: BigInt
+}
+
+type TreePlanterFinance @entity {
+  id: ID!
+  planterFund: BigInt
+  referalFund: BigInt
+  planterPaid: BigInt
+  refferalPaid: BigInt
+}
+
+type TotalPlanterFund @entity {
+  id: ID!
+  planterFund: BigInt
+  referalFund: BigInt
+  localDevelopFund: BigInt
+  totalBalance: BigInt
 }

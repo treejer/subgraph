@@ -17,7 +17,8 @@ export function handleTreeAttributesGenerated(event: TreeAttributesGenerated): v
     tree.treeAttribute = treeAttributeContract.treeAttributes(BigInt.fromString(tree.id)).value6.toHexString(); // universalCode
     tree.save();
     let treeAttribute = new TreeAttribute(tree.treeAttribute);
-    treeAttribute.buyerRank = treeAttributeContract.rankOf(Address.fromString(tree.planter)) as BigInt;
+    let _rnk = treeAttributeContract.rankOf(Address.fromHexString(tree.planter) as Address);
+    treeAttribute.buyerRank = BigInt.fromString(_rnk.toString());
     treeAttribute.save();
 }
 

@@ -68,18 +68,22 @@ export function handleFundDistributionModelAssigned(event: FundDistributionModel
     }
     let treasuryContract = TreasuryContract.bind(event.address);
     // let _count = Number.parseInt(event.params.endingTreeId.toString()) - Number.parseInt(event.params.startingTreeId.toString());
+
     let _count = Number.parseInt(event.params.endingTreeId.minus(event.params.startingTreeId).toString());
-    log.warning("_count IS {}", [_count.toString()]);
-    if (_count > 0) {
-        let assignModels = treasuryContract.assignModels(BigInt.fromI32(0));
-    }
-    for (let i = 0; i < _count; i++) {
-        // let assignModels = treasuryContract.assignModels(BigInt.fromString(i.toString()));
-        // let assignedFund = new AssignedFundDistribution(BigInt.fromString(i.toString()).toHexString());
-        // let fund = new FundDistribution(i.toString());
-        // assignedFund.distributionModel = assignModels.value1.toHexString();
-        // assignedFund.save();
-    }
+    // log.warning("_count IS {}", [_count.toString()]);
+    // if (_count > 0) {
+    //     let assignModels = treasuryContract.assignModels(BigInt.fromI32(0));
+    // }
+    // for (let i = 0; i < _count; i++) {
+    // log.warning("i = {}", [i.toString()]);
+    // let assignModels = treasuryContract.assignModels(BigInt.fromString(i.toString().split(".")[0]));
+    // let assignModels = treasuryContract.assignModels(BigInt.fromI32(i));
+    // let assignedFund = new AssignedFundDistribution(BigInt.fromString(i.toString().split(".")[0]).toHexString());
+    // let fund = new FundDistribution(i.toString());
+    // log.warning("distmodel = {} , value0 = {}", [assignModels.value1.toString(), assignModels.value0.toHexString()]);
+    // assignedFund.distributionModel = assignModels.value1.toHexString();
+    // assignedFund.save();
+    // }
     // counter.assignedFunds = BigInt.fromString(_count.toString());
     // counter.save();
 }
@@ -183,7 +187,7 @@ export function handlePlanterBalanceWithdrawn(event: PlanterBalanceWithdrawn): v
 
 export function handleTreeFunded(event: TreeFunded): void {
     let treefund = new TreeFund(getCount_treeFund(COUNTER_ID).toHexString());
-    log.warning("treefund id = {}", [treefund.id]);
+    // log.warning("treefund id = {}", [treefund.id]);
     treefund.tree = event.params.treeId.toHexString();
     treefund.date = event.block.timestamp as BigInt;
     treefund.distributionModel = event.params.modelId.toHexString();

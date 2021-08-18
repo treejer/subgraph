@@ -150,3 +150,34 @@ export function getCount_treeFund(id: string): BigInt {
 //     OTHER_BALANCE2 = "otherBalance2",
 //     PLANTER = "planter",
 // }
+
+// let _zero = "0".charCodeAt(0);
+// let _a = "a".charCodeAt(0);
+
+// function hval(s: string) {
+
+//     if (s.charCodeAt(0) - _zero < 10) return s.charCodeAt(0) - _zero;
+//     return s.charCodeAt(0) - _a + 10;
+
+// }
+// export function hexToDec(s: string): string {
+//     // var i, j, digits = [0], carry;
+//     let i: number;
+//     let j: number;
+//     let digits = [0];
+//     let carry: number;
+//     for (i = 0; i < s.length; i += 1) {
+//         if (s.charCodeAt(i) - _zero < 10) carry = s.charCodeAt(i) - _zero;
+//         else carry = s.charCodeAt(i) - _a + 10;
+//         for (j = 0; j < digits.length; j += 1) {
+//             digits[j] = digits[j] * 16 + carry;
+//             carry = digits[j] / 10 | 0;
+//             digits[j] %= 10;
+//         }
+//         while (carry > 0) {
+//             digits.push(carry % 10);
+//             carry = carry / 10 | 0;
+//         }
+//     }
+//     return digits.reverse().join('');
+// }
