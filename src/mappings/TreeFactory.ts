@@ -143,6 +143,9 @@ export function handlePlantVerified(event: PlantVerified): void {
     tree.treeStatus = BigInt.fromI32(4);
     let uptree = UpdateTree.load(tree.lastUpdate);
     uptree.status = BigInt.fromI32(3);
+    let planter = Planter.load(tree.planter);
+    planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1));
+    planter.save();
     uptree.save();
     tree.save();
 }

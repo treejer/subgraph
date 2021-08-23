@@ -112,32 +112,32 @@ dataSources:
           handler: handleAuctionEndTimeIncreased
 
       file: ./src/mappings/Auction.ts
-  # - kind: ethereum/contract
-  #   name: TreeAttribute
-  #   network: rinkeby
-  #   source:
-  #     address: '0xf3422A89A357cFE114aD429303388BabF89Dff15'
-  #     abi: TreeAttribute
-  #     startBlock: 9042650
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - TreeAttribute
-  #       - TreeWithAttributeProblem
-  #     abis:
-  #       - name: TreeAttribute
-  #         file: ./abis/TreeAttribute.json
-  #     eventHandlers:
-  #       - event: BuyerRankSet(address,uint8)
-  #         handler: handleBuyerRankSet
-  #       - event: TreeAttributesGenerated(uint256)
-  #         handler: handleTreeAttributesGenerated
-  #       - event: TreeAttributesNotGenerated(uint256)
-  #         handler: handleTreeAttributesNotGenerated
-  #     file: ./src/mappings/TreeAttribute.ts
+  - kind: ethereum/contract
+    name: TreeAttribute
+    network: rinkeby
+    source:
+      address: '0xf3422A89A357cFE114aD429303388BabF89Dff15'
+      abi: TreeAttribute
+      startBlock: 9042650
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - TreeAttribute
+        - TreeWithAttributeProblem
+      abis:
+        - name: TreeAttribute
+          file: ./abis/TreeAttribute.json
+      eventHandlers:
+        - event: BuyerRankSet(address,uint8)
+          handler: handleBuyerRankSet
+        # - event: TreeAttributesGenerated(uint256)
+        #   handler: handleTreeAttributesGenerated
+        - event: TreeAttributesNotGenerated(uint256)
+          handler: handleTreeAttributesNotGenerated
+      file: ./src/mappings/TreeAttribute.ts
   - kind: ethereum/contract
     name: IncrementalSell
     network: rinkeby
@@ -233,4 +233,71 @@ dataSources:
       eventHandlers:
         - event: PlanterFundSet(uint256,uint256,uint256)
           handler: handlePlanterFundSet
+        - event: PlanterFunded(uint256,address,uint256)
+          handler: handlePlanterFunded
+        - event: PlanterBalanceWithdrawn(uint256,address)
+          handler: handlePlanterBalanceWithdrawn
       file: ./src/mappings/PlanterFund.ts
+
+  - kind: ethereum/contract
+    name: DaiFunds
+    network: rinkeby
+    source:
+      address: '0x2a4803584395b4e613c5C7b84A9de0C38b56e835'
+      abi: DaiFunds
+      startBlock: 9063500
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TotalFund
+      abis:
+        - name: DaiFunds
+          file: ./abis/DaiFunds.json
+        - name: FinancialModel
+          file: ./abis/FinancialModel.json
+      eventHandlers:
+        - event: TreeResearchBalanceWithdrawn(uint256,address,string)
+          handler: handleTreeResearchBalanceWithdrawn
+        - event: LocalDevelopBalanceWithdrawn(uint256,address,string)
+          handler: handleLocalDevelopBalanceWithdrawn
+        - event: RescueBalanceWithdrawn(uint256,address,string)
+          handler: handleRescueBalanceWithdrawn
+        - event: TreejerDevelopBalanceWithdrawn(uint256,address,string)
+          handler: handleTreejerDevelopBalanceWithdrawn
+        - event: TreeFunded(uint256,uint256,uint256)
+          handler: handleTreeFunded
+
+      file: ./src/mappings/DaiFund.ts
+
+  - kind: ethereum/contract
+    name: WethFunds
+    network: rinkeby
+    source:
+      address: '0x23034d931778D38F538Bf14d321B775Dd4E82A3d'
+      abi: WethFunds
+      startBlock: 9063500
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TotalFund
+      abis:
+        - name: WethFunds
+          file: ./abis/WethFunds.json
+        - name: FinancialModel
+          file: ./abis/FinancialModel.json
+      eventHandlers:
+        - event: TreeResearchBalanceWithdrawn(uint256,address,string)
+          handler: handleTreeResearchBalanceWithdrawn
+        - event: LocalDevelopBalanceWithdrawn(uint256,address,string)
+          handler: handleLocalDevelopBalanceWithdrawn
+        - event: RescueBalanceWithdrawn(uint256,address,string)
+          handler: handleRescueBalanceWithdrawn
+        - event: TreejerDevelopBalanceWithdrawn(uint256,address,string)
+          handler: handleTreejerDevelopBalanceWithdrawn
+        - event: TreeFunded(uint256,uint256,uint256)
+          handler: handleTreeFunded
+      file: ./src/mappings/WethFunds.ts

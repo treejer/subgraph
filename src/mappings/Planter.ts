@@ -36,6 +36,13 @@ export function handlePlanterJoin(event: PlanterJoin): void {
     let pl = planterContract.planters(event.params.planterId);
     // pl.toMap()<>;
     setPlanterFields(planter, pl);
+    planter.referrerCount = new BigInt(0);
+    planter.balance = new BigInt(0);
+    planter.memberCount = new BigInt(0);
+    planter.verifiedPlantedCount = new BigInt(0);
+    planter.plantedCount = new BigInt(0);
+    planter.refferedBy = planterContract.refferedBy(event.params.planterId).toHexString();
+    planter.memberOf = planterContract.memberOf(event.params.planterId).toHexString();
     // log.info("Planter is {} {} {} {} {} {} {} {} ", [pl.value0.toString(), pl.value1.toString(), pl.value2.toString(), pl.value3.toString(), pl.value4.toString(), pl.value5.toString(), pl.value6.toString(), pl.value7.toString() ]);
     planter.save();
 }
@@ -44,6 +51,13 @@ export function handleOrganizationJoin(event: OrganizationJoin): void {
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.organizationId);
     setPlanterFields(planter, pl);
+    planter.referrerCount = new BigInt(0);
+    planter.balance = new BigInt(0);
+    planter.memberCount = new BigInt(0);
+    planter.verifiedPlantedCount = new BigInt(0);
+    planter.plantedCount = new BigInt(0);
+    planter.refferedBy = planterContract.refferedBy(event.params.organizationId).toHexString();
+    planter.memberOf = planterContract.memberOf(event.params.organizationId).toHexString();
     planter.save();
 }
 

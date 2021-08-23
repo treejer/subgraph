@@ -1,7 +1,8 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { PlanterFundSet, PlanterFund as PFC, PlanterFunded } from "../../generated/PlanterFund/PlanterFund";
-import { Planter, PlanterPayment, TotalPlanterFund, TreePlanterFinance } from "../../generated/schema";
-import { getCount_planterPayment, COUNTER_ID } from "../helpers";
+import { Planter, PlanterPayment, TotalPlanterFund, TreePlanterFinance, Withdraw } from "../../generated/schema";
+import { PlanterBalanceWithdrawn } from "../../generated/Treasury/Treasury";
+import { getCount_planterPayment, COUNTER_ID, getCount_withdraws } from "../helpers";
 export function handlePlanterFundSet(event: PlanterFundSet): void {
     let totalPlanterFund = TotalPlanterFund.load('0');
     if (!totalPlanterFund) totalPlanterFund = new TotalPlanterFund('0');
@@ -61,4 +62,24 @@ export function handlePlanterFunded(event: PlanterFunded): void {
         ref.save();
         pp.save();
     }
+}
+
+
+export function handlePlanterBalanceWithdrawn(event: PlanterBalanceWithdrawn): void {
+    let withdraw = new Withdraw(getCount_withdraws(COUNTER_ID).toHexString());
+    withdraw.type = "planter";
+    withdraw.reason = "";
+    withdraw.destAddress = event.params.account.toHexString();
+    withdraw.date = event.block.timestamp as BigInt;
+    withdraw.amount = event.params.amount as BigInt;
+    withdraw.save();
+
+    let tpf = TotalPlanterFund.load('0');
+    tpf.totalBalance = tpf.totalBalance.minus(withdraw.amount);
+    tpf.save();
+
+    let planter = Planter.load(withdraw.destAddress);
+    let planterFundContract = PFC.bind(event.address);
+    planter.balance = planterFundContract.balances(event.params.account);
+    planter.save();
 }

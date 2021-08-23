@@ -14,7 +14,8 @@ export function handleRegularTreeRequsted(event: RegularTreeRequsted): void {
     let owner = Owner.load(brgtr.buyer);
     if (!owner) owner = newOwner(brgtr.buyer);
     owner.lastRequestId = brgtr.id;
-    owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
+    owner.spentDai = owner.spentDai.plus(event.params.amount as BigInt);
+    // owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
     owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
     owner.save();
 }
@@ -31,13 +32,15 @@ function newOwner(id: string): Owner {
     let owner = new Owner(id);
     owner.treeCount = BigInt.fromI32(0);
     owner.spentWeth = BigInt.fromI32(0);
+    owner.spentDai = BigInt.fromI32(0);
     return owner;
 }
 
 export function handleRegularTreeRequstedById(event: RegularTreeRequstedById): void {
     let owner = Owner.load(event.params.buyer.toHexString());
     if (!owner) owner = newOwner(event.params.buyer.toHexString());
-    owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
+    owner.spentDai = owner.spentDai.plus(event.params.amount as BigInt);
+    // owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
     owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
     let tree = Tree.load(event.params.treeId.toHexString());
     tree.owner = owner.id;

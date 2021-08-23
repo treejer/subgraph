@@ -16,6 +16,7 @@ function newOwner(id: string): Owner {
     let owner = new Owner(id);
     owner.treeCount = BigInt.fromI32(0);
     owner.spentWeth = BigInt.fromI32(0);
+    owner.spentDai = BigInt.fromI32(0);
     return owner;
 }
 
