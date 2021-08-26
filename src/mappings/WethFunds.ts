@@ -1,7 +1,7 @@
 import { LocalDevelopBalanceWithdrawn, RescueBalanceWithdrawn, TreejerDevelopBalanceWithdrawn, TreeResearchBalanceWithdrawn, WethFunds as WFcontract, TreeFunded } from "../../generated/WethFunds/WethFunds";
 import { AssignedFundDistribution, Counter, DistributionModelError, FundDistribution, Planter, PlanterPayment, TotalFund, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_batchRegularTreeRequest, getCount_dme, getCount_planterPayment, getCount_treeFund, getCount_updateSpec, getCount_withdraws, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
+import { COUNTER_ID, getCount_RegularRequest, getCount_dme, getCount_planterPayment, getCount_treeFund, getCount_updateSpec, getCount_withdraws, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
 import { FinancialModel as FMcontract } from "../../generated/WethFunds/FinancialModel";
 function getTotalFund(): TotalFund | null {
     let totalFunds = TotalFund.load("weth");

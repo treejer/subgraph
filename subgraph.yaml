@@ -188,6 +188,8 @@ dataSources:
           handler: handleRegularMint
         - event: RegularTreeRequstedById(uint256,address,uint256)
           handler: handleRegularTreeRequstedById
+        - event: TreePriceUpdated(uint256)
+          handler: handleTreePriceUpdated
       file: ./src/mappings/RegularSell.ts
   - kind: ethereum/contract
     name: FinancialModel

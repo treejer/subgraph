@@ -1,23 +1,53 @@
-import { RegularMint, RegularSell as RegularSellContract, RegularTreeRequsted, RegularTreeRequstedById } from "../../generated/RegularSell/RegularSell";
-import { BatchRegularTreeRequest, IncrementalSell, Owner, Tree } from "../../generated/schema";
+import { RegularMint, RegularSell as RegularSellContract, RegularTreeRequsted, RegularTreeRequstedById, TreePriceUpdated } from "../../generated/RegularSell/RegularSell";
+import { RegularRequest, IncrementalSell, Owner, Tree, GlobalData } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_batchRegularTreeRequest, getCount_updateSpec, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
+import { COUNTER_ID, getCount_RegularRequest, getCount_updateSpec, getGlobalData, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
 
 
 
 export function handleRegularTreeRequsted(event: RegularTreeRequsted): void {
-    let brgtr = new BatchRegularTreeRequest(getCount_batchRegularTreeRequest(COUNTER_ID).toHexString());
-    brgtr.count = event.params.count as BigInt;
-    brgtr.buyer = event.params.buyer.toHexString();
-    brgtr.amount = event.params.amount as BigInt;
-    brgtr.save();
-    let owner = Owner.load(brgtr.buyer);
-    if (!owner) owner = newOwner(brgtr.buyer);
-    owner.lastRequestId = brgtr.id;
-    owner.spentDai = owner.spentDai.plus(event.params.amount as BigInt);
-    // owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
-    owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
+    // let brgtr = new RegularRequest(getCount_RegularRequest(COUNTER_ID).toHexString());
+    // brgtr.count = event.params.count as BigInt;
+    // brgtr.buyer = event.params.buyer.toHexString();
+    // brgtr.amount = event.params.amount as BigInt;
+    // brgtr.save();
+    // let owner = Owner.load(brgtr.buyer);
+    // if (!owner) owner = newOwner(brgtr.buyer);
+    // owner.lastRequestId = brgtr.id;
+    // owner.spentDai = owner.spentDai.plus(event.params.amount as BigInt);
+    // // owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
+    // owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
+    // owner.save();
+    let flag = false;
+    let rr = new RegularRequest(getCount_RegularRequest(COUNTER_ID).toHexString());
+    rr.count = event.params.count as BigInt;
+    rr.owner = event.params.buyer.toHexString();
+    rr.amount = event.params.amount as BigInt;
+    rr.date = event.block.timestamp;
+    rr.save();
+    let owner = Owner.load(rr.owner);
+    if (!owner) {
+        owner = new Owner(rr.owner);
+        flag = true;
+        owner.regularSpent = event.params.amount as BigInt;
+        owner.treeCount = event.params.count as BigInt;
+        owner.regularCount = event.params.count as BigInt;
+        owner.lastRequestId = rr.id;
+    } else {
+        owner.regularSpent = owner.regularSpent.plus(event.params.amount as BigInt);
+        owner.treeCount = owner.treeCount.plus(event.params.count as BigInt);
+        owner.regularCount = owner.regularCount.plus(event.params.count as BigInt);
+        owner.lastRequestId = rr.id;
+    }
     owner.save();
+    let gb = getGlobalData();
+    gb.totalRegularTreeSellAmount = gb.totalRegularTreeSellAmount.plus(event.params.amount as BigInt);
+    gb.totalRegularTreeSellCount = gb.totalRegularTreeSellCount.plus(event.params.count as BigInt);
+    if (flag) gb.ownerCount = gb.ownerCount.plus(BigInt.fromI32(1));
+    gb.ownedTreeCount = gb.ownedTreeCount.plus(event.params.count as BigInt);
+    gb.save();
+
+
 }
 
 export function handleRegularMint(event: RegularMint): void {
@@ -46,4 +76,10 @@ export function handleRegularTreeRequstedById(event: RegularTreeRequstedById): v
     tree.owner = owner.id;
     tree.save();
     owner.save();
+}
+
+export function handleTreePriceUpdated(event: TreePriceUpdated): void {
+    let gb = getGlobalData();
+    gb.regularTreePrice = event.params.price as BigInt;
+    gb.save();
 }

@@ -1,7 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { Counter } from "../generated/schema";
+import { Counter, GlobalData } from "../generated/schema";
 // import { Counter } from "../generated/schema";
-
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
 export const INCREMENTAL_SELL_ID = "0001";
@@ -34,12 +33,15 @@ function newCounter(id: string): Counter {
     let _zero = BigInt.fromI32(0);
     counter.updateSpec = _zero;
     counter.bid = _zero;
-    counter.batchRegularTreeRequest = _zero;
+    counter.RegularRequest = _zero;
     counter.treeFund = _zero;
     counter.dme = _zero;
     counter.withdraws = _zero;
     counter.planterPayments = _zero;
     counter.assignedFunds = _zero;
+
+    counter.treeSpecs = _zero;
+    counter.communityGift = _zero;
     return counter;
 }
 export function getCount_updateSpec(id: string): BigInt {
@@ -70,16 +72,16 @@ export function getCount_bid(id: string): BigInt {
     return BigInt.fromI32(0);
 }
 
-export function getCount_batchRegularTreeRequest(id: string): BigInt {
+export function getCount_RegularRequest(id: string): BigInt {
     let counter = Counter.load(id);
     if (counter) {
-        let cnt: BigInt = counter.batchRegularTreeRequest as BigInt;
-        counter.batchRegularTreeRequest = cnt.plus(BigInt.fromI32(1));
+        let cnt: BigInt = counter.RegularRequest as BigInt;
+        counter.RegularRequest = cnt.plus(BigInt.fromI32(1));
         counter.save();
         return cnt;
     }
     counter = newCounter(id);
-    counter.batchRegularTreeRequest = BigInt.fromI32(1);
+    counter.RegularRequest = BigInt.fromI32(1);
     counter.save();
     return BigInt.fromI32(0);
 }
@@ -138,6 +140,53 @@ export function getCount_treeFund(id: string): BigInt {
     counter.treeFund = BigInt.fromI32(1);
     counter.save();
     return BigInt.fromI32(0);
+}
+
+export function getCount_treeSpecs(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.treeSpecs as BigInt;
+        counter.treeSpecs = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.treeSpecs = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+export function getGlobalData(): GlobalData | null {
+    let gb = GlobalData.load('0');
+    if (!gb) {
+        gb = new GlobalData('0');
+        gb.totalPlantedTrees = new BigInt(0);
+        gb.totalVerifiedTrees = new BigInt(0);
+        gb.totalUpdates = new BigInt(0);
+        gb.totalVerifiedUpdates = new BigInt(0);
+        gb.totalRegularTreesUnderReview = new BigInt(0);
+        gb.totalRegularTreeSellCount = new BigInt(0);
+        gb.totalAuctionTreeSellCount = new BigInt(0);
+        gb.totalIncrementalSellCount = new BigInt(0);
+        gb.planterCount = new BigInt(0);
+        gb.organizationCount = new BigInt(0);
+        gb.independentPlanterCount = new BigInt(0);
+        gb.ownerCount = new BigInt(0);
+        gb.ownedTreeCount = new BigInt(0);
+        gb.totalRegularTreeSellAmount = new BigInt(0);
+        gb.totalAuctionTreeSellAmount = new BigInt(0);
+        gb.totalIncrementalSellAmount = new BigInt(0);
+        gb.totalClaimedGiftTrees = new BigInt(0);
+        gb.regularTreePrice = new BigInt(0);
+        gb.lastIncrementalSold = new BigInt(0);
+        gb.prevIncrementalPrice = new BigInt(0);
+        gb.nowIncrementalPrice = new BigInt(0);
+        gb.nextIncremetalPrice = new BigInt(0);
+        gb.communityGiftPlanterFund = new BigInt(0);
+        gb.communityGiftReferralFund = new BigInt(0);
+    }
+    return gb;
+
 }
 
 

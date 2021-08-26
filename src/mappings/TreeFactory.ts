@@ -1,7 +1,7 @@
-import { Planter, RegularTree, Tree, UpdateTree } from '../../generated/schema';
+import { Counter, Planter, RegularTree, Tree, TreeSpec, UpdateTree } from '../../generated/schema';
 import { AddTreeCall, AssignTreeToPlanterCall, PlantRejected, PlantVerified, RegularPlantRejected, RegularPlantVerified, RegularTreePlanted, TreeAdded, TreeAssigned, TreeFactory as TreeFactoryContract, TreeFactory__regularTreesResult, TreeFactory__treeDataResult, TreeFactory__updateTreesResult, TreePlanted, TreeUpdated, UpdateRejected, UpdateVerified } from '../../generated/TreeFactory/TreeFactory';
-import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_updateSpec, ZERO_ADDRESS } from '../helpers';
+import { Address, BigInt, ipfs, JSONValue, log, Value } from '@graphprotocol/graph-ts';
+import { COUNTER_ID, getCount_treeSpecs, getCount_updateSpec, ZERO_ADDRESS } from '../helpers';
 
 /**
  * 
@@ -82,6 +82,42 @@ function upsertTree(tree: Tree | null): void {
         tree.save();
     }
 }
+
+export function saveTreeSpec(value: JSONValue, userData: Value): void {
+    if (value.isNull()) { return; }
+    let obj = value.toObject();
+    let name = obj.get('name').toString();
+    let description = obj.get('description').toString();
+    let external_url = obj.get('external_url').toString();
+    let image = obj.get('image').toString();
+    let image_ipfs_hash = obj.get('image_ipfs_hash').toString();
+    let symbol = obj.get('symbol').toString();
+    let symbol_ipfs_hash = obj.get('symbol_ipfs_hash').toString();
+    let animation_url = obj.get('animation_url').toString();
+    let diameter = obj.get('diameter').toString();
+    let location = obj.get('location').toObject();
+    let attributes = obj.get('attributes').toArray();
+
+    // let treeSpec = new TreeSpec(userData.toString());
+    let treeSpec = new TreeSpec(getCount_treeSpecs(COUNTER_ID).toHexString());
+    treeSpec.name = name;
+    treeSpec.description = description;
+    treeSpec.externalUrl = external_url;
+    treeSpec.imageFs = image;
+    treeSpec.imageHash = image_ipfs_hash;
+    treeSpec.symbolFs = symbol;
+    treeSpec.symbolHash = symbol_ipfs_hash;
+    treeSpec.animationUrl = animation_url;
+    treeSpec.diameter = BigInt.fromString(diameter);
+    treeSpec.longitude = location.get('longitude').toString();
+    treeSpec.latitude = location.get('latitude').toString();
+    treeSpec.attributes = attributes.toString();
+    treeSpec.save();
+
+    let tree = Tree.load(userData.toString());
+    tree.treeSpecs = treeSpec.id;
+    tree.save();
+}
 export function handleTreePlanted(event: TreePlanted): void {
     let treeFactoryContract = TreeFactoryContract.bind(event.address);
     let treeId = event.params.treeId.toHexString();
@@ -104,6 +140,7 @@ export function handleTreePlanted(event: TreePlanted): void {
     tree.treeStatus = BigInt.fromI32(3);
     uptree.save();
     tree.lastUpdate = uptree.id;
+    ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
     tree.save();
     let planter = Planter.load(tree.planter);
     if (!planter) return;
@@ -121,7 +158,7 @@ export function handleTreeAdded(event: TreeAdded): void {
     let c_tree = treeFactoryContract.treeData(event.params.treeId);
     setTreeData(tree, c_tree);
     tree.treeStatus = BigInt.fromI32(2);
-    // tree.treeSpecs = call.inputs._treeDescription;
+    ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
     tree.save();
 }
 
@@ -176,7 +213,6 @@ export function handleRegularTreePlanted(event: RegularTreePlanted): void {
     rtree.status = BigInt.fromI32(0);
     rtree.save();
     let planter = Planter.load(rtree.planter);
-    // log.warning("planter {} ", [planter.id]);
     planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
     if (planter.plantedCount.equals(planter.capacity as BigInt)) {
         planter.status = BigInt.fromI32(2);
