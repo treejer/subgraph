@@ -1,5 +1,5 @@
 import { RegularMint, RegularSell as RegularSellContract, RegularTreeRequsted, RegularTreeRequstedById, TreePriceUpdated } from "../../generated/RegularSell/RegularSell";
-import { RegularRequest, IncrementalSell, Owner, Tree, GlobalData } from "../../generated/schema";
+import { RegularRequest, IncrementalSell, Owner, Tree, GlobalData, RegularTree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_RegularRequest, getCount_updateSpec, getGlobalData, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
 
@@ -54,6 +54,10 @@ export function handleRegularMint(event: RegularMint): void {
     let owner = Owner.load(event.params.buyer.toHexString());
     if (!owner) owner = newOwner(event.params.buyer.toHexString());
     let tree = Tree.load(event.params.treeId.toHexString());
+    // let tree = RegularTree.load(event.params.treeId.toHexString());
+    if (!tree) {
+        return; // TODO:  Fix this
+    }
     tree.owner = owner.id;
     tree.requestId = owner.lastRequestId;
     tree.save();

@@ -1,6 +1,6 @@
 import { Counter, Planter, RegularTree, Tree, TreeSpec, UpdateTree } from '../../generated/schema';
 import { AddTreeCall, AssignTreeToPlanterCall, PlantRejected, PlantVerified, RegularPlantRejected, RegularPlantVerified, RegularTreePlanted, TreeAdded, TreeAssigned, TreeFactory as TreeFactoryContract, TreeFactory__regularTreesResult, TreeFactory__treeDataResult, TreeFactory__updateTreesResult, TreePlanted, TreeUpdated, UpdateRejected, UpdateVerified } from '../../generated/TreeFactory/TreeFactory';
-import { Address, BigInt, ipfs, JSONValue, log, Value } from '@graphprotocol/graph-ts';
+import { Address, BigInt, JSONValue, log, Value, ipfs, json, Bytes, BigDecimal, } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_treeSpecs, getCount_updateSpec, ZERO_ADDRESS } from '../helpers';
 
 /**
@@ -94,7 +94,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     let symbol = obj.get('symbol').toString();
     let symbol_ipfs_hash = obj.get('symbol_ipfs_hash').toString();
     let animation_url = obj.get('animation_url').toString();
-    let diameter = obj.get('diameter').toString();
+    let diameter = obj.get('diameter').toBigInt();
     let location = obj.get('location').toObject();
     let attributes = obj.get('attributes').toArray();
 
@@ -108,15 +108,29 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     treeSpec.symbolFs = symbol;
     treeSpec.symbolHash = symbol_ipfs_hash;
     treeSpec.animationUrl = animation_url;
-    treeSpec.diameter = BigInt.fromString(diameter);
-    treeSpec.longitude = location.get('longitude').toString();
-    treeSpec.latitude = location.get('latitude').toString();
+    treeSpec.diameter = diameter;
+    // log.warning("longtitude === {}", []);
+    treeSpec.longitude = (location.get("longitude").data.toString());
+    treeSpec.latitude = (location.get('latitude').data.toString());
     treeSpec.attributes = attributes.toString();
     treeSpec.save();
 
     let tree = Tree.load(userData.toString());
     tree.treeSpecs = treeSpec.id;
     tree.save();
+}
+
+function handleTreeSpecs(hash: string, treeId: string): void {
+    let data = ipfs.cat(hash);
+    if (data) {
+        let dd = data.toString();
+        if (dd.length > 0) {
+            let jsonValue = json.fromBytes(data as Bytes);
+            saveTreeSpec(jsonValue, Value.fromString(treeId));
+        }
+        // log.warning("name ::: {}", [/"name":"([^"]*)"/.exec(dd).toString()]);
+
+    }
 }
 export function handleTreePlanted(event: TreePlanted): void {
     let treeFactoryContract = TreeFactoryContract.bind(event.address);
@@ -140,8 +154,10 @@ export function handleTreePlanted(event: TreePlanted): void {
     tree.treeStatus = BigInt.fromI32(3);
     uptree.save();
     tree.lastUpdate = uptree.id;
-    ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
     tree.save();
+
+    // ipfs.mapJSON(uptree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
+    handleTreeSpecs(uptree.treeSpecs, tree.id);
     let planter = Planter.load(tree.planter);
     if (!planter) return;
     planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
@@ -158,8 +174,9 @@ export function handleTreeAdded(event: TreeAdded): void {
     let c_tree = treeFactoryContract.treeData(event.params.treeId);
     setTreeData(tree, c_tree);
     tree.treeStatus = BigInt.fromI32(2);
-    ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
     tree.save();
+    handleTreeSpecs(tree.treeSpecs, tree.id);
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
 export function handleTreeAssigned(event: TreeAssigned): void {
@@ -169,6 +186,8 @@ export function handleTreeAssigned(event: TreeAssigned): void {
     let c_tree = treeFactoryContract.treeData(event.params.treeId);
     setTreeData(tree, c_tree);
     tree.save();
+    handleTreeSpecs(tree.treeSpecs, tree.id);
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
 export function handlePlantVerified(event: PlantVerified): void {
@@ -185,6 +204,8 @@ export function handlePlantVerified(event: PlantVerified): void {
     planter.save();
     uptree.save();
     tree.save();
+    handleTreeSpecs(uptree.treeSpecs, tree.id);
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
 export function handlePlantRejected(event: PlantRejected): void {
@@ -203,6 +224,7 @@ export function handlePlantRejected(event: PlantRejected): void {
     uptree.save();
     tree.treeStatus = BigInt.fromI32(2);
     tree.save();
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
 export function handleRegularTreePlanted(event: RegularTreePlanted): void {
@@ -250,6 +272,7 @@ export function handleRegularPlantVerified(event: RegularPlantVerified): void {
     uptree.save();
     tree.save();
     rtree.save();
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
 export function handleRegularPlantRejected(event: RegularPlantRejected): void {
@@ -276,7 +299,10 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     uptree.treeSpecs = c_uptree.value0;
     uptree.type = false;
     uptree.save();
+    handleTreeSpecs(uptree.treeSpecs, tree.id);
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
+
 
 
 export function handleUpdateVerified(event: UpdateVerified): void {
@@ -289,6 +315,8 @@ export function handleUpdateVerified(event: UpdateVerified): void {
     tree.treeStatus = c_tree.value4 as BigInt;
     tree.save();
     upTree.save();
+    handleTreeSpecs(upTree.treeSpecs, tree.id);
+    // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
 export function handleUpdateRejected(event: UpdateRejected): void {

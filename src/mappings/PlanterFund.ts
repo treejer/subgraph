@@ -1,7 +1,6 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { PlanterFundSet, PlanterFund as PFC, PlanterFunded } from "../../generated/PlanterFund/PlanterFund";
+import { PlanterFundSet, PlanterFund as PFC, PlanterFunded, PlanterBalanceWithdrawn } from "../../generated/PlanterFund/PlanterFund";
 import { Planter, PlanterPayment, TotalPlanterFund, TreePlanterFinance, Withdraw } from "../../generated/schema";
-import { PlanterBalanceWithdrawn } from "../../generated/Treasury/Treasury";
 import { getCount_planterPayment, COUNTER_ID, getCount_withdraws } from "../helpers";
 export function handlePlanterFundSet(event: PlanterFundSet): void {
     let totalPlanterFund = TotalPlanterFund.load('0');
