@@ -98,6 +98,30 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     let location = obj.get('location').toObject();
     let attributes = obj.get('attributes').toArray();
 
+    let attrStr = "[";
+    for (let i = 0; i < attributes.length; i++) {
+        let el = attributes[i];
+        attrStr += "{";
+        //     // let keys = Object.keys(el);
+        //     // for (let key of Object.keys(el)) {
+        //     // }
+        //     // for (let j = 0; j < keys.length; j++) {
+        //     //     let key = keys[j];
+        //     //     attrStr += '"' + key + '":"' + el[key] + '",';
+        //     // }
+        let trait_type = el.toObject().get("trait_type").toString();
+        if (trait_type == "birthday") {
+            attrStr += '"trait_type":"' + trait_type + '","value":"' + el.toObject().get("value").toBigInt().toString() + '","display_type":"date"';
+        } else {
+            attrStr += '"trait_type":"' + trait_type + '","value":"' + el.toObject().get("value").toString() + '"';
+        }
+        // attrStr += '"trait_type":"' + "tr1" + '","value":"' + "v1" + '"';
+        attrStr += "},";
+
+    }
+    attrStr += "]";
+    // attrStr.replace(",]", "]");
+    // attrStr.replace(",}", "}");
     // let treeSpec = new TreeSpec(userData.toString());
     let treeSpec = new TreeSpec(getCount_treeSpecs(COUNTER_ID).toHexString());
     treeSpec.name = name;
@@ -112,11 +136,11 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     // log.warning("longtitude === {}", []);
     treeSpec.longitude = (location.get("longitude").data.toString());
     treeSpec.latitude = (location.get('latitude').data.toString());
-    treeSpec.attributes = attributes.toString();
+    treeSpec.attributes = attrStr;
     treeSpec.save();
 
     let tree = Tree.load(userData.toString());
-    tree.treeSpecs = treeSpec.id;
+    tree.treeSpecsEntity = treeSpec.id;
     tree.save();
 }
 
@@ -128,8 +152,6 @@ function handleTreeSpecs(hash: string, treeId: string): void {
             let jsonValue = json.fromBytes(data as Bytes);
             saveTreeSpec(jsonValue, Value.fromString(treeId));
         }
-        // log.warning("name ::: {}", [/"name":"([^"]*)"/.exec(dd).toString()]);
-
     }
 }
 export function handleTreePlanted(event: TreePlanted): void {
@@ -156,8 +178,8 @@ export function handleTreePlanted(event: TreePlanted): void {
     tree.lastUpdate = uptree.id;
     tree.save();
 
-    // ipfs.mapJSON(uptree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
-    handleTreeSpecs(uptree.treeSpecs, tree.id);
+    // ipfs.mapJSON(tree.treeSpecs'saveTreeSpec', Value.fromString(tree.id));
+    handleTreeSpecs(tree.treeSpecs, tree.id);
     let planter = Planter.load(tree.planter);
     if (!planter) return;
     planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
@@ -204,7 +226,7 @@ export function handlePlantVerified(event: PlantVerified): void {
     planter.save();
     uptree.save();
     tree.save();
-    handleTreeSpecs(uptree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id);
     // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
@@ -299,7 +321,7 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     uptree.treeSpecs = c_uptree.value0;
     uptree.type = false;
     uptree.save();
-    handleTreeSpecs(uptree.treeSpecs, tree.id);
+    // handleTreeSpecs(tree.treeSpecstree.id);
     // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
@@ -315,7 +337,7 @@ export function handleUpdateVerified(event: UpdateVerified): void {
     tree.treeStatus = c_tree.value4 as BigInt;
     tree.save();
     upTree.save();
-    handleTreeSpecs(upTree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id);
     // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 

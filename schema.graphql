@@ -57,6 +57,7 @@ type Tree @entity {
   lastUpdate: UpdateTree
   treeAttribute: TreeAttribute
   treeSpecs: String
+  treeSpecsEntity: TreeSpec
   requestId: String
 }
 
