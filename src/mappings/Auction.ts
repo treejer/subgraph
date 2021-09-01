@@ -54,9 +54,9 @@ export function handleHighestBidIncreased(event: HighestBidIncreased): void {
     bid.bid = amount as BigInt;
     bid.date = event.block.timestamp as BigInt;
     bid.save();
-    // let auction = Auction.load(auctionId.toHexString());
-    // auction.highestBid = amount as BigInt;
-    // auction.save();
+    let auction = Auction.load(auctionId.toHexString());
+    auction.highestBid = amount as BigInt;
+    auction.save();
 }
 
 export function handleAuctionSettled(event: AuctionSettled): void {
