@@ -23,7 +23,7 @@ type Planter @entity {
   longitude: BigInt
   latitude: BigInt
   memberOf: Planter
-  pendingMemberOf: Planter!
+  pendingMemberOf: Planter
   members: [Planter!]! @derivedFrom(field: "memberOf")
   refferedBy: Planter
   refferers: [Planter!]! @derivedFrom(field: "refferedBy")
@@ -114,7 +114,7 @@ type Auction @entity {
 type Bid @entity {
   id: ID!
   auction: Auction
-  bidder: Owner
+  bidder: String
   bid: BigInt
   date: BigInt
 }
@@ -150,8 +150,8 @@ type IncrementalSell @entity {
   id: ID!
   startTree: Tree!
   endTree: Tree!
-  # startTree: String!
-  # endTree: String!
+  startTreeId: BigInt
+  endTreeId: BigInt
   initialPrice: BigInt
   increaseStep: BigInt
   increaseRatio: BigInt

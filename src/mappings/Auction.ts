@@ -1,3 +1,4 @@
+
 import { AuctionCreated, AuctionCreated__Params, AuctionEnded, AuctionEndTimeIncreased, AuctionSettled, HighestBidIncreased, TreeAuction as AuctionContract, TreeAuction__auctionsResult } from "../../generated/Auction/TreeAuction";
 import { Auction, Bid, Owner, Tree } from "../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts";
@@ -28,6 +29,12 @@ function newOwner(id: string): Owner {
     owner.treeCount = BigInt.fromI32(0);
     owner.spentWeth = BigInt.fromI32(0);
     owner.spentDai = BigInt.fromI32(0);
+    owner.auctionCount = BigInt.fromI32(0);
+    owner.regularCount = BigInt.fromI32(0);
+    owner.incrementalCount = BigInt.fromI32(0);
+    owner.auctionSpent = BigInt.fromI32(0);
+    owner.regularSpent = BigInt.fromI32(0);
+    owner.incrementalSpent = BigInt.fromI32(0);
     return owner;
 }
 export function handleAuctionCreated(event: AuctionCreated): void {
@@ -96,3 +103,4 @@ export function handleAuctionEndTimeIncreased(event: AuctionEndTimeIncreased): v
     auction.expireDate = event.params.newAuctionEndTime as BigInt;
     auction.save();
 }
+

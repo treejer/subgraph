@@ -1,3 +1,4 @@
+
 import { RegularMint, RegularSell as RegularSellContract, RegularTreeRequsted, RegularTreeRequstedById, TreePriceUpdated } from "../../generated/RegularSell/RegularSell";
 import { RegularRequest, IncrementalSell, Owner, Tree, GlobalData, RegularTree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
@@ -67,6 +68,12 @@ function newOwner(id: string): Owner {
     owner.treeCount = BigInt.fromI32(0);
     owner.spentWeth = BigInt.fromI32(0);
     owner.spentDai = BigInt.fromI32(0);
+    owner.auctionCount = BigInt.fromI32(0);
+    owner.regularCount = BigInt.fromI32(0);
+    owner.incrementalCount = BigInt.fromI32(0);
+    owner.auctionSpent = BigInt.fromI32(0);
+    owner.regularSpent = BigInt.fromI32(0);
+    owner.incrementalSpent = BigInt.fromI32(0);
     return owner;
 }
 
@@ -87,3 +94,11 @@ export function handleTreePriceUpdated(event: TreePriceUpdated): void {
     gb.regularTreePrice = event.params.price as BigInt;
     gb.save();
 }
+
+
+
+
+
+
+
+
