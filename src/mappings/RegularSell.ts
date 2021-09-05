@@ -79,7 +79,14 @@ function newOwner(id: string): Owner {
 
 export function handleRegularTreeRequstedById(event: RegularTreeRequstedById): void {
     let owner = Owner.load(event.params.buyer.toHexString());
-    if (!owner) owner = newOwner(event.params.buyer.toHexString());
+    let flag = false;
+    if (!owner) {
+        owner = newOwner(event.params.buyer.toHexString());
+        flag = true;
+    }
+    owner.regularSpent = owner.regularSpent.plus(event.params.amount as BigInt);
+    owner.regularCount = owner.regularCount.plus(BigInt.fromI32(1));
+    owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
     owner.spentDai = owner.spentDai.plus(event.params.amount as BigInt);
     // owner.spentWeth = owner.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
     owner.treeCount = owner.treeCount.plus(BigInt.fromI32(1));
@@ -87,6 +94,11 @@ export function handleRegularTreeRequstedById(event: RegularTreeRequstedById): v
     tree.owner = owner.id;
     tree.save();
     owner.save();
+    if (flag) {
+        let gb = getGlobalData();
+        gb.ownerCount = gb.ownerCount.plus(BigInt.fromI32(1));
+        gb.save();
+    }
 }
 
 export function handleTreePriceUpdated(event: TreePriceUpdated): void {

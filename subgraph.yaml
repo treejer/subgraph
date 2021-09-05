@@ -20,6 +20,8 @@ dataSources:
       abis:
         - name: Planter
           file: ./abis/Planter.json
+        - name: PlanterFund
+          file: ./abis/PlanterFund.json
       eventHandlers:
         - event: PlanterJoin(address)
           handler: handlePlanterJoin
