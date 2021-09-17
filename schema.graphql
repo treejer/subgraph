@@ -66,11 +66,11 @@ type TreeSpec @entity {
   id: ID!
   name: String!
   description: String
-  externalUrl: String!
+  externalUrl: String
   imageFs: String
-  imageHash: String!
+  imageHash: String
   symbolFs: String
-  symbolHash: String!
+  symbolHash: String
   # description: String
   animationUrl: String
   diameter: BigInt
@@ -96,6 +96,7 @@ type RegularTree @entity {
   plantDate: BigInt
   birthDate: BigInt
   treeSpecs: String
+  treeSpecsEntity: TreeSpec
 }
 
 type Auction @entity {

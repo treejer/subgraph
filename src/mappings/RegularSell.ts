@@ -57,7 +57,7 @@ export function handleRegularMint(event: RegularMint): void {
     let tree = Tree.load(event.params.treeId.toHexString());
     // let tree = RegularTree.load(event.params.treeId.toHexString());
     if (!tree) {
-        return; // TODO:  Fix this
+        tree = new Tree(event.params.treeId.toHexString());
     }
     tree.owner = owner.id;
     tree.requestId = owner.lastRequestId;

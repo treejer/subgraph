@@ -102,27 +102,15 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     for (let i = 0; i < attributes.length; i++) {
         let el = attributes[i];
         attrStr += "{";
-        //     // let keys = Object.keys(el);
-        //     // for (let key of Object.keys(el)) {
-        //     // }
-        //     // for (let j = 0; j < keys.length; j++) {
-        //     //     let key = keys[j];
-        //     //     attrStr += '"' + key + '":"' + el[key] + '",';
-        //     // }
         let trait_type = el.toObject().get("trait_type").toString();
         if (trait_type == "birthday") {
             attrStr += '"trait_type":"' + trait_type + '","value":"' + el.toObject().get("value").toBigInt().toString() + '","display_type":"date"';
         } else {
             attrStr += '"trait_type":"' + trait_type + '","value":"' + el.toObject().get("value").toString() + '"';
         }
-        // attrStr += '"trait_type":"' + "tr1" + '","value":"' + "v1" + '"';
         attrStr += "},";
-
     }
     attrStr += "]";
-    // attrStr.replace(",]", "]");
-    // attrStr.replace(",}", "}");
-    // let treeSpec = new TreeSpec(userData.toString());
     let treeSpec = new TreeSpec(getCount_treeSpecs(COUNTER_ID).toHexString());
     treeSpec.name = name;
     treeSpec.description = description;
@@ -140,8 +128,14 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     treeSpec.save();
 
     let tree = Tree.load(userData.toString());
-    tree.treeSpecsEntity = treeSpec.id;
-    tree.save();
+    if (tree) {
+        tree.treeSpecsEntity = treeSpec.id;
+        tree.save();
+    } else {
+        let rtree = RegularTree.load(userData.toString());
+        rtree.treeSpecsEntity = treeSpec.id;
+        rtree.save();
+    }
 }
 
 function handleTreeSpecs(hash: string, treeId: string): void {
@@ -262,6 +256,7 @@ export function handleRegularTreePlanted(event: RegularTreePlanted): void {
         planter.status = BigInt.fromI32(2);
     }
     planter.save();
+    handleTreeSpecs(rtree.treeSpecs, rtree.id);
 }
 
 export function handleRegularPlantVerified(event: RegularPlantVerified): void {
@@ -294,6 +289,7 @@ export function handleRegularPlantVerified(event: RegularPlantVerified): void {
     uptree.save();
     tree.save();
     rtree.save();
+    handleTreeSpecs(rtree.treeSpecs, rtree.id);
     // ipfs.mapJSON(tree.treeSpecs, 'saveTreeSpec', Value.fromString(tree.id));
 }
 
