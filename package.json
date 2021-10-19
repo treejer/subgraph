@@ -14,8 +14,8 @@
     "watch-local": "graph deploy graphprotocol/Uniswap2 --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.20.1",
-    "@graphprotocol/graph-ts": "^0.20.0"
+    "@graphprotocol/graph-cli": "^0.22.0",
+    "@graphprotocol/graph-ts": "^0.22.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

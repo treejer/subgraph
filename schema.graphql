@@ -18,276 +18,277 @@ type Planter @entity {
   status: BigInt!
   countryCode: String
   score: BigInt
-  capacity: BigInt
+  supplyCap: BigInt
 
   longitude: BigInt
   latitude: BigInt
-  memberOf: Planter
-  pendingMemberOf: Planter
+  memberOf: Planter!
   members: [Planter!]! @derivedFrom(field: "memberOf")
-  refferedBy: Planter
-  refferers: [Planter!]! @derivedFrom(field: "refferedBy")
-  organizationRule: BigInt
-  memberCount: BigInt
-  referrerCount: BigInt
+  invitedBy: Planter
+  refferers: [Planter!]! @derivedFrom(field: "invitedBy")
+  organizationShare: BigInt
+  memberCount: BigInt!
+  invitedCount: BigInt!
   balance: BigInt
-  trees: [Tree!]! @derivedFrom(field: "planter")
+  createdAt: BigInt!
+  updatedAt: BigInt!
+  # trees: [Tree!]! @derivedFrom(field: "planter")
 
-  plantedCount: BigInt
-  verifiedPlantedCount: BigInt
-  totalOrganizationPlantedCount: BigInt
-  totalOrganizationVerifiedPlantedCount: BigInt
-  regularPlantedCount: BigInt
-  regularVerifiedPlantedCount: BigInt
-  organizationRegularPlantedCount: BigInt
-  organizationRegularVerifiedPlantedCount: BigInt
+  plantedCount: BigInt!
+  verifiedPlantedCount: BigInt!
+  totalOrganizationPlantedCount: BigInt!
+  totalOrganizationVerifiedPlantedCount: BigInt!
+  regularPlantedCount: BigInt!
+  regularVerifiedPlantedCount: BigInt!
+  organizationRegularPlantedCount: BigInt!
+  organizationRegularVerifiedPlantedCount: BigInt!
 }
 
-type Tree @entity {
-  id: ID!
-  planter: Planter
-  owner: Owner
-  treeType: BigInt
-  mintStatus: String
-  countryCode: String
-  provideStatus: BigInt
-  treeStatus: BigInt
-  plantDate: BigInt
-  birthDate: BigInt
-  treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
-  lastUpdate: UpdateTree
-  treeAttribute: TreeAttribute
-  treeSpecs: String
-  treeSpecsEntity: TreeSpec
-  requestId: String
-}
-
-type TreeSpec @entity {
-  id: ID!
-  name: String!
-  description: String
-  externalUrl: String
-  imageFs: String
-  imageHash: String
-  symbolFs: String
-  symbolHash: String
-  # description: String
-  animationUrl: String
-  diameter: BigInt
-  latitude: String
-  longitude: String
-  attributes: String
-}
-
-type UpdateTree @entity {
-  id: ID!
-  tree: Tree!
-  updateDate: BigInt
-  status: BigInt
-  treeSpecs: String
-  type: Boolean
-}
-
-type RegularTree @entity {
-  id: ID!
-  planter: Planter!
-  countryCode: BigInt
-  status: BigInt
-  plantDate: BigInt
-  birthDate: BigInt
-  treeSpecs: String
-  treeSpecsEntity: TreeSpec
-}
-
-type Auction @entity {
-  id: ID!
-  tree: Tree!
-  initialPrice: BigInt
-  priceInterval: BigInt
-  startDate: BigInt
-  expireDate: BigInt
-  winner: Owner
-  highestBid: BigInt
-  isActive: Boolean
-  bids: [Bid!] @derivedFrom(field: "auction")
-}
-
-type Bid @entity {
-  id: ID!
-  auction: Auction
-  bidder: String
-  bid: BigInt
-  date: BigInt
-}
-
-type Owner @entity {
-  id: ID!
-  trees: [Tree!] @derivedFrom(field: "owner")
-  treeCount: BigInt
-  spentWeth: BigInt
-  spentDai: BigInt
-  rank: BigInt
-  lastRequestId: String
-
-  auctionCount: BigInt
-  regularCount: BigInt
-  incrementalCount: BigInt
-  auctionSpent: BigInt
-  incrementalSpent: BigInt
-  regularSpent: BigInt
-}
-
-type TreeAttribute @entity {
-  id: ID!
-  buyerRank: BigInt
-}
-
-type TreeWithAttributeProblem @entity {
-  id: ID!
-  tree: Tree!
-}
-
-type IncrementalSell @entity {
-  id: ID!
-  startTree: Tree!
-  endTree: Tree!
-  startTreeId: BigInt
-  endTreeId: BigInt
-  initialPrice: BigInt
-  increaseStep: BigInt
-  increaseRatio: BigInt
-}
-
-# type BatchRegularTreeRequest @entity {
+# type Tree @entity {
 #   id: ID!
-#   count: BigInt
-#   buyer: Owner!
-#   amount: BigInt
-#   trees: [Tree!]
+#   planter: Planter
+#   owner: Owner
+#   treeType: BigInt
+#   mintStatus: String
+#   countryCode: String
+#   provideStatus: BigInt
+#   treeStatus: BigInt
+#   plantDate: BigInt
+#   birthDate: BigInt
+#   treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
+#   lastUpdate: UpdateTree
+#   treeAttribute: TreeAttribute
+#   treeSpecs: String
+#   treeSpecsEntity: TreeSpec
+#   requestId: String
 # }
 
-type FundDistribution @entity {
-  id: ID!
-  planterFund: BigInt
-  referralFund: BigInt
-  treeResearch: BigInt
-  localDevelop: BigInt
-  rescueFund: BigInt
-  treejerDevelop: BigInt
-  reserveFund1: BigInt
-  reserveFund2: BigInt
-  exists: BigInt
-}
+# type TreeSpec @entity {
+#   id: ID!
+#   name: String!
+#   description: String
+#   externalUrl: String
+#   imageFs: String
+#   imageHash: String
+#   symbolFs: String
+#   symbolHash: String
+#   # description: String
+#   animationUrl: String
+#   diameter: BigInt
+#   latitude: String
+#   longitude: String
+#   attributes: String
+# }
 
-type AssignedFundDistribution @entity {
-  id: ID!
-  distributionModel: FundDistribution
-}
+# type UpdateTree @entity {
+#   id: ID!
+#   tree: Tree!
+#   updateDate: BigInt
+#   status: BigInt
+#   treeSpecs: String
+#   type: Boolean
+# }
 
-type TotalFund @entity {
-  id: ID!
-  planterFund: BigInt
-  referralFund: BigInt
-  treeResearch: BigInt
-  localDevelop: BigInt
-  rescueFund: BigInt
-  treejerDevelop: BigInt
-  reserveFund1: BigInt
-  reserveFund2: BigInt
-  totalBalance: BigInt
-}
+# type RegularTree @entity {
+#   id: ID!
+#   planter: Planter!
+#   countryCode: BigInt
+#   status: BigInt
+#   plantDate: BigInt
+#   birthDate: BigInt
+#   treeSpecs: String
+#   treeSpecsEntity: TreeSpec
+# }
 
-type TreeFund @entity {
-  id: ID!
-  tree: Tree!
-  distributionModel: FundDistribution!
-  amount: BigInt!
-  date: BigInt!
-}
+# type Auction @entity {
+#   id: ID!
+#   tree: Tree!
+#   initialPrice: BigInt
+#   priceInterval: BigInt
+#   startDate: BigInt
+#   expireDate: BigInt
+#   winner: Owner
+#   highestBid: BigInt
+#   isActive: Boolean
+#   bids: [Bid!] @derivedFrom(field: "auction")
+# }
 
-type DistributionModelError @entity {
-  id: ID!
-  description: String
-  date: BigInt
-}
+# type Bid @entity {
+#   id: ID!
+#   auction: Auction
+#   bidder: String
+#   bid: BigInt
+#   date: BigInt
+# }
 
-type PlanterPayment @entity {
-  id: ID!
-  tree: Tree!
-  planter: Planter!
-  date: BigInt
-  amount: BigInt
-  isRefferal: Boolean!
-}
+# type Owner @entity {
+#   id: ID!
+#   trees: [Tree!] @derivedFrom(field: "owner")
+#   treeCount: BigInt
+#   spentWeth: BigInt
+#   spentDai: BigInt
+#   rank: BigInt
+#   lastRequestId: String
 
-type Withdraw @entity {
-  id: ID!
-  type: String!
-  reason: String
-  destAddress: String!
-  amount: BigInt!
-  date: BigInt
-}
+#   auctionCount: BigInt
+#   regularCount: BigInt
+#   incrementalCount: BigInt
+#   auctionSpent: BigInt
+#   incrementalSpent: BigInt
+#   regularSpent: BigInt
+# }
 
-type TreePlanterFinance @entity {
-  id: ID!
-  planterFund: BigInt
-  referalFund: BigInt
-  planterPaid: BigInt
-  refferalPaid: BigInt
-}
+# type TreeAttribute @entity {
+#   id: ID!
+#   buyerRank: BigInt
+# }
 
-type TotalPlanterFund @entity {
-  id: ID!
-  planterFund: BigInt
-  referalFund: BigInt
-  localDevelopFund: BigInt
-  totalBalance: BigInt
-}
+# type TreeWithAttributeProblem @entity {
+#   id: ID!
+#   tree: Tree!
+# }
+
+# type IncrementalSell @entity {
+#   id: ID!
+#   startTree: Tree!
+#   endTree: Tree!
+#   startTreeId: BigInt
+#   endTreeId: BigInt
+#   initialPrice: BigInt
+#   increaseStep: BigInt
+#   increaseRatio: BigInt
+# }
+
+# # type BatchRegularTreeRequest @entity {
+# #   id: ID!
+# #   count: BigInt
+# #   buyer: Owner!
+# #   amount: BigInt
+# #   trees: [Tree!]
+# # }
+
+# type FundDistribution @entity {
+#   id: ID!
+#   planterFund: BigInt
+#   referralFund: BigInt
+#   treeResearch: BigInt
+#   localDevelop: BigInt
+#   rescueFund: BigInt
+#   treejerDevelop: BigInt
+#   reserveFund1: BigInt
+#   reserveFund2: BigInt
+#   exists: BigInt
+# }
+
+# type AssignedFundDistribution @entity {
+#   id: ID!
+#   distributionModel: FundDistribution
+# }
+
+# type TotalFund @entity {
+#   id: ID!
+#   planterFund: BigInt
+#   referralFund: BigInt
+#   treeResearch: BigInt
+#   localDevelop: BigInt
+#   rescueFund: BigInt
+#   treejerDevelop: BigInt
+#   reserveFund1: BigInt
+#   reserveFund2: BigInt
+#   totalBalance: BigInt
+# }
+
+# type TreeFund @entity {
+#   id: ID!
+#   tree: Tree!
+#   distributionModel: FundDistribution!
+#   amount: BigInt!
+#   date: BigInt!
+# }
+
+# type DistributionModelError @entity {
+#   id: ID!
+#   description: String
+#   date: BigInt
+# }
+
+# type PlanterPayment @entity {
+#   id: ID!
+#   tree: Tree!
+#   planter: Planter!
+#   date: BigInt
+#   amount: BigInt
+#   isRefferal: Boolean!
+# }
+
+# type Withdraw @entity {
+#   id: ID!
+#   type: String!
+#   reason: String
+#   destAddress: String!
+#   amount: BigInt!
+#   date: BigInt
+# }
+
+# type TreePlanterFinance @entity {
+#   id: ID!
+#   planterFund: BigInt
+#   referalFund: BigInt
+#   planterPaid: BigInt
+#   refferalPaid: BigInt
+# }
+
+# type TotalPlanterFund @entity {
+#   id: ID!
+#   planterFund: BigInt
+#   referalFund: BigInt
+#   localDevelopFund: BigInt
+#   totalBalance: BigInt
+# }
 
 type GlobalData @entity {
   id: ID!
-  totalPlantedTrees: BigInt
-  totalVerifiedTrees: BigInt
-  totalUpdates: BigInt
-  totalVerifiedUpdates: BigInt
-  totalRegularTreesUnderReview: BigInt
-  totalRegularTreeSellCount: BigInt
-  totalAuctionTreeSellCount: BigInt
-  totalIncrementalSellCount: BigInt
-  planterCount: BigInt
-  organizationCount: BigInt
-  independentPlanterCount: BigInt
-  ownerCount: BigInt
-  ownedTreeCount: BigInt
-  totalRegularTreeSellAmount: BigInt
-  totalAuctionTreeSellAmount: BigInt
-  totalIncrementalSellAmount: BigInt
-  totalClaimedGiftTrees: BigInt
-  regularTreePrice: BigInt
-  lastIncrementalSold: BigInt
-  prevIncrementalPrice: BigInt
-  nowIncrementalPrice: BigInt
-  nextIncremetalPrice: BigInt
-  communityGiftPlanterFund: BigInt
-  communityGiftReferralFund: BigInt
+  totalPlantedTrees: BigInt!
+  totalVerifiedTrees: BigInt!
+  totalUpdates: BigInt!
+  totalVerifiedUpdates: BigInt!
+  totalRegularTreesUnderReview: BigInt!
+  totalRegularTreeSellCount: BigInt!
+  totalAuctionTreeSellCount: BigInt!
+  totalIncrementalSellCount: BigInt!
+  planterCount: BigInt!
+  organizationCount: BigInt!
+  independentPlanterCount: BigInt!
+  ownerCount: BigInt!
+  ownedTreeCount: BigInt!
+  totalRegularTreeSellAmount: BigInt!
+  totalAuctionTreeSellAmount: BigInt!
+  totalIncrementalSellAmount: BigInt!
+  totalClaimedGiftTrees: BigInt!
+  regularTreePrice: BigInt!
+  lastIncrementalSold: BigInt!
+  prevIncrementalPrice: BigInt!
+  nowIncrementalPrice: BigInt!
+  nextIncremetalPrice: BigInt!
+  communityGiftPlanterFund: BigInt!
+  communityGiftReferralFund: BigInt!
 }
 
-type CommunityGifts @entity {
-  id: ID!
-  giftee: Owner!
-  symbol: BigInt
-  claimed: Boolean
-  treeId: Tree!
-  expireDate: BigInt
-  transferred: BigInt
-  transferAddress: Owner!
-}
+# type CommunityGifts @entity {
+#   id: ID!
+#   giftee: Owner!
+#   symbol: BigInt
+#   claimed: Boolean
+#   treeId: Tree!
+#   expireDate: BigInt
+#   transferred: BigInt
+#   transferAddress: Owner!
+# }
 
-type RegularRequest @entity {
-  id: ID!
-  owner: Owner!
-  count: BigInt
-  amount: BigInt
-  date: BigInt
-}
+# type RegularRequest @entity {
+#   id: ID!
+#   owner: Owner!
+#   count: BigInt
+#   amount: BigInt
+#   date: BigInt
+# }

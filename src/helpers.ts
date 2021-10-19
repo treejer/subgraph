@@ -156,7 +156,7 @@ export function getCount_treeSpecs(id: string): BigInt {
     return BigInt.fromI32(0);
 }
 
-export function getGlobalData(): GlobalData | null {
+export function getGlobalData(): GlobalData {
     let gb = GlobalData.load('0');
     if (!gb) {
         gb = new GlobalData('0');
