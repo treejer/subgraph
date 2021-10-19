@@ -101,7 +101,7 @@ export function handlePlanterUpdated(event: PlanterUpdated): void {
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.planter);
     if (planter === null) {
-        log.warning('Undefined planter in handlePlanterUpdated {}', [planter.memberOf]);
+        log.warning('Undefined planter in handlePlanterUpdated {}', [event.params.planter.toHex()]);
         return;
     }
 
@@ -141,7 +141,7 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): voi
     let planterContract = PlanterContract.bind(event.address);
 
     if (planter == null) {
-        log.warning('Undefined planter in handleAcceptedByOrganization {}', [planter.memberOf]);
+        log.warning('Undefined planter in handleAcceptedByOrganization {}', [event.params.planter.toHex()]);
         return;
     }
 
@@ -170,7 +170,7 @@ export function handleRejectedByOrganization(event: RejectedByOrganization): voi
     let planter = Planter.load(event.params.planter.toHex());
     let planterContract = PlanterContract.bind(event.address);
     if (planter == null) {
-        log.warning('Undefined planter in handleRejectedByOrganization {}', [planter.memberOf]);
+        log.warning('Undefined planter in handleRejectedByOrganization {}', [event.params.planter.toHex()]);
         return;
     }
     planter.memberOf = planterContract.memberOf(event.params.planter).toHexString();
@@ -188,7 +188,7 @@ export function handleRejectedByOrganization(event: RejectedByOrganization): voi
 export function handleOrganizationMemberShareUpdated(event: OrganizationMemberShareUpdated): void {
     let planter = Planter.load(event.params.planter.toHex());
     if (planter == null) {
-        log.warning('Undefined planter in handleOrganizationMemberShareUpdated {}', [planter.memberOf]);
+        log.warning('Undefined planter in handleOrganizationMemberShareUpdated {}', [event.params.planter.toHex()]);
         return;
     }
     let planterContract = PlanterContract.bind(event.address);
