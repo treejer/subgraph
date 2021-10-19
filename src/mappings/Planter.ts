@@ -101,6 +101,7 @@ export function handlePlanterUpdated(event: PlanterUpdated): void {
     let planterContract = PlanterContract.bind(event.address);
     let pl = planterContract.planters(event.params.planter);
     if (planter === null) {
+        log.warning('Undefined planter in handlePlanterUpdated {}', [planter.memberOf]);
         return;
     }
 
@@ -140,11 +141,13 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): voi
     let planterContract = PlanterContract.bind(event.address);
 
     if (planter == null) {
+        log.warning('Undefined planter in handleAcceptedByOrganization {}', [planter.memberOf]);
         return;
     }
 
     let organization = Planter.load(planter.memberOf);
     if (organization == null) {
+        log.warning('Undefined organization in handleAcceptedByOrganization {}', [planter.memberOf]);
         return;
     }
     organization.updatedAt = event.block.timestamp;
@@ -167,6 +170,7 @@ export function handleRejectedByOrganization(event: RejectedByOrganization): voi
     let planter = Planter.load(event.params.planter.toHex());
     let planterContract = PlanterContract.bind(event.address);
     if (planter == null) {
+        log.warning('Undefined planter in handleRejectedByOrganization {}', [planter.memberOf]);
         return;
     }
     planter.memberOf = planterContract.memberOf(event.params.planter).toHexString();
@@ -184,6 +188,7 @@ export function handleRejectedByOrganization(event: RejectedByOrganization): voi
 export function handleOrganizationMemberShareUpdated(event: OrganizationMemberShareUpdated): void {
     let planter = Planter.load(event.params.planter.toHex());
     if (planter == null) {
+        log.warning('Undefined planter in handleOrganizationMemberShareUpdated {}', [planter.memberOf]);
         return;
     }
     let planterContract = PlanterContract.bind(event.address);
