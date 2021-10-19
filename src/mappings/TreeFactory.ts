@@ -157,6 +157,8 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
 }
 
 function handleTreeSpecs(hash: string, treeId: string): void {
+    // TODO: uncomment this 
+    return;
     let data = ipfs.cat(hash);
     if (data) {
         let dd = data.toString();

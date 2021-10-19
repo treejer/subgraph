@@ -108,8 +108,8 @@ type TempTree @entity {
 type Funder @entity {
   id: ID!
   trees: [Tree!] @derivedFrom(field: "funder")
-  treeCount: BigInt
-  spentWeth: BigInt
+  treeCount: BigInt!
+  spentWeth: BigInt!
   spentDai: BigInt
   rank: BigInt
   lastRequestId: String
@@ -120,28 +120,32 @@ type Funder @entity {
   auctionSpent: BigInt
   incrementalSpent: BigInt
   regularSpent: BigInt
+  createdAt: BigInt!
+  updatedAt: BigInt!
 }
 
-# type Auction @entity {
-#   id: ID!
-#   tree: Tree!
-#   initialPrice: BigInt
-#   priceInterval: BigInt
-#   startDate: BigInt
-#   expireDate: BigInt
-#   winner: Funder
-#   highestBid: BigInt
-#   isActive: Boolean
-#   bids: [Bid!] @derivedFrom(field: "auction")
-# }
+type Auction @entity {
+  id: ID!
+  tree: Tree!
+  initialPrice: BigInt
+  priceInterval: BigInt
+  startDate: BigInt
+  endDate: BigInt
+  winner: Funder
+  highestBid: BigInt
+  isActive: Boolean
+  bids: [Bid!] @derivedFrom(field: "auction")
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
 
-# type Bid @entity {
-#   id: ID!
-#   auction: Auction
-#   bidder: String
-#   bid: BigInt
-#   date: BigInt
-# }
+type Bid @entity {
+  id: ID!
+  auction: Auction
+  bidder: String
+  bid: BigInt
+  createdAt: BigInt!
+}
 
 
 
