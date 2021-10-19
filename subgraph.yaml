@@ -36,51 +36,52 @@ dataSources:
         - event: OrganizationMemberShareUpdated(address)
           handler: handleOrganizationMemberShareUpdated
       file: ./src/mappings/Planter.ts
-  # - kind: ethereum/contract
-  #   name: TreeFactory
-  #   network: rinkeby
-  #   source:
-  #     address: '0x77c8a84EF5aE8972b8dC95c246B3d2385BaCE7c1'
-  #     abi: TreeFactory
-  #     startBlock: 9042600
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - Planter
-  #       - UpdateTree
-  #       - RegularTree
-  #       - Owner
-  #     abis:
-  #       - name: TreeFactory
-  #         file: ./abis/TreeFactory.json
-  #     eventHandlers:
-  #       - event: TreePlanted(uint256)
-  #         handler: handleTreePlanted
-  #       - event: PlantVerified(uint256)
-  #         handler: handlePlantVerified
-  #       - event: PlantRejected(uint256)
-  #         handler: handlePlantRejected
-  #       - event: RegularTreePlanted(uint256)
-  #         handler: handleRegularTreePlanted
-  #       - event: RegularPlantVerified(uint256)
-  #         handler: handleRegularPlantVerified
-  #       - event: RegularPlantRejected(uint256)
-  #         handler: handleRegularPlantRejected
-  #       - event: TreeUpdated(uint256)
-  #         handler: handleTreeUpdated
-  #       - event: UpdateVerified(uint256)
-  #         handler: handleUpdateVerified
-  #       - event: UpdateRejected(uint256)
-  #         handler: handleUpdateRejected
-  #       - event: TreeAdded(uint256)
-  #         handler: handleTreeAdded
-  #       - event: TreeAssigned(uint256)
-  #         handler: handleTreeAssigned
-  #     file: ./src/mappings/TreeFactory.ts
-
+  - kind: ethereum/contract
+    name: TreeFactory
+    network: rinkeby
+    source:
+      address: '0x6E93F652D71C058c62fa8F15fc3225e24160faf7'
+      abi: TreeFactory
+      startBlock: 9453496
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - TempTree
+        - Planter
+        - TreeUpdate
+        - Funder
+      abis:
+        - name: TreeFactory
+          file: ./abis/TreeFactory.json
+      eventHandlers:
+        - event: TreeListed(uint256)
+          handler: handleTreeListed
+        - event: TreeAssigned(uint256)
+          handler: handleTreeAssigned
+        - event: AssignedTreePlanted(uint256)
+          handler: handleAssignedTreePlanted
+        - event: TreePlanted(uint256)
+          handler: handleTreePlanted
+        - event: TreeVerified(uint256)
+          handler: handleTreeVerified
+        - event: TreeRejected(uint256)
+          handler: handleTreeRejected
+        - event: AssignedTreeVerified(uint256)
+          handler: handleAssignedTreeVerified
+        - event: AssignedTreeRejected(uint256)
+          handler: handleAssignedTreeRejected
+        - event: TreeUpdated(uint256)
+          handler: handleTreeUpdated
+        - event: TreeUpdatedVerified(uint256)
+          handler: handleTreeUpdatedVerified
+        - event: TreeUpdateRejected(uint256)
+          handler: handleTreeUpdateRejected
+        - event: TreeSpecsUpdated(uint256,string)
+          handler: handleTreeSpecsUpdated
+      file: ./src/mappings/TreeFactory.ts
   # - kind: ethereum/contract
   #   name: Auction
   #   network: rinkeby

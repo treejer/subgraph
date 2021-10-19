@@ -32,7 +32,7 @@ type Planter @entity {
   balance: BigInt
   createdAt: BigInt!
   updatedAt: BigInt!
-  # trees: [Tree!]! @derivedFrom(field: "planter")
+  trees: [Tree!]! @derivedFrom(field: "planter")
 
   plantedCount: BigInt!
   verifiedPlantedCount: BigInt!
@@ -44,61 +44,83 @@ type Planter @entity {
   organizationRegularVerifiedPlantedCount: BigInt!
 }
 
-# type Tree @entity {
-#   id: ID!
-#   planter: Planter
-#   owner: Owner
-#   treeType: BigInt
-#   mintStatus: String
-#   countryCode: String
-#   provideStatus: BigInt
-#   treeStatus: BigInt
-#   plantDate: BigInt
-#   birthDate: BigInt
-#   treeUpdates: [UpdateTree!] @derivedFrom(field: "tree")
-#   lastUpdate: UpdateTree
-#   treeAttribute: TreeAttribute
-#   treeSpecs: String
-#   treeSpecsEntity: TreeSpec
-#   requestId: String
-# }
+type Tree @entity {
+  id: ID!
+  planter: Planter
+  funder: Funder
+  species: BigInt
+  countryCode: String
+  saleType: BigInt
+  treeStatus: BigInt
+  plantDate: BigInt
+  birthDate: BigInt
+  treeUpdates: [TreeUpdate!] @derivedFrom(field: "tree")
+  lastUpdate: TreeUpdate!
+  treeAttribute: TreeAttribute
+  treeSpecs: String!
+  treeSpecsEntity: TreeSpec
+  requestId: String
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
 
-# type TreeSpec @entity {
-#   id: ID!
-#   name: String!
-#   description: String
-#   externalUrl: String
-#   imageFs: String
-#   imageHash: String
-#   symbolFs: String
-#   symbolHash: String
-#   # description: String
-#   animationUrl: String
-#   diameter: BigInt
-#   latitude: String
-#   longitude: String
-#   attributes: String
-# }
+type TreeSpec @entity {
+  id: ID!
+  name: String!
+  description: String!
+  externalUrl: String!
+  imageFs: String!
+  imageHash: String!
+  symbolFs: String!
+  symbolHash: String!
+  # description: String!
+  animationUrl: String!
+  diameter: BigInt!
+  latitude: String!
+  longitude: String!
+  attributes: String!
+}
 
-# type UpdateTree @entity {
-#   id: ID!
-#   tree: Tree!
-#   updateDate: BigInt
-#   status: BigInt
-#   treeSpecs: String
-#   type: Boolean
-# }
+type TreeUpdate @entity {
+  id: ID!
+  tree: Tree!
+  updateDate: BigInt
+  status: BigInt
+  treeSpecs: String
+  type: Boolean
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
 
-# type RegularTree @entity {
-#   id: ID!
-#   planter: Planter!
-#   countryCode: BigInt
-#   status: BigInt
-#   plantDate: BigInt
-#   birthDate: BigInt
-#   treeSpecs: String
-#   treeSpecsEntity: TreeSpec
-# }
+type TempTree @entity {
+  id: ID!
+  planter: Planter!
+  countryCode: String!
+  status: BigInt
+  plantDate: BigInt
+  birthDate: BigInt
+  treeSpecs: String!
+  treeSpecsEntity: TreeSpec
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type Funder @entity {
+  id: ID!
+  trees: [Tree!] @derivedFrom(field: "funder")
+  treeCount: BigInt
+  spentWeth: BigInt
+  spentDai: BigInt
+  rank: BigInt
+  lastRequestId: String
+
+  auctionCount: BigInt
+  regularCount: BigInt
+  incrementalCount: BigInt
+  auctionSpent: BigInt
+  incrementalSpent: BigInt
+  regularSpent: BigInt
+}
 
 # type Auction @entity {
 #   id: ID!
@@ -107,7 +129,7 @@ type Planter @entity {
 #   priceInterval: BigInt
 #   startDate: BigInt
 #   expireDate: BigInt
-#   winner: Owner
+#   winner: Funder
 #   highestBid: BigInt
 #   isActive: Boolean
 #   bids: [Bid!] @derivedFrom(field: "auction")
@@ -121,27 +143,12 @@ type Planter @entity {
 #   date: BigInt
 # }
 
-# type Owner @entity {
-#   id: ID!
-#   trees: [Tree!] @derivedFrom(field: "owner")
-#   treeCount: BigInt
-#   spentWeth: BigInt
-#   spentDai: BigInt
-#   rank: BigInt
-#   lastRequestId: String
 
-#   auctionCount: BigInt
-#   regularCount: BigInt
-#   incrementalCount: BigInt
-#   auctionSpent: BigInt
-#   incrementalSpent: BigInt
-#   regularSpent: BigInt
-# }
 
-# type TreeAttribute @entity {
-#   id: ID!
-#   buyerRank: BigInt
-# }
+type TreeAttribute @entity {
+  id: ID!
+  buyerRank: BigInt
+}
 
 # type TreeWithAttributeProblem @entity {
 #   id: ID!
@@ -162,7 +169,7 @@ type Planter @entity {
 # # type BatchRegularTreeRequest @entity {
 # #   id: ID!
 # #   count: BigInt
-# #   buyer: Owner!
+# #   buyer: Funder!
 # #   amount: BigInt
 # #   trees: [Tree!]
 # # }
@@ -259,7 +266,7 @@ type GlobalData @entity {
   planterCount: BigInt!
   organizationCount: BigInt!
   independentPlanterCount: BigInt!
-  ownerCount: BigInt!
+  funderCount: BigInt!
   ownedTreeCount: BigInt!
   totalRegularTreeSellAmount: BigInt!
   totalAuctionTreeSellAmount: BigInt!
@@ -276,18 +283,18 @@ type GlobalData @entity {
 
 # type CommunityGifts @entity {
 #   id: ID!
-#   giftee: Owner!
+#   giftee: Funder!
 #   symbol: BigInt
 #   claimed: Boolean
 #   treeId: Tree!
 #   expireDate: BigInt
 #   transferred: BigInt
-#   transferAddress: Owner!
+#   transferAddress: Funder!
 # }
 
 # type RegularRequest @entity {
 #   id: ID!
-#   owner: Owner!
+#   funder: Funder!
 #   count: BigInt
 #   amount: BigInt
 #   date: BigInt

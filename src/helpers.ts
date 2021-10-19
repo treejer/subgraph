@@ -171,7 +171,7 @@ export function getGlobalData(): GlobalData {
         gb.planterCount = new BigInt(0);
         gb.organizationCount = new BigInt(0);
         gb.independentPlanterCount = new BigInt(0);
-        gb.ownerCount = new BigInt(0);
+        gb.funderCount = new BigInt(0);
         gb.ownedTreeCount = new BigInt(0);
         gb.totalRegularTreeSellAmount = new BigInt(0);
         gb.totalAuctionTreeSellAmount = new BigInt(0);
