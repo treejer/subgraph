@@ -100,7 +100,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
                 let value_obj = el.toObject().get("value");
                 if (value_obj != null) {
                     if (trait_type == "birthday") {
-                        attrStr += '"trait_type":"' + trait_type + '","value":"' + value_obj.toString() + '","display_type":"date"';
+                        attrStr += '"trait_type":"' + trait_type + '","value":"' + value_obj.toBigInt().toString() + '","display_type":"date"';
                     } else {
                         attrStr += '"trait_type":"' + trait_type + '","value":"' + value_obj.toString() + '"';
                     }
@@ -131,11 +131,11 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     if (location != null) {
         let locationObj = location.toObject();
 
-        let longitude = locationObj.get('diameter');
-        let latitude = locationObj.get('location');
+        let longitude = locationObj.get('longitude');
+        let latitude = locationObj.get('latitude');
 
-        treeSpec.longitude = longitude == null ? '' : (longitude.toString());
-        treeSpec.latitude = latitude == null ? '' : (latitude.toString());
+        treeSpec.longitude = longitude == null ? '' : (longitude.toBigInt().toString());
+        treeSpec.latitude = latitude == null ? '' : (latitude.toBigInt().toString());
     }
 
     treeSpec.attributes = attrStr;
@@ -148,7 +148,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     } else {
         let tempTree = TempTree.load(userData.toString());
         if (tempTree == null) {
-            log.warning('Undefined tempTree in saveTreeSpec {}', [userData.toString()]);
+            log.info('Undefined tempTree in saveTreeSpec {}', [userData.toString()]);
             return;
         }
         tempTree.treeSpecsEntity = treeSpec.id;
@@ -157,8 +157,13 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
 }
 
 function handleTreeSpecs(hash: string, treeId: string): void {
-    // TODO: uncomment this 
-    return;
+
+    // return;
+    
+    if(hash == null || hash == "" || hash.length <= 5 ){
+        return;
+    }
+    
     let data = ipfs.cat(hash);
     if (data) {
         let dd = data.toString();
@@ -173,10 +178,12 @@ export function handleTreeListed(event: TreeListed): void {
     let tree = new Tree(event.params.treeId.toHexString());
     let treeFactoryContract = TreeFactoryContract.bind(event.address);
     let c_tree = treeFactoryContract.trees(event.params.treeId);
+
+
     setTreeData(tree, c_tree);
     tree.treeStatus = BigInt.fromI32(2);
-    tree.createdAt = event.block.timestamp;
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
+    tree.createdAt = event.block.timestamp as BigInt;
     tree.save();
     handleTreeSpecs(tree.treeSpecs, tree.id);
 }
@@ -188,9 +195,8 @@ export function handleTreeAssigned(event: TreeAssigned): void {
     let treeFactoryContract = TreeFactoryContract.bind(event.address);
     let c_tree = treeFactoryContract.trees(event.params.treeId);
     setTreeData(tree, c_tree);
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
-    handleTreeSpecs(tree.treeSpecs, tree.id);
 }
 
 
@@ -216,7 +222,7 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
     tree.treeStatus = BigInt.fromI32(3);
     uptree.save();
     tree.lastUpdate = uptree.id;
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
     handleTreeSpecs(tree.treeSpecs, tree.id);
@@ -243,13 +249,13 @@ export function handleAssignedTreeVerified(event: AssignedTreeVerified): void {
     let c_tree = treeFactoryContract.trees(event.params.treeId);
     setTreeData(tree, c_tree);
     tree.treeStatus = BigInt.fromI32(4);
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
     let uptree = TreeUpdate.load(tree.lastUpdate);
     if (uptree != null) {
         uptree.status = BigInt.fromI32(3);
-        uptree.updatedAt = event.block.timestamp;
+        uptree.updatedAt = event.block.timestamp as BigInt;
         uptree.save();
     }
 
@@ -257,12 +263,10 @@ export function handleAssignedTreeVerified(event: AssignedTreeVerified): void {
         let planter = Planter.load(tree.planter as string);
         if (planter != null) {
             planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1));
-            planter.updatedAt = event.block.timestamp;
+            planter.updatedAt = event.block.timestamp as BigInt;
             planter.save();
         }
     }
-
-    handleTreeSpecs(tree.treeSpecs, tree.id);
 }
 
 export function handleAssignedTreeRejected(event: AssignedTreeRejected): void {
@@ -271,7 +275,7 @@ export function handleAssignedTreeRejected(event: AssignedTreeRejected): void {
         return;
     }
     tree.treeStatus = BigInt.fromI32(2);
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
     if (tree.planter != null) {
@@ -281,7 +285,7 @@ export function handleAssignedTreeRejected(event: AssignedTreeRejected): void {
             if (planter.status.equals(BigInt.fromI32(2))) {
                 planter.status = BigInt.fromI32(1);
             }
-            planter.updatedAt = event.block.timestamp;
+            planter.updatedAt = event.block.timestamp as BigInt;
             planter.save();
         }
     }
@@ -291,7 +295,7 @@ export function handleAssignedTreeRejected(event: AssignedTreeRejected): void {
     let uptree = TreeUpdate.load(tree.lastUpdate);
     if (uptree) {
         uptree.status = BigInt.fromI32(2);
-        uptree.updatedAt = event.block.timestamp;
+        uptree.updatedAt = event.block.timestamp as BigInt;
         uptree.save();
     }
 }
@@ -302,8 +306,8 @@ export function handleTreePlanted(event: TreePlanted): void {
     let c_tempTree = treeFactoryContract.tempTrees(event.params.treeId);
     setTempTreeData(tempTree, c_tempTree);
     tempTree.status = BigInt.fromI32(0);
-    tempTree.createdAt = event.block.timestamp;
-    tempTree.updatedAt = event.block.timestamp;
+    tempTree.createdAt = event.block.timestamp as BigInt;
+    tempTree.updatedAt = event.block.timestamp as BigInt;
 
     tempTree.save();
     let planter = Planter.load(tempTree.planter);
@@ -328,7 +332,7 @@ export function handleTreeVerified(event: TreeVerified): void {
     if (!tree) {
         tree = new Tree(event.params.treeId.toHexString());
     }
-    // log.warning("planter {} ", [tempTree.planter]);
+    // log.info("planter {} ", [tempTree.planter]);
     tree.planter = tempTree.planter;
     tree.birthDate = tempTree.birthDate;
     tree.plantDate = tempTree.plantDate as BigInt;
@@ -346,15 +350,14 @@ export function handleTreeVerified(event: TreeVerified): void {
     uptree.treeSpecs = tree.treeSpecs;
     uptree.type = true;
 
-    uptree.updatedAt = event.block.timestamp;
+    uptree.updatedAt = event.block.timestamp as BigInt;
     uptree.save();
 
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
-    tempTree.updatedAt = event.block.timestamp;
+    tempTree.updatedAt = event.block.timestamp as BigInt;
     tempTree.save();
-    handleTreeSpecs(tempTree.treeSpecs, tempTree.id);
 }
 
 export function handleTreeRejected(event: TreeRejected): void {
@@ -363,7 +366,7 @@ export function handleTreeRejected(event: TreeRejected): void {
         return;
     }
     tempTree.status = BigInt.fromI32(1);
-    tempTree.updatedAt = event.block.timestamp;
+    tempTree.updatedAt = event.block.timestamp as BigInt;
     tempTree.save();
 
 
@@ -376,7 +379,7 @@ export function handleTreeRejected(event: TreeRejected): void {
     if (planter.status.equals(BigInt.fromI32(2))) {
         planter.status = BigInt.fromI32(1);
     }
-    planter.updatedAt = event.block.timestamp;
+    planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
 }
 
@@ -390,12 +393,12 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     let c_uptree = treeFactoryContract.treeUpdates(event.params.treeId);
     let uptree = new TreeUpdate(getCount_updateSpec(COUNTER_ID).toHexString());
     uptree.tree = tree.id;
-    uptree.updateDate = event.block.timestamp;
+    uptree.updateDate = event.block.timestamp as BigInt;
     uptree.status = BigInt.fromI32(1);
     uptree.treeSpecs = c_uptree.value0;
     uptree.type = false;
-    uptree.createdAt = event.block.timestamp;
-    uptree.updatedAt = event.block.timestamp;
+    uptree.createdAt = event.block.timestamp as BigInt;
+    uptree.updatedAt = event.block.timestamp as BigInt;
 
     uptree.save();
     // handleTreeSpecs(tree.treeSpecstree.id);
@@ -415,14 +418,13 @@ export function handleTreeUpdatedVerified(event: TreeUpdatedVerified): void {
     let c_tree = treeFactoryContract.trees(event.params.treeId);
     tree.treeSpecs = c_tree.value7;
     tree.treeStatus = c_tree.value4 as BigInt;
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
     uptree.status = BigInt.fromI32(3);
-    uptree.updatedAt = event.block.timestamp;
+    uptree.updatedAt = event.block.timestamp as BigInt;
     uptree.save();
 
-    // handleTreeSpecs(tree.treeSpecs, tree.id);
 }
 
 export function handleTreeUpdateRejected(event: TreeUpdateRejected): void {
@@ -436,7 +438,7 @@ export function handleTreeUpdateRejected(event: TreeUpdateRejected): void {
     }
 
     uptree.status = BigInt.fromI32(2);
-    uptree.updatedAt = event.block.timestamp;
+    uptree.updatedAt = event.block.timestamp as BigInt;
     uptree.save();
 }
 
@@ -448,7 +450,7 @@ export function handleTreeSpecsUpdated(event: TreeSpecsUpdated): void {
     }
 
     tree.treeSpecs = event.params.treeSpecs.toString();
-    tree.updatedAt = event.block.timestamp;
+    tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
     handleTreeSpecs(tree.treeSpecs, tree.id);

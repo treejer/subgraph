@@ -42,7 +42,7 @@ dataSources:
     source:
       address: '0x6E93F652D71C058c62fa8F15fc3225e24160faf7'
       abi: TreeFactory
-      startBlock: 9453496
+      startBlock: 9452737
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
