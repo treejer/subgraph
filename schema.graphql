@@ -156,6 +156,7 @@ type TreeAttribute @entity {
 # type TreeWithAttributeProblem @entity {
 #   id: ID!
 #   tree: Tree!
+#   createdAt: BigInt!
 # }
 
 type IncrementalSale @entity {
@@ -175,6 +176,7 @@ type IncrementalSale @entity {
 # #   buyer: Funder!
 # #   amount: BigInt
 # #   trees: [Tree!]
+#     createdAt: BigInt!
 # # }
 
 # type FundDistribution @entity {
@@ -188,6 +190,7 @@ type IncrementalSale @entity {
 #   reserveFund1: BigInt
 #   reserveFund2: BigInt
 #   exists: BigInt
+#   createdAt: BigInt!
 # }
 
 # type AssignedFundDistribution @entity {
@@ -213,48 +216,51 @@ type IncrementalSale @entity {
 #   tree: Tree!
 #   distributionModel: FundDistribution!
 #   amount: BigInt!
-#   date: BigInt!
+#   updatedAt: BigInt!
+#   createdAt: BigInt!
 # }
 
 # type DistributionModelError @entity {
 #   id: ID!
 #   description: String
-#   date: BigInt
+#   createdAt: BigInt
 # }
 
-# type PlanterPayment @entity {
-#   id: ID!
-#   tree: Tree!
-#   planter: Planter!
-#   date: BigInt
-#   amount: BigInt
-#   isRefferal: Boolean!
-# }
+type PlanterPayment @entity {
+  id: ID!
+  tree: Tree!
+  planter: Planter!
+  amount: BigInt
+  isRefferal: Boolean!
+  createdAt: BigInt!
+}
 
-# type Withdraw @entity {
-#   id: ID!
-#   type: String!
-#   reason: String
-#   destAddress: String!
-#   amount: BigInt!
-#   date: BigInt
-# }
+type Withdraw @entity {
+  id: ID!
+  type: String!
+  reason: String
+  destAddress: String!
+  amount: BigInt!
+  createdAt: BigInt!
+}
 
-# type TreePlanterFinance @entity {
-#   id: ID!
-#   planterFund: BigInt
-#   referalFund: BigInt
-#   planterPaid: BigInt
-#   refferalPaid: BigInt
-# }
+type TreePlanterFinance @entity {
+  id: ID!
+  planterFund: BigInt
+  referalFund: BigInt
+  planterPaid: BigInt!
+  refferalPaid: BigInt
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
 
-# type TotalPlanterFund @entity {
-#   id: ID!
-#   planterFund: BigInt
-#   referalFund: BigInt
-#   localDevelopFund: BigInt
-#   totalBalance: BigInt
-# }
+type TotalPlanterFund @entity {
+  id: ID!
+  planterFund: BigInt
+  referalFund: BigInt
+  localDevelopFund: BigInt
+  totalBalance: BigInt!
+}
 
 type GlobalData @entity {
   id: ID!

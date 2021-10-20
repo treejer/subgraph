@@ -170,6 +170,32 @@ dataSources:
           handler: handlePriceUpdated
       file: ./src/mappings/RegularSale.ts
 
+  - kind: ethereum/contract
+    name: PlanterFund
+    network: rinkeby
+    source:
+      address: '0x35684D1C771457DFBaf96e0245477cE5953a3A9F'
+      abi: PlanterFund
+      startBlock: 9452721
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TotalFund
+      abis:
+        - name: PlanterFund
+          file: ./abis/PlanterFund.json
+      eventHandlers:
+        - event: ProjectedEarningUpdated(uint256,uint256,uint256)
+          handler: handleProjectedEarningUpdated
+        - event: PlanterTotalClaimedUpdated(uint256,address,uint256,address)
+          handler: handlePlanterTotalClaimedUpdated
+        - event: BalanceWithdrew(uint256,address)
+          handler: handleBalanceWithdrew
+      file: ./src/mappings/PlanterFund.ts
+
+
   # - kind: ethereum/contract
   #   name: TreeAttribute
   #   network: rinkeby
@@ -224,30 +250,7 @@ dataSources:
   #       #   handler: handleFundDistributionModelAssigned
   #     file: ./src/mappings/FinancialModel.ts
 
-  # - kind: ethereum/contract
-  #   name: PlanterFund
-  #   network: rinkeby
-  #   source:
-  #     address: '0xc2EFF2acc032974566583ac7e680545b0f3007fB'
-  #     abi: PlanterFund
-  #     startBlock: 9062500
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - TotalFund
-  #     abis:
-  #       - name: PlanterFund
-  #         file: ./abis/PlanterFund.json
-  #     eventHandlers:
-  #       - event: PlanterFundSet(uint256,uint256,uint256)
-  #         handler: handlePlanterFundSet
-  #       - event: PlanterFunded(uint256,address,uint256)
-  #         handler: handlePlanterFunded
-  #       - event: PlanterBalanceWithdrawn(uint256,address)
-  #         handler: handlePlanterBalanceWithdrawn
-  #     file: ./src/mappings/PlanterFund.ts
+
 
   # - kind: ethereum/contract
   #   name: DaiFunds
