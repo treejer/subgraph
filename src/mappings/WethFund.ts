@@ -1,21 +1,19 @@
 import {
     LocalDevelopmentBalanceWithdrew,
     InsuranceBalanceWithdrew,
-    TreeFunded,
     TreasuryBalanceWithdrew,
     ResearchBalanceWithdrew,
-    DaiFund as DaiFundcontract
-} from "../../generated/DaiFund/DaiFund";
-import { Allocation as AllocationContract } from "../../generated/DaiFund/Allocation";
-import { TotalFund, TreeFund, Withdraw } from "../../generated/schema";
+    WethFund as WethFundcontract,
+    TreeFunded
+} from "../../generated/WethFund/WethFund";
+import { Planter, PlanterPayment, TotalFund, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_RegularRequest, getCount_dme, getCount_planterPayment, getCount_treeFund, getCount_updateSpec, getCount_withdraws, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
-// import {  } from "../../generated/Allocation/Allocation";
-
+import { Allocation as AllocationContract } from "../../generated/WethFund/Allocation";
 function getTotalFund(): TotalFund | null {
-    let totalFunds = TotalFund.load("dai");
+    let totalFunds = TotalFund.load("weth");
     if (totalFunds == null) {
-        totalFunds = new TotalFund('dai');
+        totalFunds = new TotalFund('weth');
         totalFunds.localDevelopment = new BigInt(0);
         totalFunds.totalBalance = new BigInt(0);
         totalFunds.planter = new BigInt(0);
@@ -38,12 +36,12 @@ export function handleResearchBalanceWithdrew(event: ResearchBalanceWithdrew): v
     withdraw.reason = event.params.reason;
     withdraw.save();
 
-    let dfc = DaiFundcontract.bind(event.address);
+    let wfc = WethFundcontract.bind(event.address);
 
     let totalFunds = getTotalFund();
-    if (totalFunds && totalFunds != null) {
+    if (totalFunds) {
         totalFunds.totalBalance = totalFunds.totalBalance.minus(withdraw.amount);
-        totalFunds.research = dfc.totalBalances().value0 as BigInt;
+        totalFunds.research = wfc.totalBalances().value0 as BigInt;
         totalFunds.save();
     }
 }
@@ -59,11 +57,10 @@ export function handleLocalDevelopmentBalanceWithdrew(event: LocalDevelopmentBal
     let totalFunds = getTotalFund();
     if (totalFunds) {
         totalFunds.totalBalance = totalFunds.totalBalance.minus(withdraw.amount);
-        let dfc = DaiFundcontract.bind(event.address);
-        totalFunds.localDevelopment = dfc.totalBalances().value1 as BigInt;
+        let wfc = WethFundcontract.bind(event.address);
+        totalFunds.localDevelopment = wfc.totalBalances().value1 as BigInt;
         totalFunds.save();
     }
-
 }
 
 export function handleInsuranceBalanceWithdrew(event: InsuranceBalanceWithdrew): void {
@@ -77,8 +74,8 @@ export function handleInsuranceBalanceWithdrew(event: InsuranceBalanceWithdrew):
     let totalFunds = getTotalFund();
     if (totalFunds) {
         totalFunds.totalBalance = totalFunds.totalBalance.minus(withdraw.amount);
-        let dfc = DaiFundcontract.bind(event.address);
-        totalFunds.insurance = dfc.totalBalances().value2 as BigInt;
+        let wfc = WethFundcontract.bind(event.address);
+        totalFunds.insurance = wfc.totalBalances().value2 as BigInt;
         totalFunds.save();
     }
 }
@@ -94,11 +91,12 @@ export function handleTreasuryBalanceWithdrew(event: TreasuryBalanceWithdrew): v
     let totalFunds = getTotalFund();
     if (totalFunds) {
         totalFunds.totalBalance = totalFunds.totalBalance.minus(withdraw.amount);
-        let dfc = DaiFundcontract.bind(event.address);
-        totalFunds.treasury = dfc.totalBalances().value3 as BigInt;
+        let wfc = WethFundcontract.bind(event.address);
+        totalFunds.treasury = wfc.totalBalances().value3 as BigInt;
         totalFunds.save();
     }
 }
+
 
 
 export function handleTreeFunded(event: TreeFunded): void {
@@ -111,7 +109,7 @@ export function handleTreeFunded(event: TreeFunded): void {
     treeFunds.createdAt = event.block.timestamp as BigInt;
     treeFunds.save();
 
-    let dfc = DaiFundcontract.bind(event.address);
+    let dfc = WethFundcontract.bind(event.address);
     let tfc = dfc.totalBalances();
     let totalFunds = getTotalFund();
     if (totalFunds) {

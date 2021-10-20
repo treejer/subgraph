@@ -200,15 +200,15 @@ type AssignedAllocation @entity {
 
 type TotalFund @entity {
   id: ID!
-  planter: BigInt
-  referral: BigInt
-  research: BigInt
-  localDevelopment: BigInt
-  insurance: BigInt
-  treasury: BigInt
-  reserve1: BigInt
-  reserve2: BigInt
-  totalBalance: BigInt
+  planter: BigInt!
+  referral: BigInt!
+  research: BigInt!
+  localDevelopment: BigInt!
+  insurance: BigInt!
+  treasury: BigInt!
+  reserve1: BigInt!
+  reserve2: BigInt!
+  totalBalance: BigInt!
 }
 
 type TreeFund @entity {
