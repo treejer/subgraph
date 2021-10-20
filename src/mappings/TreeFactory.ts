@@ -157,8 +157,8 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
 }
 
 function handleTreeSpecs(hash: string, treeId: string): void {
-
-    // return;
+    // TODO: uncomment this
+    return;
     
     if(hash == null || hash == "" || hash.length <= 5 ){
         return;

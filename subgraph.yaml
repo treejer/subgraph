@@ -114,6 +114,33 @@ dataSources:
         - event: AuctionEndTimeIncreased(uint256,uint256)
           handler: handleAuctionEndTimeIncreased
       file: ./src/mappings/Auction.ts
+  - kind: ethereum/contract
+    name: IncrementalSale
+    network: rinkeby
+    source:
+      address: '0xd5aa046c75D7b0d83BD8d0986039E881C4107165'
+      abi: IncrementalSale
+      startBlock: 9452699
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - IncrementalSale
+        - Funder
+      abis:
+        - name: IncrementalSale
+          file: ./abis/IncrementalSale.json
+      eventHandlers:
+        - event: IncrementalSaleUpdated()
+          handler: handleIncrementalSaleUpdated
+        - event: IncrementalSaleDataUpdated()
+          handler: handleIncrementalSaleDataUpdated
+        - event: TreeFunded(address,address,address,uint256,uint256)
+          handler: handleTreeFunded
+      file: ./src/mappings/IncrementalSale.ts
+
   # - kind: ethereum/contract
   #   name: TreeAttribute
   #   network: rinkeby
@@ -140,30 +167,7 @@ dataSources:
   #       - event: TreeAttributesNotGenerated(uint256)
   #         handler: handleTreeAttributesNotGenerated
   #     file: ./src/mappings/TreeAttribute.ts
-  # - kind: ethereum/contract
-  #   name: IncrementalSell
-  #   network: rinkeby
-  #   source:
-  #     address: '0xd8abB819dF21c5AD8E8Bf08fCC61568B6383786C'
-  #     abi: IncrementalSell
-  #     startBlock: 9061500
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - IncrementalSell
-  #       - Funder
-  #     abis:
-  #       - name: IncrementalSell
-  #         file: ./abis/IncrementalSell.json
-  #     eventHandlers:
-  #       - event: IncrementalSellUpdated()
-  #         handler: handleIncrementalSellUpdated
-  #       - event: IncrementalTreeSold(uint256,address,uint256)
-  #         handler: handleIncrementalTreeSold
-  #     file: ./src/mappings/IncrementalSell.ts
+
 
   # - kind: ethereum/contract
   #   name: RegularSell

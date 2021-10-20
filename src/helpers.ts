@@ -175,7 +175,7 @@ export function getGlobalData(): GlobalData {
         gb.ownedTreeCount = new BigInt(0);
         gb.totalRegularTreeSellAmount = new BigInt(0);
         gb.totalAuctionTreeSellAmount = new BigInt(0);
-        gb.totalIncrementalSellAmount = new BigInt(0);
+        gb.totalIncrementalSaleCount = new BigInt(0);
         gb.totalClaimedGiftTrees = new BigInt(0);
         gb.regularTreePrice = new BigInt(0);
         gb.lastIncrementalSold = new BigInt(0);

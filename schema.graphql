@@ -114,12 +114,12 @@ type Funder @entity {
   rank: BigInt
   lastRequestId: String
 
-  auctionCount: BigInt
-  regularCount: BigInt
-  incrementalCount: BigInt
-  auctionSpent: BigInt
-  incrementalSpent: BigInt
-  regularSpent: BigInt
+  auctionCount: BigInt!
+  regularCount: BigInt!
+  incrementalCount: BigInt!
+  auctionSpent: BigInt!
+  incrementalSpent: BigInt!
+  regularSpent: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
 }
@@ -159,16 +159,16 @@ type TreeAttribute @entity {
 #   tree: Tree!
 # }
 
-# type IncrementalSell @entity {
-#   id: ID!
-#   startTree: Tree!
-#   endTree: Tree!
-#   startTreeId: BigInt
-#   endTreeId: BigInt
-#   initialPrice: BigInt
-#   increaseStep: BigInt
-#   increaseRatio: BigInt
-# }
+type IncrementalSale @entity {
+  id: ID!
+  startTree: Tree!
+  endTree: Tree!
+  startTreeId: BigInt
+  endTreeId: BigInt
+  initialPrice: BigInt
+  increments: BigInt
+  priceJump: BigInt
+}
 
 # # type BatchRegularTreeRequest @entity {
 # #   id: ID!
@@ -274,7 +274,7 @@ type GlobalData @entity {
   ownedTreeCount: BigInt!
   totalRegularTreeSellAmount: BigInt!
   totalAuctionTreeSellAmount: BigInt!
-  totalIncrementalSellAmount: BigInt!
+  totalIncrementalSaleCount: BigInt!
   totalClaimedGiftTrees: BigInt!
   regularTreePrice: BigInt!
   lastIncrementalSold: BigInt!
