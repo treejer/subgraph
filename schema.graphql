@@ -110,10 +110,9 @@ type Funder @entity {
   trees: [Tree!] @derivedFrom(field: "funder")
   treeCount: BigInt!
   spentWeth: BigInt!
-  spentDai: BigInt
-  rank: BigInt
-  lastRequestId: String
-
+  spentDai: BigInt!
+  rank: BigInt!
+  lastRequestId: String!
   auctionCount: BigInt!
   regularCount: BigInt!
   incrementalCount: BigInt!
@@ -296,10 +295,11 @@ type GlobalData @entity {
 #   transferAddress: Funder!
 # }
 
-# type RegularRequest @entity {
-#   id: ID!
-#   funder: Funder!
-#   count: BigInt
-#   amount: BigInt
-#   date: BigInt
-# }
+type RegularRequest @entity {
+  id: ID!
+  funder: Funder!
+  count: BigInt
+  amount: BigInt
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}

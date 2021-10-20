@@ -141,6 +141,35 @@ dataSources:
           handler: handleTreeFunded
       file: ./src/mappings/IncrementalSale.ts
 
+  - kind: ethereum/contract
+    name: RegularSale
+    network: rinkeby
+    source:
+      address: '0x284A8C079Af3EA02669e5B9e55d675CA7cE4253a'
+      abi: RegularSale
+      startBlock: 9452709
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - RegularSale
+        - Funder
+      abis:
+        - name: RegularSale
+          file: ./abis/RegularSale.json
+      eventHandlers:
+        - event: TreeFunded(address,address,address,uint256,uint256)
+          handler: handleTreeFunded
+        - event: RegularMint(address,uint256,uint256)
+          handler: handleRegularMint
+        - event: TreeFundedById(address,address,address,uint256,uint256)
+          handler: handleTreeFundedById
+        - event: PriceUpdated(uint256)
+          handler: handlePriceUpdated
+      file: ./src/mappings/RegularSale.ts
+
   # - kind: ethereum/contract
   #   name: TreeAttribute
   #   network: rinkeby
@@ -169,34 +198,7 @@ dataSources:
   #     file: ./src/mappings/TreeAttribute.ts
 
 
-  # - kind: ethereum/contract
-  #   name: RegularSell
-  #   network: rinkeby
-  #   source:
-  #     address: '0x61D7ecD219da5c2495a1FE045E1CdDfC3F5E8a46'
-  #     abi: RegularSell
-  #     startBlock: 9061500
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - RegularSell
-  #       - Funder
-  #     abis:
-  #       - name: RegularSell
-  #         file: ./abis/RegularSell.json
-  #     eventHandlers:
-  #       - event: RegularTreeRequsted(uint256,address,uint256)
-  #         handler: handleRegularTreeRequsted
-  #       - event: RegularMint(address,uint256)
-  #         handler: handleRegularMint
-  #       - event: RegularTreeRequstedById(uint256,address,uint256)
-  #         handler: handleRegularTreeRequstedById
-  #       - event: TreePriceUpdated(uint256)
-  #         handler: handleTreePriceUpdated
-  #     file: ./src/mappings/RegularSell.ts
+
   # - kind: ethereum/contract
   #   name: FinancialModel
   #   network: rinkeby
