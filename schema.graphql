@@ -179,52 +179,52 @@ type IncrementalSale @entity {
 #     createdAt: BigInt!
 # # }
 
-# type FundDistribution @entity {
-#   id: ID!
-#   planterFund: BigInt
-#   referralFund: BigInt
-#   treeResearch: BigInt
-#   localDevelop: BigInt
-#   rescueFund: BigInt
-#   treejerDevelop: BigInt
-#   reserveFund1: BigInt
-#   reserveFund2: BigInt
-#   exists: BigInt
-#   createdAt: BigInt!
-# }
+type Allocation @entity {
+  id: ID!
+  planterShare: BigInt
+  ambassadorShare: BigInt
+  researchShare: BigInt
+  localDevelopmentShare: BigInt
+  insuranceShare: BigInt
+  treasuryShare: BigInt
+  reserve1Share: BigInt
+  reserve2Share: BigInt
+  exists: BigInt
+  createdAt: BigInt!
+}
 
-# type AssignedFundDistribution @entity {
-#   id: ID!
-#   distributionModel: FundDistribution
-# }
+type AssignedAllocation @entity {
+  id: ID!
+  allocation: Allocation
+}
 
-# type TotalFund @entity {
-#   id: ID!
-#   planterFund: BigInt
-#   referralFund: BigInt
-#   treeResearch: BigInt
-#   localDevelop: BigInt
-#   rescueFund: BigInt
-#   treejerDevelop: BigInt
-#   reserveFund1: BigInt
-#   reserveFund2: BigInt
-#   totalBalance: BigInt
-# }
+type TotalFund @entity {
+  id: ID!
+  planter: BigInt
+  referral: BigInt
+  research: BigInt
+  localDevelopment: BigInt
+  insurance: BigInt
+  treasury: BigInt
+  reserve1: BigInt
+  reserve2: BigInt
+  totalBalance: BigInt
+}
 
-# type TreeFund @entity {
-#   id: ID!
-#   tree: Tree!
-#   distributionModel: FundDistribution!
-#   amount: BigInt!
-#   updatedAt: BigInt!
-#   createdAt: BigInt!
-# }
+type TreeFund @entity {
+  id: ID!
+  tree: Tree!
+  allocation: Allocation!
+  amount: BigInt!
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}
 
-# type DistributionModelError @entity {
-#   id: ID!
-#   description: String
-#   createdAt: BigInt
-# }
+type AllocationError @entity {
+  id: ID!
+  description: String
+  createdAt: BigInt
+}
 
 type PlanterPayment @entity {
   id: ID!

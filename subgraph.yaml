@@ -194,7 +194,28 @@ dataSources:
         - event: BalanceWithdrew(uint256,address)
           handler: handleBalanceWithdrew
       file: ./src/mappings/PlanterFund.ts
-
+  - kind: ethereum/contract
+    name: Allocation
+    network: rinkeby
+    source:
+      address: '0xDF0d58f908f24a5dEf66928236a20E2077A2474a'
+      abi: Allocation
+      startBlock: 9452717
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TotalFund
+      abis:
+        - name: Allocation
+          file: ./abis/Allocation.json
+      eventHandlers:
+        - event: AllocationDataAdded(uint256)
+          handler: handleAllocationDataAdded
+        - event: AllocationToTreeAssigned(uint256)
+          handler: handleAllocationToTreeAssigned
+      file: ./src/mappings/Allocation.ts
 
   # - kind: ethereum/contract
   #   name: TreeAttribute
@@ -225,30 +246,7 @@ dataSources:
 
 
 
-  # - kind: ethereum/contract
-  #   name: FinancialModel
-  #   network: rinkeby
-  #   source:
-  #     address: '0xd5784E9F70D4C81B800491B799f6c33AF984caD7'
-  #     abi: FinancialModel
-  #     startBlock: 9061500
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - TotalFund
-  #     abis:
-  #       - name: FinancialModel
-  #         file: ./abis/FinancialModel.json
-  #     eventHandlers:
-  #       - event: DistributionModelAdded(uint256)
-  #         handler: handleDistributionModelAdded
-  #       - event: FundDistributionModelAssigned(uint256)
-  #         handler: handleFundDistributionModelAssigned
-  #       # - event: FundDistributionModelAssigned(uint256)
-  #       #   handler: handleFundDistributionModelAssigned
-  #     file: ./src/mappings/FinancialModel.ts
+
 
 
 
@@ -268,8 +266,8 @@ dataSources:
   #     abis:
   #       - name: DaiFunds
   #         file: ./abis/DaiFunds.json
-  #       - name: FinancialModel
-  #         file: ./abis/FinancialModel.json
+  #       - name: Allocation
+  #         file: ./abis/Allocation.json
   #     eventHandlers:
   #       - event: TreeResearchBalanceWithdrawn(uint256,address,string)
   #         handler: handleTreeResearchBalanceWithdrawn
@@ -300,8 +298,8 @@ dataSources:
   #     abis:
   #       - name: WethFunds
   #         file: ./abis/WethFunds.json
-  #       - name: FinancialModel
-  #         file: ./abis/FinancialModel.json
+  #       - name: Allocation
+  #         file: ./abis/Allocation.json
   #     eventHandlers:
   #       - event: TreeResearchBalanceWithdrawn(uint256,address,string)
   #         handler: handleTreeResearchBalanceWithdrawn
