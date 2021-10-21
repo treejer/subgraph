@@ -50,8 +50,8 @@ export function handlePlanterJoined(event: PlanterJoined): void {
     let invitedBy = planterContract.invitedBy(event.params.planter).toHexString();
     planter.invitedBy = invitedBy;
     planter.memberOf = planterContract.memberOf(event.params.planter).toHexString();
-    planter.createdAt = event.block.timestamp;
-    planter.updatedAt = event.block.timestamp;
+    planter.createdAt = event.block.timestamp as BigInt;
+    planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
 
     handleInviteBy(invitedBy);
@@ -63,7 +63,7 @@ export function handlePlanterJoined(event: PlanterJoined): void {
             log.warning('Undefined organization in handlePlanterJoined {}', [planter.memberOf]);
         } else {
             organization.memberCount = organization.memberCount.plus(BigInt.fromI32(1));
-            organization.updatedAt = event.block.timestamp;
+            organization.updatedAt = event.block.timestamp as BigInt;
             organization.save();
         }
 
@@ -85,8 +85,8 @@ export function handleOrganizationJoined(event: OrganizationJoined): void {
     let invitedBy = planterContract.invitedBy(event.params.organization).toHexString();
     planter.invitedBy = invitedBy;
     planter.memberOf = planterContract.memberOf(event.params.organization).toHexString();
-    planter.createdAt = event.block.timestamp;
-    planter.updatedAt = event.block.timestamp;
+    planter.createdAt = event.block.timestamp as BigInt;
+    planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
     handleInviteBy(invitedBy);
 
@@ -118,7 +118,7 @@ export function handlePlanterUpdated(event: PlanterUpdated): void {
     //decrease organization count when planter change organizaion
     let organization = Planter.load(planter.memberOf);
     if (planter.memberOf != ZERO_ADDRESS && organization != null) {
-        organization.updatedAt = event.block.timestamp;
+        organization.updatedAt = event.block.timestamp as BigInt;
         organization.memberCount = organization.memberCount.plus(BigInt.fromI32(1));
 
         organization.totalOrganizationPlantedCount = organization.totalOrganizationPlantedCount.minus(planter.plantedCount as BigInt);
@@ -131,7 +131,7 @@ export function handlePlanterUpdated(event: PlanterUpdated): void {
 
     planter.memberOf = planterContract.memberOf(event.params.planter).toHexString();
     setPlanterFields(planter, pl);
-    planter.updatedAt = event.block.timestamp;
+    planter.updatedAt = event.block.timestamp as BigInt;
 
     planter.save();
 }
@@ -150,7 +150,7 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): voi
         log.warning('Undefined organization in handleAcceptedByOrganization {}', [planter.memberOf]);
         return;
     }
-    organization.updatedAt = event.block.timestamp;
+    organization.updatedAt = event.block.timestamp as BigInt;
     organization.memberCount = organization.memberCount.plus(BigInt.fromI32(1));
     organization.totalOrganizationPlantedCount = organization.totalOrganizationPlantedCount.plus(planter.plantedCount as BigInt);
     organization.totalOrganizationVerifiedPlantedCount = organization.totalOrganizationVerifiedPlantedCount.plus(planter.verifiedPlantedCount as BigInt);
@@ -161,7 +161,7 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): voi
 
     let pl = planterContract.planters(event.params.planter);
     setPlanterFields(planter, pl);
-    planter.updatedAt = event.block.timestamp;
+    planter.updatedAt = event.block.timestamp as BigInt;
 
     planter.save();
 }
@@ -176,7 +176,7 @@ export function handleRejectedByOrganization(event: RejectedByOrganization): voi
     planter.memberOf = planterContract.memberOf(event.params.planter).toHexString();
     let pl = planterContract.planters(event.params.planter);
     setPlanterFields(planter, pl);
-    planter.updatedAt = event.block.timestamp;
+    planter.updatedAt = event.block.timestamp as BigInt;
 
     planter.save();
 
@@ -193,6 +193,6 @@ export function handleOrganizationMemberShareUpdated(event: OrganizationMemberSh
     }
     let planterContract = PlanterContract.bind(event.address);
     planter.organizationShare = planterContract.organizationMemberShare(Address.fromString(planter.memberOf), Address.fromString(planter.id)) as BigInt;
-    planter.updatedAt = event.block.timestamp;
+    planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
 }

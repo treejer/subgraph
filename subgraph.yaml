@@ -278,33 +278,32 @@ dataSources:
         - event: TreeFunded(uint256,uint256,uint256)
           handler: handleTreeFunded
       file: ./src/mappings/WethFund.ts
-
-  # - kind: ethereum/contract
-  #   name: TreeAttribute
-  #   network: rinkeby
-  #   source:
-  #     address: '0xf3422A89A357cFE114aD429303388BabF89Dff15'
-  #     abi: TreeAttribute
-  #     startBlock: 9042650
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Tree
-  #       - TreeAttribute
-  #       - TreeWithAttributeProblem
-  #     abis:
-  #       - name: TreeAttribute
-  #         file: ./abis/TreeAttribute.json
-  #     eventHandlers:
-  #       - event: BuyerRankSet(address,uint8)
-  #         handler: handleBuyerRankSet
-  #       # - event: TreeAttributesGenerated(uint256)
-  #       #   handler: handleTreeAttributesGenerated
-  #       - event: TreeAttributesNotGenerated(uint256)
-  #         handler: handleTreeAttributesNotGenerated
-  #     file: ./src/mappings/TreeAttribute.ts
+  - kind: ethereum/contract
+    name: Attribute
+    network: rinkeby
+    source:
+      address: '0x3F4CbdDFc8942AdC52Dd2F3a24934d3A58583a20'
+      abi: Attribute
+      startBlock: 9452733
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - Attribute
+        - TreeWithAttributeProblem
+      abis:
+        - name: Attribute
+          file: ./abis/Attribute.json
+        - name: Tree
+          file: ./abis/Tree.json
+      eventHandlers:
+        - event: AttributeGenerated(uint256)
+          handler: handleAttributeGenerated
+        - event: AttributeGenerationFailed(uint256)
+          handler: handleAttributeGenerationFailed
+      file: ./src/mappings/Attribute.ts
 
 
 

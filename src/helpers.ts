@@ -4,6 +4,7 @@ import { Counter, GlobalData } from "../generated/schema";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
 export const INCREMENTAL_SELL_ID = "0001";
+export const TREE_CONTRACT_ADDRESS = "0x574eD3f5787D368Ffc15Ac9cfd8F85605090bbF1"
 
 // let COUNTER_FIELDS = {
 //     UPDATE_SPECS: "updateSpec"

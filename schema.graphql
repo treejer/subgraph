@@ -56,7 +56,8 @@ type Tree @entity {
   birthDate: BigInt
   treeUpdates: [TreeUpdate!] @derivedFrom(field: "tree")
   lastUpdate: TreeUpdate!
-  treeAttribute: TreeAttribute
+  attribute: Attribute
+  symbol: Symbol
   treeSpecs: String!
   treeSpecsEntity: TreeSpec
   requestId: String
@@ -148,16 +149,39 @@ type Bid @entity {
 
 
 
-type TreeAttribute @entity {
+type Attribute @entity {
   id: ID!
-  buyerRank: BigInt
+  tree: Tree
+  attribute1: BigInt
+  attribute2: BigInt
+  attribute3: BigInt
+  attribute4: BigInt
+  attribute5: BigInt
+  attribute6: BigInt
+  attribute7: BigInt
+  attribute8: BigInt
+  generationType: BigInt
+  createdAt: BigInt!
 }
 
-# type TreeWithAttributeProblem @entity {
-#   id: ID!
-#   tree: Tree!
-#   createdAt: BigInt!
-# }
+type Symbol @entity {
+  id: ID!
+  tree: Tree
+  shape: BigInt
+  trunkColor: BigInt
+  crownColor: BigInt
+  effect: BigInt
+  coefficient: BigInt
+  generationType: BigInt
+  createdAt: BigInt!
+}
+
+
+type TreeWithAttributeProblem @entity {
+  id: ID!
+  tree: Tree
+  createdAt: BigInt!
+}
 
 type IncrementalSale @entity {
   id: ID!

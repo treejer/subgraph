@@ -52,7 +52,7 @@ function copyTree(t1: Tree | null, t2: Tree | null): void {
     t1.species = t2.species;
     t1.treeStatus = t2.treeStatus;
     t1.treeSpecs = t2.treeSpecs;
-    t1.treeAttribute = t2.treeAttribute;
+    t1.attribute = t2.attribute;
     t1.saleType = t2.saleType;
     t1.planter = t2.planter;
     t1.plantDate = t2.plantDate;
@@ -158,7 +158,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
 
 function handleTreeSpecs(hash: string, treeId: string): void {
     // TODO: uncomment this
-    return;
+    // return;
     
     if(hash == null || hash == "" || hash.length <= 5 ){
         return;
