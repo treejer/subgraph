@@ -8,7 +8,7 @@ import {
 } from "../../generated/IncrementalSale/IncrementalSale";
 import { IncrementalSale, Funder, Tree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_updateSpec, getGlobalData, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
+import { INCREMENTAL_SELL_ID } from '../helpers';
 
 
 

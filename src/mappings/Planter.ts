@@ -58,9 +58,9 @@ export function handlePlanterJoined(event: PlanterJoined): void {
 
     //if admin add planter to organization automaticlly status is 1 and we can update memberCount for org
     if (planter.status === BigInt.fromString("1") && (planter.memberOf != null || planter.memberOf != ZERO_ADDRESS)) {
-        let organization = Planter.load(planter.memberOf);
+        let organization = Planter.load(planter.memberOf as string);
         if (organization == null) {
-            log.warning('Undefined organization in handlePlanterJoined {}', [planter.memberOf]);
+            log.warning('Undefined organization in handlePlanterJoined {}', [planter.memberOf as string]);
         } else {
             organization.memberCount = organization.memberCount.plus(BigInt.fromI32(1));
             organization.updatedAt = event.block.timestamp as BigInt;
@@ -116,7 +116,7 @@ export function handlePlanterUpdated(event: PlanterUpdated): void {
     }
 
     //decrease organization count when planter change organizaion
-    let organization = Planter.load(planter.memberOf);
+    let organization = Planter.load(planter.memberOf as string);
     if (planter.memberOf != ZERO_ADDRESS && organization != null) {
         organization.updatedAt = event.block.timestamp as BigInt;
         organization.memberCount = organization.memberCount.plus(BigInt.fromI32(1));
@@ -145,9 +145,9 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): voi
         return;
     }
 
-    let organization = Planter.load(planter.memberOf);
+    let organization = Planter.load(planter.memberOf as string);
     if (organization == null) {
-        log.warning('Undefined organization in handleAcceptedByOrganization {}', [planter.memberOf]);
+        log.warning('Undefined organization in handleAcceptedByOrganization {}', [planter.memberOf as string]);
         return;
     }
     organization.updatedAt = event.block.timestamp as BigInt;
@@ -192,7 +192,7 @@ export function handleOrganizationMemberShareUpdated(event: OrganizationMemberSh
         return;
     }
     let planterContract = PlanterContract.bind(event.address);
-    planter.organizationShare = planterContract.organizationMemberShare(Address.fromString(planter.memberOf), Address.fromString(planter.id)) as BigInt;
+    planter.organizationShare = planterContract.organizationMemberShare(Address.fromString(planter.memberOf as string), Address.fromString(planter.id)) as BigInt;
     planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
 }

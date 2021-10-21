@@ -8,8 +8,9 @@ import {
 } from "../../generated/WethFund/WethFund";
 import { Planter, PlanterPayment, TotalFund, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_RegularRequest, getCount_dme, getCount_planterPayment, getCount_treeFund, getCount_updateSpec, getCount_withdraws, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
+import { COUNTER_ID, getCount_treeFund, getCount_withdraws } from '../helpers';
 import { Allocation as AllocationContract } from "../../generated/WethFund/Allocation";
+
 function getTotalFund(): TotalFund | null {
     let totalFunds = TotalFund.load("weth");
     if (totalFunds == null) {

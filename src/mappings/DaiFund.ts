@@ -9,8 +9,7 @@ import {
 import { Allocation as AllocationContract } from "../../generated/DaiFund/Allocation";
 import { TotalFund, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_RegularRequest, getCount_dme, getCount_planterPayment, getCount_treeFund, getCount_updateSpec, getCount_withdraws, INCREMENTAL_SELL_ID, ZERO_ADDRESS } from '../helpers';
-// import {  } from "../../generated/Allocation/Allocation";
+import { COUNTER_ID, getCount_treeFund, getCount_withdraws } from '../helpers';
 
 function getTotalFund(): TotalFund | null {
     let totalFunds = TotalFund.load("dai");

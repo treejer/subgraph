@@ -1,38 +1,38 @@
 type Counter @entity {
   id: ID!
-  updateSpec: BigInt
-  bid: BigInt
-  RegularRequest: BigInt
-  assignedFunds: BigInt
-  dme: BigInt
-  planterPayments: BigInt
-  withdraws: BigInt
-  treeFund: BigInt
-  treeSpecs: BigInt
-  communityGift: BigInt
+  treeUpdates: BigInt!
+  bid: BigInt!
+  RegularRequest: BigInt!
+  assignedFunds: BigInt!
+  dme: BigInt!
+  planterPayments: BigInt!
+  withdraws: BigInt!
+  treeFund: BigInt!
+  treeSpecs: BigInt!
+  communityGift: BigInt!
 }
 
 type Planter @entity {
   id: ID!
   planterType: BigInt!
   status: BigInt!
-  countryCode: String
-  score: BigInt
-  supplyCap: BigInt
+  countryCode: String!
+  score: BigInt!
+  supplyCap: BigInt!
 
-  longitude: BigInt
-  latitude: BigInt
-  memberOf: Planter!
-  members: [Planter!]! @derivedFrom(field: "memberOf")
+  longitude: BigInt!
+  latitude: BigInt!
+  memberOf: Planter
+  members: [Planter!] @derivedFrom(field: "memberOf")
   invitedBy: Planter
-  refferers: [Planter!]! @derivedFrom(field: "invitedBy")
-  organizationShare: BigInt
+  refferers: [Planter!] @derivedFrom(field: "invitedBy")
+  organizationShare: BigInt!
   memberCount: BigInt!
   invitedCount: BigInt!
-  balance: BigInt
+  balance: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
-  trees: [Tree!]! @derivedFrom(field: "planter")
+  trees: [Tree!] @derivedFrom(field: "planter")
 
   plantedCount: BigInt!
   verifiedPlantedCount: BigInt!
@@ -48,19 +48,19 @@ type Tree @entity {
   id: ID!
   planter: Planter
   funder: Funder
-  species: BigInt
-  countryCode: String
-  saleType: BigInt
-  treeStatus: BigInt
-  plantDate: BigInt
-  birthDate: BigInt
+  species: BigInt!
+  countryCode: String!
+  saleType: BigInt!
+  treeStatus: BigInt!
+  plantDate: BigInt!
+  birthDate: BigInt!
   treeUpdates: [TreeUpdate!] @derivedFrom(field: "tree")
-  lastUpdate: TreeUpdate!
+  lastUpdate: TreeUpdate
   attribute: Attribute
   symbol: Symbol
   treeSpecs: String!
   treeSpecsEntity: TreeSpec
-  requestId: String
+  requestId: String!
   createdAt: BigInt!
   updatedAt: BigInt!
 }
@@ -85,10 +85,8 @@ type TreeSpec @entity {
 type TreeUpdate @entity {
   id: ID!
   tree: Tree!
-  updateDate: BigInt
-  status: BigInt
-  treeSpecs: String
-  type: Boolean
+  updateStatus: BigInt!
+  updateSpecs: String!
   createdAt: BigInt!
   updatedAt: BigInt!
 }
@@ -97,9 +95,9 @@ type TempTree @entity {
   id: ID!
   planter: Planter!
   countryCode: String!
-  status: BigInt
-  plantDate: BigInt
-  birthDate: BigInt
+  status: BigInt!
+  plantDate: BigInt!
+  birthDate: BigInt!
   treeSpecs: String!
   treeSpecsEntity: TreeSpec
   createdAt: BigInt!
@@ -127,12 +125,12 @@ type Funder @entity {
 type Auction @entity {
   id: ID!
   tree: Tree!
-  initialPrice: BigInt
-  priceInterval: BigInt
-  startDate: BigInt
-  endDate: BigInt
+  initialPrice: BigInt!
+  priceInterval: BigInt!
+  startDate: BigInt!
+  endDate: BigInt!
   winner: Funder
-  highestBid: BigInt
+  highestBid: BigInt!
   isActive: Boolean
   bids: [Bid!] @derivedFrom(field: "auction")
   createdAt: BigInt!
@@ -142,8 +140,8 @@ type Auction @entity {
 type Bid @entity {
   id: ID!
   auction: Auction
-  bidder: String
-  bid: BigInt
+  bidder: String!
+  bid: BigInt!
   createdAt: BigInt!
 }
 
@@ -152,27 +150,27 @@ type Bid @entity {
 type Attribute @entity {
   id: ID!
   tree: Tree
-  attribute1: BigInt
-  attribute2: BigInt
-  attribute3: BigInt
-  attribute4: BigInt
-  attribute5: BigInt
-  attribute6: BigInt
-  attribute7: BigInt
-  attribute8: BigInt
-  generationType: BigInt
+  attribute1: BigInt!
+  attribute2: BigInt!
+  attribute3: BigInt!
+  attribute4: BigInt!
+  attribute5: BigInt!
+  attribute6: BigInt!
+  attribute7: BigInt!
+  attribute8: BigInt!
+  generationType: BigInt!
   createdAt: BigInt!
 }
 
 type Symbol @entity {
   id: ID!
   tree: Tree
-  shape: BigInt
-  trunkColor: BigInt
-  crownColor: BigInt
-  effect: BigInt
-  coefficient: BigInt
-  generationType: BigInt
+  shape: BigInt!
+  trunkColor: BigInt!
+  crownColor: BigInt!
+  effect: BigInt!
+  coefficient: BigInt!
+  generationType: BigInt!
   createdAt: BigInt!
 }
 
@@ -187,11 +185,13 @@ type IncrementalSale @entity {
   id: ID!
   startTree: Tree!
   endTree: Tree!
-  startTreeId: BigInt
-  endTreeId: BigInt
-  initialPrice: BigInt
-  increments: BigInt
-  priceJump: BigInt
+  startTreeId: BigInt!
+  endTreeId: BigInt!
+  initialPrice: BigInt!
+  increments: BigInt!
+  priceJump: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
 }
 
 # # type BatchRegularTreeRequest @entity {
@@ -205,15 +205,15 @@ type IncrementalSale @entity {
 
 type Allocation @entity {
   id: ID!
-  planterShare: BigInt
-  ambassadorShare: BigInt
-  researchShare: BigInt
-  localDevelopmentShare: BigInt
-  insuranceShare: BigInt
-  treasuryShare: BigInt
-  reserve1Share: BigInt
-  reserve2Share: BigInt
-  exists: BigInt
+  planterShare: BigInt!
+  ambassadorShare: BigInt!
+  researchShare: BigInt!
+  localDevelopmentShare: BigInt!
+  insuranceShare: BigInt!
+  treasuryShare: BigInt!
+  reserve1Share: BigInt!
+  reserve2Share: BigInt!
+  exists: BigInt!
   createdAt: BigInt!
 }
 
@@ -238,7 +238,7 @@ type TotalFund @entity {
 type TreeFund @entity {
   id: ID!
   tree: Tree!
-  allocation: Allocation!
+  allocation: Allocation
   amount: BigInt!
   updatedAt: BigInt!
   createdAt: BigInt!
@@ -246,15 +246,15 @@ type TreeFund @entity {
 
 type AllocationError @entity {
   id: ID!
-  description: String
-  createdAt: BigInt
+  description: String!
+  createdAt: BigInt!
 }
 
 type PlanterPayment @entity {
   id: ID!
   tree: Tree!
   planter: Planter!
-  amount: BigInt
+  amount: BigInt!
   isRefferal: Boolean!
   createdAt: BigInt!
 }
@@ -262,7 +262,7 @@ type PlanterPayment @entity {
 type Withdraw @entity {
   id: ID!
   type: String!
-  reason: String
+  reason: String!
   destAddress: String!
   amount: BigInt!
   createdAt: BigInt!
@@ -270,19 +270,19 @@ type Withdraw @entity {
 
 type TreePlanterFinance @entity {
   id: ID!
-  planterFund: BigInt
-  referalFund: BigInt
+  planterFund: BigInt!
+  referalFund: BigInt!
   planterPaid: BigInt!
-  refferalPaid: BigInt
+  refferalPaid: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
 }
 
 type TotalPlanterFund @entity {
   id: ID!
-  planterFund: BigInt
-  referalFund: BigInt
-  localDevelopFund: BigInt
+  planterFund: BigInt!
+  referalFund: BigInt!
+  localDevelopFund: BigInt!
   totalBalance: BigInt!
 }
 
@@ -327,9 +327,9 @@ type GlobalData @entity {
 
 type RegularRequest @entity {
   id: ID!
-  funder: Funder!
-  count: BigInt
-  amount: BigInt
+  funder: Funder
+  count: BigInt!
+  amount: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
 }

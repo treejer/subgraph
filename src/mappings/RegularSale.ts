@@ -33,9 +33,9 @@ export function handleTreeFunded(event: TreeFunded): void {
     rr.createdAt = event.block.timestamp as BigInt;
     rr.updatedAt = event.block.timestamp as BigInt;
     rr.save();
-    let funder = Funder.load(rr.funder);
+    let funder = Funder.load(rr.funder as string);
     if (!funder) {
-        funder = new Funder(rr.funder);
+        funder = new Funder(rr.funder as string);
         flag = true;
         funder.regularSpent = event.params.amount as BigInt;
         funder.treeCount = event.params.count as BigInt;

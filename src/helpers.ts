@@ -29,10 +29,23 @@ export const TREE_CONTRACT_ADDRESS = "0x574eD3f5787D368Ffc15Ac9cfd8F85605090bbF1
 //     counter.save();
 //     return BigInt.fromI32(0);
 // }
+// tempTrees {
+//     id
+//     status
+//   }
+//   trees {
+//     id
+//     treeStatus
+//   }
+  
+//   treeSpecs {
+//     id
+//     name
+//   }
 function newCounter(id: string): Counter {
     let counter = new Counter(id);
     let _zero = BigInt.fromI32(0);
-    counter.updateSpec = _zero;
+    counter.treeUpdates = _zero;
     counter.bid = _zero;
     counter.RegularRequest = _zero;
     counter.treeFund = _zero;
@@ -45,16 +58,17 @@ function newCounter(id: string): Counter {
     counter.communityGift = _zero;
     return counter;
 }
-export function getCount_updateSpec(id: string): BigInt {
+
+export function getCount_treeUpdates(id: string): BigInt {
     let counter = Counter.load(id);
     if (counter) {
-        let cnt: BigInt = counter.updateSpec as BigInt;
-        counter.updateSpec = cnt.plus(BigInt.fromI32(1));
+        let cnt: BigInt = counter.treeUpdates as BigInt;
+        counter.treeUpdates = cnt.plus(BigInt.fromI32(1));
         counter.save();
         return cnt;
     }
     counter = newCounter(id);
-    counter.updateSpec = BigInt.fromI32(1);
+    counter.treeUpdates = BigInt.fromI32(1);
     counter.save();
     return BigInt.fromI32(0);
 }
@@ -189,6 +203,7 @@ export function getGlobalData(): GlobalData {
     return gb;
 
 }
+
 
 
 // export enum withdrawTypes {
