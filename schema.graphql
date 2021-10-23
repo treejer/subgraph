@@ -77,8 +77,8 @@ type TreeSpec @entity {
   # description: String!
   animationUrl: String!
   diameter: BigInt!
-  latitude: String!
-  longitude: String!
+  latitude: BigInt!
+  longitude: BigInt!
   attributes: String!
 }
 

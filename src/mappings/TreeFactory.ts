@@ -16,7 +16,7 @@ import {
     TreeFactory__tempTreesResult,
     TreeFactory__treeUpdatesResult, TreeFactory as TreeFactoryContract
 } from '../../generated/TreeFactory/TreeFactory';
-import { BigInt, JSONValue, log, Value, ipfs, json, Bytes, store } from '@graphprotocol/graph-ts';
+import { BigInt, JSONValue, log, Value, ipfs, json, Bytes, store, JSONValueKind } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_treeSpecs, getCount_treeUpdates, ZERO_ADDRESS } from '../helpers';
 
 function setTempTreeData(tempTree: TempTree | null, c_tempTree: TreeFactory__tempTreesResult): void {
@@ -134,8 +134,14 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
         let longitude = locationObj.get('longitude');
         let latitude = locationObj.get('latitude');
 
-        treeSpec.longitude = longitude == null ? '' : (longitude.toBigInt().toString());
-        treeSpec.latitude = latitude == null ? '' : (latitude.toBigInt().toString());
+        if(longitude != null) {
+            treeSpec.longitude = longitude.toBigInt();
+        }
+
+        if(latitude != null) {
+            treeSpec.latitude = latitude.toBigInt();
+        }
+
     }
 
     treeSpec.attributes = attrStr;
@@ -226,7 +232,7 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
 
     if (tree.planter != null) {
         let planter = Planter.load(tree.planter as string);
-        if (!planter && planter != null) {
+        if (planter != null) {
             planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
             if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
                 planter.status = BigInt.fromI32(2);
@@ -328,18 +334,24 @@ export function handleTreePlanted(event: TreePlanted): void {
 //TO DO: remove temp tree object
 export function handleTreeVerified(event: TreeVerified): void {
 
-
     let tree = new Tree(event.params.treeId.toHexString());
     let treeFactoryContract = TreeFactoryContract.bind(event.address);
     let c_tree = treeFactoryContract.trees(event.params.treeId);
 
+    log.debug("TreeId: {}", [event.params.treeId.toString()])
+    log.debug("TreeSpec: {}", [c_tree.value7.toString()])
+
+    
     setTreeData(tree, c_tree);
 
     tree.updatedAt = event.block.timestamp as BigInt;
     tree.createdAt = event.block.timestamp as BigInt;
     tree.save();
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    //to remove this if
+    if(event.params.treeId.notEqual(BigInt.fromString("10017"))  && event.params.treeId.notEqual(BigInt.fromString("10018"))) {
+        handleTreeSpecs(tree.treeSpecs, tree.id);
+    }
 
 
     // let tempTree = TempTree.load(event.params.treeId.toHexString());

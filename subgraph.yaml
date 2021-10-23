@@ -304,13 +304,3 @@ dataSources:
         - event: AttributeGenerationFailed(uint256)
           handler: handleAttributeGenerationFailed
       file: ./src/mappings/Attribute.ts
-
-
-
-
-
-
-
- 
-
-
