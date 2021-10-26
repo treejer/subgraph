@@ -102,7 +102,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
                 let value_obj = el.toObject().get("value");
                 if (value_obj != null) {
                     if (trait_type == "birthday") {
-                        attrStr += '"trait_type":"' + trait_type + '","value":"' + value_obj.toBigInt().toString() + '","display_type":"date"';
+                        attrStr += '"trait_type":"' + trait_type + '","value":"' + value_obj.toString() + '","display_type":"date"';
                     } else {
                         attrStr += '"trait_type":"' + trait_type + '","value":"' + value_obj.toString() + '"';
                     }
@@ -132,7 +132,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
             let image_hash_obj = el.toObject().get("image_hash");
             let created_at_obj = el.toObject().get("created_at");
             if (image_obj != null && image_hash_obj != null && created_at_obj != null) {            
-                updateStr += '"image":"' + image_obj.toString() + '","image_hash":"' + image_hash_obj.toString() + '","created_at":"' + created_at_obj.toBigInt().toString() + '"';
+                updateStr += '"image":"' + image_obj.toString() + '","image_hash":"' + image_hash_obj.toString() + '","created_at":"' + created_at_obj.toString() + '"';
             }
 
             if (i == updatesArray.length - 1) {
@@ -154,7 +154,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     treeSpec.symbolFs = symbol == null ? '' : symbol.toString();
     treeSpec.symbolHash = symbol_ipfs_hash == null ? '' : symbol_ipfs_hash.toString();
     treeSpec.animationUrl = animation_url == null ? '' : animation_url.toString();
-    treeSpec.diameter = diameter == null ? new BigInt(0) : diameter.toBigInt();
+    treeSpec.diameter = diameter == null ? '' : diameter.toString();
 
     if (location != null) {
         let locationObj = location.toObject();
@@ -163,11 +163,11 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
         let latitude = locationObj.get('latitude');
 
         if(longitude != null) {
-            treeSpec.longitude = longitude.toBigInt();
+            treeSpec.longitude = longitude.toString();
         }
 
         if(latitude != null) {
-            treeSpec.latitude = latitude.toBigInt();
+            treeSpec.latitude = latitude.toString();
         }
 
     }
@@ -377,10 +377,9 @@ export function handleTreeVerified(event: TreeVerified): void {
     tree.createdAt = event.block.timestamp as BigInt;
     tree.save();
 
-    //to remove this if
-    if(event.params.treeId.notEqual(BigInt.fromString("10017"))  && event.params.treeId.notEqual(BigInt.fromString("10018"))) {
-        handleTreeSpecs(tree.treeSpecs, tree.id);
-    }
+    handleTreeSpecs(tree.treeSpecs, tree.id);
+
+    store.remove('TempTree', event.params.tempTreeId.toHexString());
 
 
     // let tempTree = TempTree.load(event.params.treeId.toHexString());

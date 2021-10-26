@@ -76,9 +76,9 @@ type TreeSpec @entity {
   symbolHash: String!
   # description: String!
   animationUrl: String!
-  diameter: BigInt!
-  latitude: BigInt!
-  longitude: BigInt!
+  diameter: String!
+  latitude: String!
+  longitude: String!
   attributes: String!
   updates: String!
 }
