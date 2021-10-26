@@ -35,7 +35,7 @@ export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdat
     if (!planter) {
         return;
     }
-    planter.balance = planterFundContract.balances(Address.fromHexString(planter.id) as Address);
+    planter.balance = planterFundContract.balances(Address.fromString(planter.id));
     planter.save();
 
     let planterPayment = new PlanterPayment(getCount_planterPayment(COUNTER_ID).toHexString());
@@ -69,7 +69,7 @@ export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdat
         let pp = new PlanterPayment(getCount_planterPayment(COUNTER_ID).toHexString());
 
         if (ref) {
-            ref.balance = planterFundContract.balances(Address.fromHexString(ref.id) as Address);
+            ref.balance = planterFundContract.balances(Address.fromString(ref.id));
             pp.planter = ref.id;
             ref.save();
         }

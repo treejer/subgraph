@@ -80,6 +80,7 @@ type TreeSpec @entity {
   latitude: BigInt!
   longitude: BigInt!
   attributes: String!
+  updates: String!
 }
 
 type TreeUpdate @entity {

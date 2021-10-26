@@ -83,6 +83,8 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     let diameter = obj.get('diameter');
     let location = obj.get('location');
     let attributes = obj.get('attributes');
+    let updates = obj.get('updates');
+
     let attrStr = '';
     if (attributes != null) {
         let attributesArray = attributes.toArray();
@@ -116,6 +118,32 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
         attrStr += "]";
     }
 
+    let updateStr = '';
+    if (updates != null) {
+        let updatesArray = updates.toArray();
+
+
+        updateStr = "[";
+        for (let i = 0; i < updatesArray.length; i++) {
+            let el = updatesArray[i];
+            updateStr += "{";
+
+            let image_obj = el.toObject().get("image");
+            let image_hash_obj = el.toObject().get("image_hash");
+            let created_at_obj = el.toObject().get("created_at");
+            if (image_obj != null && image_hash_obj != null && created_at_obj != null) {            
+                updateStr += '"image":"' + image_obj.toString() + '","image_hash":"' + image_hash_obj.toString() + '","created_at":"' + created_at_obj.toBigInt().toString() + '"';
+            }
+
+            if (i == updatesArray.length - 1) {
+                updateStr += "}";
+            } else {
+                updateStr += "},";
+            }
+        }
+        updateStr += "]";
+    }
+
 
     let treeSpec = new TreeSpec(getCount_treeSpecs(COUNTER_ID).toHexString());
     treeSpec.name = name == null ? '' : name.toString();
@@ -145,6 +173,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     }
 
     treeSpec.attributes = attrStr;
+    treeSpec.updates = updateStr;
     treeSpec.save();
 
     let tree = Tree.load(userData.toString());
@@ -459,7 +488,10 @@ export function handleTreeUpdatedVerified(event: TreeUpdatedVerified): void {
     treeUpdate.updatedAt = event.block.timestamp as BigInt;
     treeUpdate.save();
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    if(event.params.treeId.notEqual(BigInt.fromString("10022")) ) {
+        handleTreeSpecs(tree.treeSpecs, tree.id);
+    }
+
 
 }
 
