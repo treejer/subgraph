@@ -266,6 +266,8 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
             if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
                 planter.status = BigInt.fromI32(2);
             }
+            planter.updatedAt = event.block.timestamp as BigInt;
+            planter.save();
         }
     }
 
@@ -354,6 +356,7 @@ export function handleTreePlanted(event: TreePlanted): void {
         if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
             planter.status = BigInt.fromI32(2);
         }
+        planter.updatedAt = event.block.timestamp as BigInt;
         planter.save();
     }
 
@@ -487,9 +490,7 @@ export function handleTreeUpdatedVerified(event: TreeUpdatedVerified): void {
     treeUpdate.updatedAt = event.block.timestamp as BigInt;
     treeUpdate.save();
 
-    if(event.params.treeId.notEqual(BigInt.fromString("10022")) ) {
-        handleTreeSpecs(tree.treeSpecs, tree.id);
-    }
+    handleTreeSpecs(tree.treeSpecs, tree.id);
 
 
 }
