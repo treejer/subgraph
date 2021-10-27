@@ -78,19 +78,30 @@ export function handleIncrementalSaleDataUpdated(event: IncrementalSaleDataUpdat
 
 // TODO: handle recipient and global data
 export function handleTreeFunded(event: TreeFunded): void {
-    let tree = Tree.load(event.params.startTreeId.toHexString());
-    if (!tree) {
-        tree = new Tree(event.params.startTreeId.toHexString()); // TODO: set tree params
-        tree.createdAt = event.block.timestamp as BigInt;
+
+    let endTreeId = parseInt(event.params.startTreeId.toString()) + parseInt(event.params.count.toString());
+
+    for (let i = parseInt(event.params.startTreeId.toString()); i < endTreeId; i++) {
+
+        let fundedTreeId = BigInt.fromI32(i as i32).toHexString();
+
+        let tree = Tree.load(fundedTreeId);
+        if (!tree) {
+            tree = new Tree(fundedTreeId); // TODO: set tree params
+            tree.createdAt = event.block.timestamp as BigInt;
+        }
+
+        tree.funder = event.params.recipient.toHexString();
+        tree.updatedAt = event.block.timestamp as BigInt;
+        tree.save();
     }
 
-    tree.funder = event.params.funder.toHexString();
-    tree.updatedAt = event.block.timestamp as BigInt;
-    tree.save();
+
+    
     let flag = false;
-    let funder = Funder.load(event.params.funder.toHexString());
+    let funder = Funder.load(event.params.recipient.toHexString());
     if (!funder) {
-        funder = newFunder(event.params.funder.toHexString());
+        funder = newFunder(event.params.recipient.toHexString());
         flag = true;
         funder.createdAt = event.block.timestamp as BigInt;
     }

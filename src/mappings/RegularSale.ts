@@ -15,7 +15,7 @@ import { COUNTER_ID, getCount_RegularRequest, getGlobalData } from '../helpers';
 export function handleTreeFunded(event: TreeFunded): void {
     // let brgtr = new RegularRequest(getCount_RegularRequest(COUNTER_ID).toHexString());
     // brgtr.count = event.params.count as BigInt;
-    // brgtr.funder = event.params.funder.toHexString();
+    // brgtr.funder = event.params.recipient.toHexString();
     // brgtr.amount = event.params.amount as BigInt;
     // brgtr.save();
     // let funder = Funder.load(brgtr.funder);
@@ -28,7 +28,7 @@ export function handleTreeFunded(event: TreeFunded): void {
     let flag = false;
     let rr = new RegularRequest(getCount_RegularRequest(COUNTER_ID).toHexString());
     rr.count = event.params.count as BigInt;
-    rr.funder = event.params.funder.toHexString();
+    rr.funder = event.params.recipient.toHexString();
     rr.amount = event.params.amount as BigInt;
     rr.createdAt = event.block.timestamp as BigInt;
     rr.updatedAt = event.block.timestamp as BigInt;
@@ -65,6 +65,9 @@ export function handleTreeFunded(event: TreeFunded): void {
 export function handleRegularMint(event: RegularMint): void {
     let funder = Funder.load(event.params.recipient.toHexString());
     if (!funder) funder = newFunder(event.params.recipient.toHexString());
+
+
+    
     let tree = Tree.load(event.params.treeId.toHexString());
     // let tree = RegularTree.load(event.params.treeId.toHexString());
     if (!tree) {
@@ -92,10 +95,10 @@ function newFunder(id: string): Funder {
 }
 
 export function handleTreeFundedById(event: TreeFundedById): void {
-    let funder = Funder.load(event.params.funder.toHexString());
+    let funder = Funder.load(event.params.recipient.toHexString());
     let flag = false;
     if (!funder) {
-        funder = newFunder(event.params.funder.toHexString());
+        funder = newFunder(event.params.recipient.toHexString());
         funder.createdAt = event.block.timestamp as BigInt;
         flag = true;
     }
