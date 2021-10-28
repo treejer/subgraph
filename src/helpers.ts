@@ -1,5 +1,5 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { Counter, GlobalData } from "../generated/schema";
+import { Counter, GlobalData, TreeHistory } from "../generated/schema";
 // import { Counter } from "../generated/schema";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
@@ -53,6 +53,7 @@ function newCounter(id: string): Counter {
     counter.withdraws = _zero;
     counter.planterPayments = _zero;
     counter.assignedFunds = _zero;
+    counter.treeHistory = _zero;
 
     counter.treeSpecs = _zero;
     counter.communityGift = _zero;
@@ -169,6 +170,41 @@ export function getCount_treeSpecs(id: string): BigInt {
     counter.treeSpecs = BigInt.fromI32(1);
     counter.save();
     return BigInt.fromI32(0);
+}
+
+export function getCount_treeHistory(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.treeHistory as BigInt;
+        counter.treeHistory = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.treeHistory = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
+export function addTreeHistory(
+    treeId: string,
+    event: string,
+    from: string,
+    transactionHash: string,
+    blockNumber: BigInt,
+    createdAt: BigInt, value: BigInt): void {
+    let treeHistory = new TreeHistory(getCount_treeHistory(COUNTER_ID).toHexString());
+
+    treeHistory.tree = treeId;
+    treeHistory.event = event;
+    treeHistory.from = from;
+    treeHistory.transactionHash = transactionHash;
+    treeHistory.blockNumber = blockNumber;
+    treeHistory.value = value;
+    treeHistory.createdAt = createdAt;
+
+    treeHistory.save();
+
 }
 
 export function getGlobalData(): GlobalData {

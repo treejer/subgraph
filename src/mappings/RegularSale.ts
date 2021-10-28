@@ -8,7 +8,7 @@ import {
 } from "../../generated/RegularSale/RegularSale";
 import { RegularRequest, Funder, Tree } from "../../generated/schema";
 import { BigInt } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_RegularRequest, getGlobalData } from '../helpers';
+import { COUNTER_ID, getCount_RegularRequest, getGlobalData,addTreeHistory } from '../helpers';
 
 
 // TODO: handle recipient
@@ -79,6 +79,13 @@ export function handleRegularMint(event: RegularMint): void {
     tree.updatedAt = event.block.timestamp as BigInt;
 
     tree.save();
+
+    addTreeHistory(event.params.treeId.toHexString(),
+    'RegularMint',
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt, event.params.price);
 }
 function newFunder(id: string): Funder {
     let funder = new Funder(id);

@@ -10,7 +10,7 @@ import {
 } from "../../generated/Auction/Auction";
 import { Auction, Bid, Funder, Tree } from "../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts";
-import { COUNTER_ID, getCount_bid, ZERO_ADDRESS } from "../helpers";
+import { COUNTER_ID, getCount_bid, ZERO_ADDRESS, addTreeHistory } from "../helpers";
 
 /**
      struct Auction {
@@ -63,6 +63,13 @@ export function handleAuctionCreated(event: AuctionCreated): void {
         tree.save();
     }
 
+    addTreeHistory(auction.tree,
+        'AuctionCreated',
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, auction.initialPrice);
+
 }
 
 export function handleHighestBidIncreased(event: HighestBidIncreased): void {
@@ -83,6 +90,13 @@ export function handleHighestBidIncreased(event: HighestBidIncreased): void {
         auction.highestBid = amount as BigInt;
         auction.updatedAt = event.block.timestamp as BigInt;
         auction.save();
+
+        addTreeHistory(auction.tree,
+            'HighestBidIncreased',
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, amount);
     }
 }
 
@@ -98,6 +112,13 @@ export function handleAuctionSettled(event: AuctionSettled): void {
         auction.isActive = false;
         auction.updatedAt = event.block.timestamp as BigInt;
         auction.save();
+
+        addTreeHistory(auction.tree,
+            'AuctionSettled',
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, amount);
     }
 
 
@@ -119,6 +140,8 @@ export function handleAuctionSettled(event: AuctionSettled): void {
         tree.save();
     }
 
+
+
 }
 
 export function handleAuctionEnded(event: AuctionEnded): void {
@@ -138,7 +161,12 @@ export function handleAuctionEnded(event: AuctionEnded): void {
         tree.save();
     }
 
-
+    addTreeHistory(event.params.treeId.toHexString(),
+        'AuctionEnded',
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, new BigInt(0));
 }
 
 export function handleAuctionEndTimeIncreased(event: AuctionEndTimeIncreased): void {

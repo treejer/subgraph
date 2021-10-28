@@ -8,7 +8,7 @@ import {
 } from "../../generated/IncrementalSale/IncrementalSale";
 import { IncrementalSale, Funder, Tree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { INCREMENTAL_SELL_ID } from '../helpers';
+import { INCREMENTAL_SELL_ID,addTreeHistory } from '../helpers';
 
 
 
@@ -22,7 +22,6 @@ function upsertTreeIncremental(id: string, timestamp: BigInt): void {
         tree.updatedAt = timestamp as BigInt;
     }
     tree.saleType = BigInt.fromI32(2);
-    tree.treeStatus = BigInt.fromI32(2);
     tree.save();
 }
 function newFunder(id: string): Funder {
@@ -66,8 +65,46 @@ export function handleIncrementalSaleUpdated(event: IncrementalSaleUpdated): voi
     if (!incSell) incSell = new IncrementalSale(INCREMENTAL_SELL_ID);
     setIncSellData(incSell, c_incSell);
     for (let i = parseInt(incSell.startTree); i <= parseInt(incSell.endTree); i++) {
-        upsertTreeIncremental(BigInt.fromString(i.toString().split(".")[0]).toHexString(), event.block.timestamp as BigInt);
+
+        let treeId = BigInt.fromString(i.toString().split(".")[0]).toHexString();
+        // upsertTreeIncremental(treeId, event.block.timestamp as BigInt);
         // upsertTreeIncremental(BigInt.fromString(i.toString()).toHexString());
+
+        let tree = Tree.load(treeId);
+        if (!tree){
+            tree = new Tree(treeId);
+            tree.createdAt = event.block.timestamp as BigInt;
+            tree.updatedAt = event.block.timestamp as BigInt;
+            tree.saleType = BigInt.fromI32(2);
+            tree.save();
+
+            addTreeHistory(treeId,
+                'IncrementalListed',
+                event.transaction.from.toHexString(),
+                event.transaction.hash.toHexString(),
+                event.block.number as BigInt,
+                event.block.timestamp as BigInt, new BigInt(0));
+        } else {
+
+            if(tree.saleType.notEqual(BigInt.fromI32(2))) {
+                tree.updatedAt = event.block.timestamp as BigInt;
+                tree.saleType = BigInt.fromI32(2);
+                tree.save();
+
+                addTreeHistory(treeId,
+                    'IncrementalListed',
+                    event.transaction.from.toHexString(),
+                    event.transaction.hash.toHexString(),
+                    event.block.number as BigInt,
+                    event.block.timestamp as BigInt, new BigInt(0));
+
+            }
+
+        }
+        
+
+
+
     }
 
     incSell.save();
@@ -94,6 +131,13 @@ export function handleTreeFunded(event: TreeFunded): void {
         tree.funder = event.params.recipient.toHexString();
         tree.updatedAt = event.block.timestamp as BigInt;
         tree.save();
+
+        addTreeHistory(fundedTreeId,
+        'IncrementalSaleTreeFunded',
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, new BigInt(0));
     }
 
 
