@@ -67,6 +67,26 @@ type Tree @entity {
   updatedAt: BigInt!
 }
 
+type HonoraryTree @entity {
+  id: ID!
+  tree: Tree!
+  recipient: HonoraryTreeRecipient
+  claimed: Boolean!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type HonoraryTreeRecipient @entity {
+  id: ID!
+  expiryDate: BigInt!
+  startDate: BigInt!
+  status: BigInt!
+  claimedFailed: Boolean!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+
 type TreeHistory @entity {
   id: ID!
   tree: Tree!

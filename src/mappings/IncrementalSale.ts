@@ -101,10 +101,7 @@ export function handleIncrementalSaleUpdated(event: IncrementalSaleUpdated): voi
             }
 
         }
-        
-
-
-
+    
     }
 
     incSell.save();
