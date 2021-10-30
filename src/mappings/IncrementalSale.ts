@@ -73,7 +73,7 @@ export function handleIncrementalSaleUpdated(event: IncrementalSaleUpdated): voi
         let tree = Tree.load(treeId);
         if (!tree){
             tree = new Tree(treeId);
-            tree.createdAt = event.block.timestamp as BigInt;
+            tree.createdAt = (event.block.timestamp as BigInt).plus(BigInt.fromString(i.toString().split(".")[0]));
             tree.updatedAt = event.block.timestamp as BigInt;
             tree.saleType = BigInt.fromI32(2);
             tree.save();

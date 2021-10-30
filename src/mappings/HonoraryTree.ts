@@ -33,7 +33,7 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
         let tree = Tree.load(treeId);
         if (!tree) {
             tree = new Tree(treeId);
-            tree.createdAt = event.block.timestamp as BigInt;
+            tree.createdAt = (event.block.timestamp as BigInt).plus(BigInt.fromString(i.toString().split(".")[0]));
             tree.updatedAt = event.block.timestamp as BigInt;
             tree.saleType = BigInt.fromI32(5);
             tree.save();
@@ -69,7 +69,7 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
             honoraryTree.tree = treeId;
 
             honoraryTree.claimed = false;
-            honoraryTree.createdAt = event.block.timestamp as BigInt;
+            honoraryTree.createdAt = (event.block.timestamp as BigInt).plus(BigInt.fromString(i.toString().split(".")[0]));
             honoraryTree.updatedAt = event.block.timestamp as BigInt;
             honoraryTree.save();
         } else {
