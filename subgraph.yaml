@@ -104,6 +104,8 @@ dataSources:
       abis:
         - name: Auction
           file: ./abis/Auction.json
+        - name: RegularSale
+          file: ./abis/RegularSale.json
       eventHandlers:
         - event: AuctionCreated(uint256)
           handler: handleAuctionCreated
@@ -135,6 +137,8 @@ dataSources:
       abis:
         - name: IncrementalSale
           file: ./abis/IncrementalSale.json
+        - name: RegularSale
+          file: ./abis/RegularSale.json
       eventHandlers:
         - event: IncrementalSaleUpdated()
           handler: handleIncrementalSaleUpdated
@@ -171,6 +175,8 @@ dataSources:
           handler: handleTreeFundedById
         - event: PriceUpdated(uint256)
           handler: handlePriceUpdated
+        - event: ReferralRewardClaimed(address,uint256,uint256)
+          handler: handleReferralRewardClaimed
       file: ./src/mappings/RegularSale.ts
 
   - kind: ethereum/contract

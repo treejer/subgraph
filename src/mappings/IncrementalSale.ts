@@ -9,6 +9,7 @@ import {
 import { IncrementalSale, Funder, Tree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { INCREMENTAL_SELL_ID,addTreeHistory } from '../helpers';
+import { updateReferrer } from '../helpers/referrer';
 
 
 
@@ -152,6 +153,10 @@ export function handleTreeFunded(event: TreeFunded): void {
     // funder.spentWeth = funder.spentWeth.plus(event.params.amount as BigInt);
     funder.updatedAt = event.block.timestamp as BigInt;
     funder.save();
+
+
+    updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
+
     // let gb = getGlobalData();
     // gb.totalIncrementalSaleCount = gb.totalIncrementalSaleCount.plus(BigInt.fromI32(1));
     // gb.totalIncrementalSaleAmount = gb.totalIncrementalSaleAmount.plus(event.params.amount as BigInt);

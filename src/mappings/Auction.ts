@@ -11,6 +11,7 @@ import {
 import { Auction, Bid, Funder, Tree } from "../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts";
 import { COUNTER_ID, getCount_bid, ZERO_ADDRESS, addTreeHistory } from "../helpers";
+import { updateReferrer } from '../helpers/referrer';
 
 /**
      struct Auction {
@@ -140,7 +141,7 @@ export function handleAuctionSettled(event: AuctionSettled): void {
         tree.save();
     }
 
-
+    updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
 
 }
 

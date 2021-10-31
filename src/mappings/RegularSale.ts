@@ -4,11 +4,13 @@ import {
     RegularSale as RegularSaleContract,
     TreeFunded,
     TreeFundedById,
-    PriceUpdated
+    PriceUpdated,
+    ReferralRewardClaimed
 } from "../../generated/RegularSale/RegularSale";
-import { RegularRequest, Funder, Tree } from "../../generated/schema";
+import { RegularRequest, Funder, Tree,Referrer } from "../../generated/schema";
 import { BigInt } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_RegularRequest, getGlobalData,addTreeHistory } from '../helpers';
+import { updateReferrer } from '../helpers/referrer';
 
 
 // TODO: handle recipient
@@ -59,6 +61,7 @@ export function handleTreeFunded(event: TreeFunded): void {
     gb.ownedTreeCount = gb.ownedTreeCount.plus(event.params.count as BigInt);
     gb.save();
 
+    updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
 
 }
 
@@ -131,6 +134,8 @@ export function handleTreeFundedById(event: TreeFundedById): void {
         gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
         gb.save();
     }
+
+    updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
 }
 
 export function handlePriceUpdated(event: PriceUpdated): void {
@@ -140,6 +145,22 @@ export function handlePriceUpdated(event: PriceUpdated): void {
 }
 
 
+export function handleReferralRewardClaimed(event: ReferralRewardClaimed): void {
+    let regularSaleContract = RegularSaleContract.bind(event.address);
+
+    let referrer = Referrer.load(event.params.referrer.toHexString());
+    if (referrer) {
+        referrer.claimableTreesDai = regularSaleContract.referrerClaimableTreesDai(event.params.referrer);
+        referrer.claimableTreesWeth = regularSaleContract.referrerClaimableTreesWeth(event.params.referrer);;
+        referrer.referrerCount = regularSaleContract.referrerCount(event.params.referrer);
+
+        referrer.claimedCount = referrer.claimedCount.plus(event.params.count);
+
+        referrer.updatedAt = event.block.timestamp as BigInt;
+    
+        referrer.save();
+    }
+}
 
 
 
