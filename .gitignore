@@ -62,6 +62,8 @@ typings/
 
 # vscode history
 .history
+.vscode
+
 
 ###########################
 generated/
