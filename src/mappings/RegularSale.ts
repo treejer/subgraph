@@ -36,13 +36,15 @@ export function handleTreeFunded(event: TreeFunded): void {
     rr.updatedAt = event.block.timestamp as BigInt;
     rr.save();
 
-    let funder = Funder.load(rr.funder as string);
+    let funder = Funder.load(event.params.funder.toHexString());
     if (!funder) {
-        funder = new Funder(rr.funder as string);
+        funder = new Funder(event.params.funder.toHexString());
         flag = true;
         funder.createdAt = event.block.timestamp as BigInt;
     }
     funder.regularSpent = funder.regularSpent.plus(event.params.amount as BigInt);
+    funder.spentDai = funder.spentDai.plus(event.params.amount as BigInt);
+
     funder.treeCount = funder.treeCount.plus(event.params.count as BigInt);
     funder.regularCount = funder.regularCount.plus(event.params.count as BigInt);
     funder.lastRequestId = rr.id;
@@ -62,7 +64,24 @@ export function handleTreeFunded(event: TreeFunded): void {
 
 export function handleRegularMint(event: RegularMint): void {
     let funder = Funder.load(event.transaction.from.toHexString());
-    if (!funder) funder = newFunder(event.transaction.from.toHexString());
+    if (!funder){
+        funder = newFunder(event.transaction.from.toHexString());
+        funder.createdAt = event.block.timestamp as BigInt;
+
+        let gb = getGlobalData();
+        gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
+        gb.save();
+
+        funder.regularSpent = funder.regularSpent.plus(event.params.price as BigInt);
+        funder.regularCount = funder.regularCount.plus(BigInt.fromI32(1));
+        funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
+        funder.spentDai = funder.spentDai.plus(event.params.price as BigInt);
+        funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
+    }
+
+    funder.updatedAt = event.block.timestamp as BigInt;
+    funder.save();
+
 
     
     let tree = Tree.load(event.params.treeId.toHexString());
@@ -71,7 +90,7 @@ export function handleRegularMint(event: RegularMint): void {
         tree = new Tree(event.params.treeId.toHexString());
         tree.createdAt = event.block.timestamp as BigInt;
     }
-    tree.funder = funder.id;
+    tree.funder = event.transaction.from.toHexString();
     tree.requestId = funder.lastRequestId;
     tree.updatedAt = event.block.timestamp as BigInt;
 
@@ -110,7 +129,6 @@ export function handleTreeFundedById(event: TreeFundedById): void {
     funder.regularCount = funder.regularCount.plus(BigInt.fromI32(1));
     funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
     funder.spentDai = funder.spentDai.plus(event.params.amount as BigInt);
-    // funder.spentWeth = funder.spentWeth.plus(event.params.amount as BigInt); // DAI to WETH ???
     funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
     funder.updatedAt = event.block.timestamp as BigInt;
     funder.save();
