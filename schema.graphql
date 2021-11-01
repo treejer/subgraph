@@ -49,6 +49,7 @@ type Tree @entity {
   id: ID!
   planter: Planter
   funder: Funder
+  owner: Owner
   species: BigInt!
   countryCode: String!
   saleType: BigInt!
@@ -152,6 +153,14 @@ type Funder @entity {
   auctionSpent: BigInt!
   incrementalSpent: BigInt!
   regularSpent: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type Owner @entity {
+  id: ID!
+  trees: [Tree!] @derivedFrom(field: "owner")
+  treeCount: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
 }
@@ -337,17 +346,17 @@ type GlobalData @entity {
   totalUpdates: BigInt!
   totalVerifiedUpdates: BigInt!
   totalRegularTreesUnderReview: BigInt!
-  totalRegularTreeSellCount: BigInt!
-  totalAuctionTreeSellCount: BigInt!
-  totalIncrementalSellCount: BigInt!
+  totalRegularTreeSaleCount: BigInt!
+  totalAuctionTreeSaleCount: BigInt!
+  totalIncrementalSaleCount: BigInt!
   planterCount: BigInt!
   organizationCount: BigInt!
   independentPlanterCount: BigInt!
   funderCount: BigInt!
   ownedTreeCount: BigInt!
-  totalRegularTreeSellAmount: BigInt!
-  totalAuctionTreeSellAmount: BigInt!
-  totalIncrementalSaleCount: BigInt!
+  totalRegularTreeSaleAmount: BigInt!
+  totalAuctionTreeSaleAmount: BigInt!
+  totalIncrementalSaleAmount: BigInt!
   totalClaimedGiftTrees: BigInt!
   regularTreePrice: BigInt!
   lastIncrementalSold: BigInt!

@@ -8,7 +8,7 @@ import {
 } from "../../generated/IncrementalSale/IncrementalSale";
 import { IncrementalSale, Funder, Tree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { INCREMENTAL_SELL_ID,addTreeHistory } from '../helpers';
+import { INCREMENTAL_SELL_ID,addTreeHistory, getGlobalData } from '../helpers';
 import { updateReferrer } from '../helpers/referrer';
 
 
@@ -111,7 +111,6 @@ export function handleIncrementalSaleDataUpdated(event: IncrementalSaleDataUpdat
     
 }
 
-// TODO: handle recipient and global data
 export function handleTreeFunded(event: TreeFunded): void {
 
     let endTreeId = parseInt(event.params.startTreeId.toString()) + parseInt(event.params.count.toString());
@@ -126,7 +125,7 @@ export function handleTreeFunded(event: TreeFunded): void {
             tree.createdAt = event.block.timestamp as BigInt;
         }
 
-        tree.funder = event.params.recipient.toHexString();
+        tree.funder = event.params.funder.toHexString();
         tree.updatedAt = event.block.timestamp as BigInt;
         tree.save();
 
@@ -141,9 +140,9 @@ export function handleTreeFunded(event: TreeFunded): void {
 
     
     let flag = false;
-    let funder = Funder.load(event.params.recipient.toHexString());
+    let funder = Funder.load(event.params.funder.toHexString());
     if (!funder) {
-        funder = newFunder(event.params.recipient.toHexString());
+        funder = newFunder(event.params.funder.toHexString());
         flag = true;
         funder.createdAt = event.block.timestamp as BigInt;
     }
@@ -157,9 +156,9 @@ export function handleTreeFunded(event: TreeFunded): void {
 
     updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
 
-    // let gb = getGlobalData();
-    // gb.totalIncrementalSaleCount = gb.totalIncrementalSaleCount.plus(BigInt.fromI32(1));
-    // gb.totalIncrementalSaleAmount = gb.totalIncrementalSaleAmount.plus(event.params.amount as BigInt);
+    let gb = getGlobalData();
+    gb.totalIncrementalSaleCount = gb.totalIncrementalSaleCount.plus(event.params.count as BigInt);
+    // gb.totalIncrementalSaleAmount = gb.totalIncrementalSaleAmount.plus(event.params.amunt as BigInt);
     // if (event.params.startTreeId.gt(gb.lastIncrementalSold as BigInt)) {
     //     gb.lastIncrementalSold = event.params.startTreeId as BigInt;
     // }
@@ -168,8 +167,8 @@ export function handleTreeFunded(event: TreeFunded): void {
     // gb.nowIncrementalPrice = event.params.startTreeId.plus(BigInt.fromI32(1)).minus(incSell.startTreeId as BigInt).div(incSell.increments as BigInt).times(incSell.priceJump as BigInt).times(incSell.initialPrice as BigInt).plus(incSell.initialPrice as BigInt);
     // gb.nextIncremetalPrice = event.params.startTreeId.plus(BigInt.fromI32(2)).minus(incSell.startTreeId as BigInt).div(incSell.increments as BigInt).times(incSell.priceJump as BigInt).times(incSell.initialPrice as BigInt).plus(incSell.initialPrice as BigInt);
     // gb.ownedTreeCount = gb.ownedTreeCount.plus(BigInt.fromI32(1));
-    // if (flag) {
-    //     gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
-    // }
-    // gb.save();
+    if (flag) {
+        gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
+    }
+    gb.save();
 }

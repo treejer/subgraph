@@ -38,6 +38,28 @@ dataSources:
       file: ./src/mappings/Planter.ts
       
   - kind: ethereum/contract
+    name: Tree
+    network: rinkeby
+    source:
+      address: '0xa69aB5Cb498a854e16eb88a1545D6e5B03c72034'
+      abi: Tree
+      startBlock: 9529020
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - Owner
+      abis:
+        - name: Tree
+          file: ./abis/Tree.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/Tree.ts      
+
+  - kind: ethereum/contract
     name: TreeFactory
     network: rinkeby
     source:
