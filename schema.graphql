@@ -161,6 +161,8 @@ type Owner @entity {
   id: ID!
   trees: [Tree!] @derivedFrom(field: "owner")
   treeCount: BigInt!
+  regularTreeCount: BigInt!
+  genesisTreeCount: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
 }
