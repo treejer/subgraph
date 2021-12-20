@@ -195,9 +195,14 @@ function handleTreeSpecs(hash: string | null, treeId: string): void {
     // TODO: uncomment this
     // return;
 
+
+
     if (hash == null || hash == "") {
         return;
     }
+    
+    log.debug("TreeId: {} Hash: {}", [treeId, hash as string]);
+
 
     let data = ipfs.cat(hash as string);
     if (data) {
