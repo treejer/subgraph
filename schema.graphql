@@ -53,6 +53,7 @@ type Tree @entity {
   species: BigInt!
   countryCode: String!
   saleType: BigInt!
+  soldType: BigInt!
   treeStatus: BigInt!
   plantDate: BigInt!
   birthDate: BigInt!

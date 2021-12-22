@@ -126,6 +126,8 @@ export function handleTreeFunded(event: TreeFunded): void {
         }
 
         tree.funder = event.params.funder.toHexString();
+        tree.soldType = BigInt.fromI32(2);
+        tree.saleType = BigInt.fromI32(0);
         tree.updatedAt = event.block.timestamp as BigInt;
         tree.save();
 

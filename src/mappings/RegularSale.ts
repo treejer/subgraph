@@ -85,11 +85,13 @@ export function handleRegularMint(event: RegularMint): void {
 
     
     let tree = Tree.load(event.params.treeId.toHexString());
-    // let tree = RegularTree.load(event.params.treeId.toHexString());
     if (!tree) {
         tree = new Tree(event.params.treeId.toHexString());
         tree.createdAt = event.block.timestamp as BigInt;
     }
+    tree.soldType = BigInt.fromI32(4);
+    tree.saleType = BigInt.fromI32(0);
+
     tree.funder = event.transaction.from.toHexString();
     tree.requestId = funder.lastRequestId;
     tree.updatedAt = event.block.timestamp as BigInt;

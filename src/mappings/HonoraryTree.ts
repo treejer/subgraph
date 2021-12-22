@@ -33,7 +33,7 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
         let tree = Tree.load(treeId);
         if (!tree) {
             tree = new Tree(treeId);
-            tree.createdAt = (event.block.timestamp as BigInt).plus(BigInt.fromString(i.toString().split(".")[0]));
+            tree.createdAt = event.block.timestamp as BigInt;
             tree.updatedAt = event.block.timestamp as BigInt;
             tree.saleType = BigInt.fromI32(5);
             tree.save();
@@ -69,7 +69,7 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
             honoraryTree.tree = treeId;
 
             honoraryTree.claimed = false;
-            honoraryTree.createdAt = (event.block.timestamp as BigInt).plus(BigInt.fromString(i.toString().split(".")[0]));
+            honoraryTree.createdAt = event.block.timestamp as BigInt;
             honoraryTree.updatedAt = event.block.timestamp as BigInt;
             honoraryTree.save();
         } else {
@@ -111,13 +111,27 @@ export function handleRecipientUpdated(event: RecipientUpdated): void {
 
 export function handleClaimed(event: Claimed): void {
 
-    let honoraryTree = HonoraryTree.load(event.params.treeId.toHexString());
+    let treeId = event.params.treeId.toHexString();
+
+    let honoraryTree = HonoraryTree.load(treeId);
     if (honoraryTree) {
         honoraryTree.recipient = event.transaction.from.toHexString();
         honoraryTree.claimed = true;
         honoraryTree.updatedAt = event.block.timestamp as BigInt;
         honoraryTree.save();
     }
+
+    let tree = Tree.load(treeId);
+    if (!tree) {
+        tree = new Tree(treeId);
+        tree.createdAt = event.block.timestamp as BigInt;
+    }
+    tree.updatedAt = event.block.timestamp as BigInt;
+    tree.soldType = BigInt.fromI32(5);
+    tree.saleType = BigInt.fromI32(0);
+    tree.save();
+
+
 
     addTreeHistory(event.params.treeId.toHexString(),
         'HonoraryClaimed',

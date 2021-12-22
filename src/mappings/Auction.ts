@@ -136,6 +136,7 @@ export function handleAuctionSettled(event: AuctionSettled): void {
     if (tree) {
         tree.funder = funder.id;
         tree.saleType = BigInt.fromI32(0);
+        tree.soldType = BigInt.fromI32(1);
         tree.updatedAt = event.block.timestamp as BigInt;
 
         tree.save();
