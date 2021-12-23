@@ -60,7 +60,7 @@ type Tree @entity {
   treeUpdates: [TreeUpdate!] @derivedFrom(field: "tree")
   treeHistories: [TreeHistory!] @derivedFrom(field: "tree")
   auctions: [Auction!] @derivedFrom(field: "tree")
-  honoraryTrees: [HonoraryTree!] @derivedFrom(field: "tree")
+  honoraryTree: HonoraryTree
   lastUpdate: TreeUpdate
   attribute: Attribute
   symbol: Symbol
