@@ -25,6 +25,8 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
     let startTreeId = hTreeContract.currentTreeId();
     let endTreeId = hTreeContract.upTo();
 
+    let blockTimestamp = event.block.timestamp as BigInt;
+
     for (let i = parseInt(startTreeId.toString()); i < parseInt(endTreeId.toString()); i++) {
 
         let treeId = BigInt.fromString(i.toString().split(".")[0]).toHexString();
@@ -63,17 +65,19 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
 
         }
 
+        blockTimestamp = blockTimestamp.plus(BigInt.fromI32(1));
+
         let honoraryTree = HonoraryTree.load(treeId);
         if (!honoraryTree) {
             honoraryTree = new HonoraryTree(treeId);
             honoraryTree.tree = treeId;
 
             honoraryTree.claimed = false;
-            honoraryTree.createdAt = event.block.timestamp as BigInt;
-            honoraryTree.updatedAt = event.block.timestamp as BigInt;
+            honoraryTree.createdAt = blockTimestamp;
+            honoraryTree.updatedAt = blockTimestamp;
             honoraryTree.save();
         } else {
-            honoraryTree.updatedAt = event.block.timestamp as BigInt;
+            honoraryTree.updatedAt = blockTimestamp;
             honoraryTree.save();
         }
 
