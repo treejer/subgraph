@@ -10,7 +10,7 @@ import {
 } from "../../generated/Auction/Auction";
 import { Auction, Bid, Funder, Tree } from "../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts";
-import { COUNTER_ID, getCount_bid, ZERO_ADDRESS, addTreeHistory } from "../helpers";
+import { COUNTER_ID, getCount_bid, ZERO_ADDRESS, addTreeHistory, addAddressHistory } from "../helpers";
 import { updateReferrer } from '../helpers/referrer';
 
 /**
@@ -94,10 +94,19 @@ export function handleHighestBidIncreased(event: HighestBidIncreased): void {
 
         addTreeHistory(auction.tree,
             'HighestBidIncreased',
-            event.transaction.from.toHexString(),
+            bidder.toHexString(),
             event.transaction.hash.toHexString(),
             event.block.number as BigInt,
             event.block.timestamp as BigInt, amount);
+
+        addAddressHistory(bidder.toHexString(),
+            'HighestBidIncreased',
+            'auction',
+            auctionId.toHexString(),
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, amount as BigInt, BigInt.fromI32(0));
     }
 }
 
@@ -120,6 +129,15 @@ export function handleAuctionSettled(event: AuctionSettled): void {
             event.transaction.hash.toHexString(),
             event.block.number as BigInt,
             event.block.timestamp as BigInt, amount);
+
+        addAddressHistory(event.transaction.from.toHexString(),
+            'AuctionSettled',
+            'auction',
+            auctionId.toHexString(),
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0));    
     }
 
 
@@ -130,6 +148,15 @@ export function handleAuctionSettled(event: AuctionSettled): void {
     funder.spentWeth = funder.spentWeth.plus(amount as BigInt);
     funder.updatedAt = event.block.timestamp as BigInt;
     funder.save();
+
+    addAddressHistory(winnerId,
+    'WonAuction',
+    'auction',
+    auctionId.toHexString(),
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt, amount as BigInt, BigInt.fromI32(1));
 
 
     let tree = Tree.load(treeId.toHexString());
@@ -169,6 +196,16 @@ export function handleAuctionEnded(event: AuctionEnded): void {
         event.transaction.hash.toHexString(),
         event.block.number as BigInt,
         event.block.timestamp as BigInt, new BigInt(0));
+
+
+    addAddressHistory(event.transaction.from.toHexString(),
+        'AuctionEnded',
+        'auction',
+        event.params.auctionId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0)); 
 }
 
 export function handleAuctionEndTimeIncreased(event: AuctionEndTimeIncreased): void {

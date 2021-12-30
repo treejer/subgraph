@@ -1,5 +1,5 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { Counter, GlobalData, TreeHistory } from "../generated/schema";
+import { Counter, GlobalData, TreeHistory, AddressHistory } from "../generated/schema";
 // import { Counter } from "../generated/schema";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
@@ -55,6 +55,7 @@ function newCounter(id: string): Counter {
     counter.planterPayments = _zero;
     counter.assignedFunds = _zero;
     counter.treeHistory = _zero;
+    counter.addressHistory = _zero;
 
     counter.treeSpecs = _zero;
     counter.communityGift = _zero;
@@ -187,6 +188,20 @@ export function getCount_treeHistory(id: string): BigInt {
     return BigInt.fromI32(0);
 }
 
+export function getCount_addressHistory(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.addressHistory as BigInt;
+        counter.addressHistory = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.addressHistory = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
 export function addTreeHistory(
     treeId: string,
     event: string,
@@ -207,6 +222,34 @@ export function addTreeHistory(
     treeHistory.save();
 
 }
+
+
+export function addAddressHistory(
+    address: string,
+    event: string,
+    type: string,
+    typeId: string,
+    from: string,
+    transactionHash: string,
+    blockNumber: BigInt,
+    createdAt: BigInt, value: BigInt, count: BigInt): void {
+    let addressHistory = new AddressHistory(getCount_addressHistory(COUNTER_ID).toHexString());
+
+    addressHistory.address = address;
+    addressHistory.event = event;
+    addressHistory.type = type;
+    addressHistory.typeId = typeId;
+    addressHistory.from = from;
+    addressHistory.transactionHash = transactionHash;
+    addressHistory.blockNumber = blockNumber;
+    addressHistory.value = value;
+    addressHistory.count = count;
+    addressHistory.createdAt = createdAt;
+
+    addressHistory.save();
+
+}
+
 
 export function getGlobalData(): GlobalData {
     let gb = GlobalData.load('0');

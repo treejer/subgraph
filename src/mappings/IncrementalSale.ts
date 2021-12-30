@@ -8,7 +8,7 @@ import {
 } from "../../generated/IncrementalSale/IncrementalSale";
 import { IncrementalSale, Funder, Tree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { INCREMENTAL_SELL_ID,addTreeHistory, getGlobalData } from '../helpers';
+import { INCREMENTAL_SELL_ID,addTreeHistory, getGlobalData, addAddressHistory } from '../helpers';
 import { updateReferrer } from '../helpers/referrer';
 
 
@@ -157,6 +157,16 @@ export function handleTreeFunded(event: TreeFunded): void {
 
 
     updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
+
+
+    addAddressHistory(event.params.funder.toHexString(),
+    'IncrementalTreeFunded',
+    '',
+    '',
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt, BigInt.fromI32(0), event.params.count as BigInt);
 
     let gb = getGlobalData();
     gb.totalIncrementalSaleCount = gb.totalIncrementalSaleCount.plus(event.params.count as BigInt);

@@ -9,7 +9,7 @@ import {
 } from "../../generated/RegularSale/RegularSale";
 import { RegularRequest, Funder, Tree,Referrer } from "../../generated/schema";
 import { BigInt } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_RegularRequest, getGlobalData,addTreeHistory } from '../helpers';
+import { COUNTER_ID, getCount_RegularRequest, getGlobalData,addTreeHistory, addAddressHistory } from '../helpers';
 import { updateReferrer } from '../helpers/referrer';
 
 
@@ -58,6 +58,17 @@ export function handleTreeFunded(event: TreeFunded): void {
     gb.totalRegularTreeSaleCount = gb.totalRegularTreeSaleCount.plus(event.params.count as BigInt);
     if (flag) gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
     gb.save();
+
+    
+
+    addAddressHistory(event.params.funder.toHexString(),
+    'RegularTreeFunded',
+    '',
+    '',
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt, event.params.amount as BigInt, event.params.count as BigInt);
 
     updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
 }

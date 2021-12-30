@@ -11,6 +11,7 @@ type Counter @entity {
   treeSpecs: BigInt!
   communityGift: BigInt!
   treeHistory: BigInt!
+  addressHistory: BigInt!
 }
 
 type Planter @entity {
@@ -57,13 +58,13 @@ type Tree @entity {
   treeStatus: BigInt!
   plantDate: BigInt!
   birthDate: BigInt!
+  attribute: Attribute
+  symbol: Symbol
+  lastUpdate: TreeUpdate
   treeUpdates: [TreeUpdate!] @derivedFrom(field: "tree")
   treeHistories: [TreeHistory!] @derivedFrom(field: "tree")
   auctions: [Auction!] @derivedFrom(field: "tree")
   honoraryTree: HonoraryTree
-  lastUpdate: TreeUpdate
-  attribute: Attribute
-  symbol: Symbol
   treeSpecs: String!
   treeSpecsEntity: TreeSpec
   requestId: String!
@@ -99,6 +100,20 @@ type TreeHistory @entity {
   transactionHash: String!
   blockNumber: BigInt!
   value: BigInt!
+  createdAt: BigInt!
+}
+
+type AddressHistory @entity {
+  id: ID!
+  address: String!
+  event: String!
+  from: String!
+  transactionHash: String!
+  blockNumber: BigInt!
+  type: String!
+  typeId: String!
+  value: BigInt!
+  count: BigInt!
   createdAt: BigInt!
 }
 

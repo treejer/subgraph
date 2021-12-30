@@ -53,6 +53,7 @@ function copyTree(t1: Tree | null, t2: Tree | null): void {
     t1.treeStatus = t2.treeStatus;
     t1.treeSpecs = t2.treeSpecs;
     t1.attribute = t2.attribute;
+    t1.symbol = t2.symbol;
     t1.saleType = t2.saleType;
     t1.planter = t2.planter;
     t1.plantDate = t2.plantDate;

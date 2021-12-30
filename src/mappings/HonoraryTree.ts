@@ -9,7 +9,7 @@ import {
 } from "../../generated/HonoraryTree/HonoraryTree";
 import { Tree, HonoraryTree, HonoraryTreeRecipient } from "../../generated/schema";
 import { BigInt } from '@graphprotocol/graph-ts';
-import { addTreeHistory } from '../helpers';
+import { addTreeHistory, addAddressHistory } from '../helpers';
 
 
 function setRecipientFields(recipient: HonoraryTreeRecipient, recipientRes: HonoraryTree__recipientsResult): void {
@@ -143,6 +143,16 @@ export function handleClaimed(event: Claimed): void {
         event.transaction.hash.toHexString(),
         event.block.number as BigInt,
         event.block.timestamp as BigInt, new BigInt(0));
+
+
+    addAddressHistory(event.transaction.from.toHexString(),
+        'HonoraryClaimed',
+        'tree',
+        treeId,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
 }
 
 export function handleClaimFailed(event: ClaimFailed): void {
