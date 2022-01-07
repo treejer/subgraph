@@ -85,6 +85,8 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     let location = obj.get('location');
     let attributes = obj.get('attributes');
     let updates = obj.get('updates');
+    let nursery = obj.get('nursery');
+
 
     let attrStr = '';
     if (attributes != null) {
@@ -156,6 +158,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     treeSpec.symbolHash = symbol_ipfs_hash == null ? '' : symbol_ipfs_hash.toString();
     treeSpec.animationUrl = animation_url == null ? '' : animation_url.toString();
     treeSpec.diameter = diameter == null ? '' : diameter.toString();
+    treeSpec.nursery = nursery == null ? '' : nursery.toString();
 
     if (location != null) {
         let locationObj = location.toObject();

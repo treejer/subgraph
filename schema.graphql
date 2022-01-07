@@ -133,6 +133,7 @@ type TreeSpec @entity {
   longitude: String!
   attributes: String!
   updates: String!
+  nursery: String!
 }
 
 type TreeUpdate @entity {
