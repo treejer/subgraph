@@ -1,16 +1,37 @@
 specVersion: 0.0.2
-description: Treejer V1
-repository: https://github.com/SinaHo/treejer-thegraph-v1
+description: Treejer subgraph v1
+repository: https://github.com/treejer/subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Planter
-    network: rinkeby
+    name: Tree
+    network: {{NETWORK}}
     source:
-      address: '0xe3f3b40F7132d15FD7618AB8D24E0aB9584116ED'
-      abi: Planter
-      startBlock: 9528995
+      address: '{{CONTRACT_TREE_ADDRESS}}'
+      abi: ITree
+      startBlock: {{CONTRACT_TREE_START_BLOCK}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+      abis:
+        - name: ITree
+          file: ./abis/ITree.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/Tree.ts      
+
+  - kind: ethereum/contract
+    name: Planter
+    network: {{NETWORK}}
+    source:
+      address: '{{CONTRACT_PLANTER_ADDRESS}}'
+      abi: IPlanter
+      startBlock: {{CONTRACT_PLANTER_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -18,10 +39,8 @@ dataSources:
       entities:
         - Planter
       abis:
-        - name: Planter
-          file: ./abis/Planter.json
-        # - name: PlanterFund
-        #   file: ./abis/PlanterFund.json
+        - name: IPlanter
+          file: ./abis/IPlanter.json
       eventHandlers:
         - event: PlanterJoined(address)
           handler: handlePlanterJoined
@@ -36,36 +55,14 @@ dataSources:
         - event: OrganizationMemberShareUpdated(address)
           handler: handleOrganizationMemberShareUpdated
       file: ./src/mappings/Planter.ts
-      
-  - kind: ethereum/contract
-    name: Tree
-    network: rinkeby
-    source:
-      address: '0xa69aB5Cb498a854e16eb88a1545D6e5B03c72034'
-      abi: Tree
-      startBlock: 9529020
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Tree
-        - Owner
-      abis:
-        - name: Tree
-          file: ./abis/Tree.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/mappings/Tree.ts      
 
   - kind: ethereum/contract
     name: TreeFactory
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0xd4906bFCe031f1b77baC6B02fae535c8C663FB34'
-      abi: TreeFactory
-      startBlock: 9529030
+      address: '{{CONTRACT_TREE_FACTORY_ADDRESS}}'
+      abi: ITreeFactory
+      startBlock: {{CONTRACT_TREE_FACTORY_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -77,8 +74,8 @@ dataSources:
         - TreeUpdate
         - Funder
       abis:
-        - name: TreeFactory
-          file: ./abis/TreeFactory.json
+        - name: ITreeFactory
+          file: ./abis/ITreeFactory.json
       eventHandlers:
         - event: TreeListed(uint256)
           handler: handleTreeListed
@@ -108,11 +105,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: Auction
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x17d836ffAC9a5bFcC33c68D7A5899Fc4D86BFe45'
-      abi: Auction
-      startBlock: 9528979
+      address: '{{CONTRACT_TREE_AUCTION_ADDRESS}}'
+      abi: IAuction
+      startBlock: {{CONTRACT_TREE_AUCTION_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -124,10 +121,8 @@ dataSources:
         - Bid
         - Funder
       abis:
-        - name: Auction
-          file: ./abis/Auction.json
-        - name: RegularSale
-          file: ./abis/RegularSale.json
+        - name: IAuction
+          file: ./abis/IAuction.json
       eventHandlers:
         - event: AuctionCreated(uint256)
           handler: handleAuctionCreated
@@ -143,11 +138,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: IncrementalSale
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x2DdC631b6f08E5835640EFdeB23222093f97cF3c'
-      abi: IncrementalSale
-      startBlock: 9528987
+      address: '{{CONTRACT_INCREMENTAL_SELL_ADDRESS}}'
+      abi: IIncrementalSale
+      startBlock: {{CONTRACT_INCREMENTAL_SELL_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -157,10 +152,8 @@ dataSources:
         - IncrementalSale
         - Funder
       abis:
-        - name: IncrementalSale
-          file: ./abis/IncrementalSale.json
-        - name: RegularSale
-          file: ./abis/RegularSale.json
+        - name: IIncrementalSale
+          file: ./abis/IIncrementalSale.json
       eventHandlers:
         - event: IncrementalSaleUpdated()
           handler: handleIncrementalSaleUpdated
@@ -172,11 +165,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: RegularSale
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x183c89063392E1565ccCe42B02d97BefB01E4D42'
-      abi: RegularSale
-      startBlock: 9528999
+      address: '{{CONTRACT_REGULAR_SELL_ADDRESS}}'
+      abi: IRegularSale
+      startBlock: {{CONTRACT_REGULAR_SELL_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -186,8 +179,8 @@ dataSources:
         - RegularSale
         - Funder
       abis:
-        - name: RegularSale
-          file: ./abis/RegularSale.json
+        - name: IRegularSale
+          file: ./abis/IRegularSale.json
       eventHandlers:
         - event: TreeFunded(address,address,address,uint256,uint256)
           handler: handleTreeFunded
@@ -203,11 +196,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: PlanterFund
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x0b68BA6Fd1d3CD0f14189bB3e2F0cB3b79351437'
-      abi: PlanterFund
-      startBlock: 9529012
+      address: '{{CONTRACT_PLANTER_FUND_ADDRESS}}'
+      abi: IPlanterFund
+      startBlock: {{CONTRACT_PLANTER_FUND_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -215,8 +208,8 @@ dataSources:
       entities:
         - TotalFund
       abis:
-        - name: PlanterFund
-          file: ./abis/PlanterFund.json
+        - name: IPlanterFund
+          file: ./abis/IPlanterFund.json
       eventHandlers:
         - event: ProjectedEarningUpdated(uint256,uint256,uint256)
           handler: handleProjectedEarningUpdated
@@ -228,11 +221,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: Allocation
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x771518c6e48869Fe84Da36416DBC0542cd3013bB'
-      abi: Allocation
-      startBlock: 9529008
+      address: '{{CONTRACT_FINANCIAL_MODEL_ADDRESS}}'
+      abi: IAllocation
+      startBlock: {{CONTRACT_FINANCIAL_MODEL_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -240,8 +233,8 @@ dataSources:
       entities:
         - TotalFund
       abis:
-        - name: Allocation
-          file: ./abis/Allocation.json
+        - name: IAllocation
+          file: ./abis/IAllocation.json
       eventHandlers:
         - event: AllocationDataAdded(uint256)
           handler: handleAllocationDataAdded
@@ -251,11 +244,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: DaiFund
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x146cf5EcB413CbB2B65D6aD3bD75aDFe714Ec1f1'
-      abi: DaiFund
-      startBlock: 9529004
+      address: '{{CONTRACT_DAI_FUNDS_ADDRESS}}'
+      abi: IDaiFund
+      startBlock: {{CONTRACT_DAI_FUNDS_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -263,10 +256,8 @@ dataSources:
       entities:
         - TotalFund
       abis:
-        - name: DaiFund
-          file: ./abis/DaiFund.json
-        - name: Allocation
-          file: ./abis/Allocation.json
+        - name: IDaiFund
+          file: ./abis/IDaiFund.json
       eventHandlers:
         - event: ResearchBalanceWithdrew(uint256,address,string)
           handler: handleResearchBalanceWithdrew
@@ -282,11 +273,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: WethFund
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x76dFa4D77790d02ddBfE009fb8E2251327F7EEe8'
-      abi: WethFund
-      startBlock: 9529016
+      address: '{{CONTRACT_WETH_FUNDS_ADDRESS}}'
+      abi: IWethFund
+      startBlock: {{CONTRACT_WETH_FUNDS_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -294,10 +285,8 @@ dataSources:
       entities:
         - TotalFund
       abis:
-        - name: WethFund
-          file: ./abis/WethFund.json
-        - name: Allocation
-          file: ./abis/Allocation.json
+        - name: IWethFund
+          file: ./abis/IWethFund.json
       eventHandlers:
         - event: ResearchBalanceWithdrew(uint256,address,string)
           handler: handleResearchBalanceWithdrew
@@ -313,11 +302,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: Attribute
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x062eB91b76bE03BfEB60ACADA47F3871D07D8ead'
-      abi: Attribute
-      startBlock: 9529025
+      address: '{{CONTRACT_TREE_ATTRIBUTE_ADDRESS}}'
+      abi: IAttribute
+      startBlock: {{CONTRACT_TREE_ATTRIBUTE_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -327,10 +316,10 @@ dataSources:
         - Attribute
         - TreeWithAttributeProblem
       abis:
-        - name: Attribute
-          file: ./abis/Attribute.json
-        - name: Tree
-          file: ./abis/Tree.json
+        - name: IAttribute
+          file: ./abis/IAttribute.json
+        - name: ITree
+          file: ./abis/ITree.json
       eventHandlers:
         - event: AttributeGenerated(uint256)
           handler: handleAttributeGenerated
@@ -340,11 +329,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: HonoraryTree
-    network: rinkeby
+    network: {{NETWORK}}
     source:
-      address: '0x2C5EFc3121C6253365A20926fd5D846530B42a71'
-      abi: HonoraryTree
-      startBlock: 9528983
+      address: '{{CONTRACT_COMMUNITY_GIFTS_ADDRESS}}'
+      abi: IHonoraryTree
+      startBlock: {{CONTRACT_COMMUNITY_GIFTS_START_BLOCK}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -354,13 +343,11 @@ dataSources:
         - HonoraryTree
         - HonoraryTreeRecipient
       abis:
-        - name: HonoraryTree
-          file: ./abis/HonoraryTree.json
+        - name: IHonoraryTree
+          file: ./abis/IHonoraryTree.json
       eventHandlers:
         - event: TreeRangeSet()
           handler: handleTreeRangeSet
-        # - event: TreeRangeReleased()
-        #   handler: handleTreeRangeReleased
         - event: Claimed(uint256)
           handler: handleClaimed 
         - event: ClaimFailed(address)

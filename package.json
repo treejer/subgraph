@@ -1,17 +1,23 @@
 {
-  "name": "treejer-thegraph-v1",
-  "version": "0.1.0",
+  "name": "treejer-subgraph",
+  "version": "1.0.0",
   "scripts": {
     "build-contract": "solc contracts/Gravity.sol --abi -o abis --overwrite && solc contracts/Gravity.sol --bin -o bin --overwrite",
-    "create": "graph create SinaHo/treejer-thegraph-v1 --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create SinaHo/treejer-thegraph-v1 --node http://127.0.0.1:8020",
+    "create": "graph create treejer/treejer-subgraph --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create treejer/treejer-subgraph --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "windeploy": "graph.cmd deploy --studio treejer-thegraph-v1",
-    "deploy-lagecy": "graph.cmd deploy --product hosted-service SinaHo/Treejerv1",
-    "deploy-local": "graph deploy SinaHo/treejer-thegraph-v1 --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-    "watch-local": "graph deploy graphprotocol/Uniswap2 --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001"
+    "deploy": "graph deploy treejer/treejer-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "windeploy": "graph.cmd deploy --studio subgraph",
+    "deploy-lagecy": "graph.cmd deploy --product hosted-service treejer/Treejerv1",
+    "deploy-local": "graph deploy treejer/treejer-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "watch-local": "graph deploy treejer/treejer-subgraph --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001",
+    "prepare:matic": "mustache config/matic.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml",
+    "deploy:matic": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ treejer/treejer-subgraph",
+    "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ treejer/treejer-subgraph-rinkeby",
+    "build-deploy:matic": "npm run prepare:matic; npm run codegen; npm run build; npm run deploy:matic; rm subgraph.yaml",
+    "build-deploy:rinkeby": "npm run prepare:rinkeby; npm run codegen; npm run build; npm run deploy:rinkeby; rm subgraph.yaml"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.22.0",
@@ -20,6 +26,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
+    "mustache": "^4.2.0",
     "truffle": "^5.0.4",
     "truffle-contract": "^4.0.5",
     "truffle-hdwallet-provider": "^1.0.4"
