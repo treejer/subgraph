@@ -1,18 +1,18 @@
 import {
-    HonoraryTree as HonoraryTreeContract,
+    IHonoraryTree as HonoraryTreeContract,
     TreeRangeSet,
     RecipientAdded,
     RecipientUpdated,
     Claimed,
     ClaimFailed,
-    HonoraryTree__recipientsResult
-} from "../../generated/HonoraryTree/HonoraryTree";
+    IHonoraryTree__recipientsResult
+} from "../../generated/HonoraryTree/IHonoraryTree";
 import { Tree, HonoraryTree, HonoraryTreeRecipient } from "../../generated/schema";
 import { BigInt } from '@graphprotocol/graph-ts';
 import { addTreeHistory, addAddressHistory } from '../helpers';
 
 
-function setRecipientFields(recipient: HonoraryTreeRecipient, recipientRes: HonoraryTree__recipientsResult): void {
+function setRecipientFields(recipient: HonoraryTreeRecipient, recipientRes: IHonoraryTree__recipientsResult): void {
     recipient.expiryDate = recipientRes.value0 as BigInt;
     recipient.startDate = recipientRes.value1 as BigInt;
     recipient.status = recipientRes.value2 as BigInt;

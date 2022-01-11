@@ -1,8 +1,8 @@
 
 import {
-    Tree as TreeContract,
+    ITree as TreeContract,
     Transfer
-} from "../../generated/Tree/Tree";
+} from "../../generated/Tree/ITree";
 import { Tree, Owner } from "../../generated/schema";
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { getGlobalData, ZERO_ADDRESS } from '../helpers';

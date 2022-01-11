@@ -1,10 +1,10 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import {
     ProjectedEarningUpdated,
-    PlanterFund as PlanterFundContract,
+    IPlanterFund as PlanterFundContract,
     PlanterTotalClaimedUpdated,
     BalanceWithdrew
-} from "../../generated/PlanterFund/PlanterFund";
+} from "../../generated/PlanterFund/IPlanterFund";
 import { Planter, PlanterPayment, TotalPlanterFund, TreePlanterFinance, Withdraw } from "../../generated/schema";
 import { getCount_planterPayment, COUNTER_ID, getCount_withdraws } from "../helpers";
 export function handleProjectedEarningUpdated(event: ProjectedEarningUpdated): void {

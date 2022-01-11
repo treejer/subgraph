@@ -3,13 +3,13 @@ import {
     InsuranceBalanceWithdrew,
     TreasuryBalanceWithdrew,
     ResearchBalanceWithdrew,
-    WethFund as WethFundcontract,
+    IWethFund as WethFundcontract,
     TreeFunded
-} from "../../generated/WethFund/WethFund";
+} from "../../generated/WethFund/IWethFund";
 import { Planter, PlanterPayment, TotalFund, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_treeFund, getCount_withdraws } from '../helpers';
-import { Allocation as AllocationContract } from "../../generated/WethFund/Allocation";
+import { IAllocation as AllocationContract } from "../../generated/Allocation/IAllocation";
 
 function getTotalFund(): TotalFund | null {
     let totalFunds = TotalFund.load("weth");

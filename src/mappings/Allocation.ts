@@ -1,7 +1,7 @@
 import { AssignedAllocation, Counter, Allocation } from "../../generated/schema";
 import { AllocationDataAdded,
-Allocation as AllocationContract,
-Allocation__allocationsResult, AllocationToTreeAssigned } from "../../generated/Allocation/Allocation";
+IAllocation as AllocationContract,
+IAllocation__allocationsResult, AllocationToTreeAssigned } from "../../generated/Allocation/IAllocation";
 import { BigInt, log, store } from "@graphprotocol/graph-ts";
 import { COUNTER_ID } from "../helpers";
 
@@ -19,7 +19,7 @@ struct Allocation {
         uint16 exists;
     }
 */
-function setModelData(model: Allocation, c_model: Allocation__allocationsResult): void {
+function setModelData(model: Allocation, c_model: IAllocation__allocationsResult): void {
     model.planterShare = BigInt.fromI32(c_model.value0);
     model.ambassadorShare = BigInt.fromI32(c_model.value1);
     model.researchShare = BigInt.fromI32(c_model.value2);

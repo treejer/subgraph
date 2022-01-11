@@ -1,0 +1,4290 @@
+{
+  "contractName": "IAttribute",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "treeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "AttributeGenerated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "treeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "AttributeGenerationFailed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "uniquenessFactor",
+          "type": "uint64"
+        }
+      ],
+      "name": "ReservedSymbolReleased",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "uniquenessFactor",
+          "type": "uint64"
+        }
+      ],
+      "name": "SymbolReserved",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "setTreeTokenAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_baseTokenAddress",
+          "type": "address"
+        }
+      ],
+      "name": "setBaseTokenAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        }
+      ],
+      "name": "setDexTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_dexRouterAddress",
+          "type": "address"
+        }
+      ],
+      "name": "setDexRouterAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "_uniquenessFactor",
+          "type": "uint64"
+        }
+      ],
+      "name": "reserveSymbol",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "_uniquenessFactor",
+          "type": "uint64"
+        }
+      ],
+      "name": "releaseReservedSymbolByAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "_uniquenessFactor",
+          "type": "uint64"
+        }
+      ],
+      "name": "releaseReservedSymbol",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint64",
+          "name": "_attributeUniquenessFactor",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint64",
+          "name": "_symbolUniquenessFactor",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_generationType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint64",
+          "name": "_coefficient",
+          "type": "uint64"
+        }
+      ],
+      "name": "setAttribute",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_randomValue",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "_funder",
+          "type": "address"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_funderRank",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_generationType",
+          "type": "uint8"
+        }
+      ],
+      "name": "createSymbol",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_generationType",
+          "type": "uint8"
+        }
+      ],
+      "name": "createAttribute",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "manageAttributeUniquenessFactor",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_accessRestrictionAddress",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "isAttribute",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "specialTreeCount",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "baseTokenAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "_attribute",
+          "type": "uint64"
+        }
+      ],
+      "name": "uniquenessFactorToGeneratedAttributesCount",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint64",
+          "name": "_uniqueSymbol",
+          "type": "uint64"
+        }
+      ],
+      "name": "uniquenessFactorToSymbolStatus",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "generatedCount",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "status",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "dexTokens",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_funder",
+          "type": "address"
+        }
+      ],
+      "name": "getFunderRank",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"treeId\",\"type\":\"uint256\"}],\"name\":\"AttributeGenerated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"treeId\",\"type\":\"uint256\"}],\"name\":\"AttributeGenerationFailed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"uniquenessFactor\",\"type\":\"uint64\"}],\"name\":\"ReservedSymbolReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"uniquenessFactor\",\"type\":\"uint64\"}],\"name\":\"SymbolReserved\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"baseTokenAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"},{\"internalType\":\"uint8\",\"name\":\"_generationType\",\"type\":\"uint8\"}],\"name\":\"createAttribute\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_randomValue\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"_funder\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"_funderRank\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"_generationType\",\"type\":\"uint8\"}],\"name\":\"createSymbol\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"dexTokens\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_funder\",\"type\":\"address\"}],\"name\":\"getFunderRank\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_accessRestrictionAddress\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isAttribute\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"}],\"name\":\"manageAttributeUniquenessFactor\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"_uniquenessFactor\",\"type\":\"uint64\"}],\"name\":\"releaseReservedSymbol\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"_uniquenessFactor\",\"type\":\"uint64\"}],\"name\":\"releaseReservedSymbolByAdmin\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"_uniquenessFactor\",\"type\":\"uint64\"}],\"name\":\"reserveSymbol\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"},{\"internalType\":\"uint64\",\"name\":\"_attributeUniquenessFactor\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"_symbolUniquenessFactor\",\"type\":\"uint64\"},{\"internalType\":\"uint8\",\"name\":\"_generationType\",\"type\":\"uint8\"},{\"internalType\":\"uint64\",\"name\":\"_coefficient\",\"type\":\"uint64\"}],\"name\":\"setAttribute\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_baseTokenAddress\",\"type\":\"address\"}],\"name\":\"setBaseTokenAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_dexRouterAddress\",\"type\":\"address\"}],\"name\":\"setDexRouterAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"_tokens\",\"type\":\"address[]\"}],\"name\":\"setDexTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"setTreeTokenAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"specialTreeCount\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"_attribute\",\"type\":\"uint64\"}],\"name\":\"uniquenessFactorToGeneratedAttributesCount\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"_uniqueSymbol\",\"type\":\"uint64\"}],\"name\":\"uniquenessFactorToSymbolStatus\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"generatedCount\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"status\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"AttributeGenerated(uint256)\":{\"details\":\"emitted when unique attribute generated successfully\",\"params\":{\"treeId\":\"id of tree to generate attribute for\"}},\"AttributeGenerationFailed(uint256)\":{\"details\":\"emitted when attribute genertion failed\",\"params\":{\"treeId\":\"id of tree that attribute generation failed\"}},\"ReservedSymbolReleased(uint64)\":{\"details\":\"emitted when reservation of a unique symbol released\",\"params\":{\"uniquenessFactor\":\"unique symbol to release reservation\"}},\"SymbolReserved(uint64)\":{\"details\":\"emitted when a symbol reserved\",\"params\":{\"uniquenessFactor\":\"unique symbol to reserve\"}}},\"kind\":\"dev\",\"methods\":{\"baseTokenAddress()\":{\"returns\":{\"_0\":\"DaiToken address\"}},\"createAttribute(uint256,uint8)\":{\"details\":\"generate a random unique attribute using tree attributes 64 bit value\",\"params\":{\"_generationType\":\"generation type NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\",\"_treeId\":\"id of tree\"},\"returns\":{\"_0\":\"if unique attribute generated successfully\"}},\"createSymbol(uint256,bytes32,address,uint8,uint8)\":{\"details\":\"generate a random unique symbol using tree attributes 64 bit value\",\"params\":{\"_funder\":\"address of funder\",\"_funderRank\":\"rank of funder based on trees owned in treejer\",\"_generationType\":\"type of attribute assignement NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\",\"_randomValue\":\"base random value\",\"_treeId\":\"id of tree\"},\"returns\":{\"_0\":\"if unique symbol generated successfully\"}},\"getFunderRank(address)\":{\"details\":\"the function tries to calculate the rank of funder based trees owned in Treejer\",\"params\":{\"_funder\":\"address of funder\"}},\"isAttribute()\":{\"returns\":{\"_0\":\"true in case of Attribute contract has been initialized \"}},\"manageAttributeUniquenessFactor(uint256)\":{\"details\":\"check and generate random attributes for honorary trees\",\"params\":{\"_treeId\":\"id of tree\"},\"returns\":{\"_0\":\"a unique random value\"}},\"releaseReservedSymbol(uint64)\":{\"details\":\"release reservation of a unique symbol\",\"params\":{\"_uniquenessFactor\":\"unique symbol to release reservation NOTE emit a {ReservedSymbolReleased} event\"}},\"releaseReservedSymbolByAdmin(uint64)\":{\"details\":\"release reservation of a unique symbol by admin\",\"params\":{\"_uniquenessFactor\":\"unique symbol to release reservation NOTE emit a {ReservedSymbolReleased} event\"}},\"reserveSymbol(uint64)\":{\"details\":\"reserve a unique symbol\",\"params\":{\"_uniquenessFactor\":\"unique symbol to reserve NOTE emit a {SymbolReserved} event\"}},\"setAttribute(uint256,uint64,uint64,uint8,uint64)\":{\"details\":\"admin assigns symbol and attribute to the specified treeId\",\"params\":{\"_attributeUniquenessFactor\":\"unique attribute code to assign\",\"_coefficient\":\"coefficient value NOTE emit a {AttributeGenerated} event\",\"_generationType\":\"type of attribute assignement\",\"_symbolUniquenessFactor\":\"unique symbol to assign\",\"_treeId\":\"id of tree\"}},\"setBaseTokenAddress(address)\":{\"details\":\"admin set Dai contract address\",\"params\":{\"_baseTokenAddress\":\"set to the address of Dai contract\"}},\"setTreeTokenAddress(address)\":{\"details\":\"set {_address} to TreeToken contract address \"},\"specialTreeCount()\":{\"returns\":{\"_0\":\"total number of special tree created \"}},\"uniquenessFactorToGeneratedAttributesCount(uint64)\":{\"details\":\"return generation count\",\"params\":{\"_attribute\":\"generated attributes\"},\"returns\":{\"_0\":\"generation count\"}},\"uniquenessFactorToSymbolStatus(uint64)\":{\"details\":\"return SymbolStatus\",\"params\":{\"_uniqueSymbol\":\"unique symbol\"},\"returns\":{\"generatedCount\":\"generatedCount\",\"status\":\"status\"}}},\"title\":\"Attribute interfce \",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/tree/IAttribute.sol\":\"IAttribute\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":4294967295},\"remappings\":[]},\"sources\":{\"project:/contracts/tree/IAttribute.sol\":{\"keccak256\":\"0xd8ea6799f9c02555cafc2b18811d9308ba12ad74639b6b649c93207fac0a0075\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://0a61ea302ef1a0f5cf740d0961a914c5b730661d6f0c3a3935e3ac7ab9ea2a14\",\"dweb:/ipfs/QmcQqbuztt7SPVKigBXrqB8iqPbJnxGEar6xGDW3q3py2W\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: GPL-3.0\npragma solidity ^0.8.6;\n\n/** @title Attribute interfce */\ninterface IAttribute {\n    /**\n     * @dev emitted when unique attribute generated successfully\n     * @param treeId id of tree to generate attribute for\n     */\n    event AttributeGenerated(uint256 treeId);\n\n    /**\n     * @dev emitted when attribute genertion failed\n     * @param treeId id of tree that attribute generation failed\n     */\n    event AttributeGenerationFailed(uint256 treeId);\n\n    /**\n     * @dev emitted when a symbol reserved\n     * @param uniquenessFactor unique symbol to reserve\n     */\n    event SymbolReserved(uint64 uniquenessFactor);\n\n    /**\n     * @dev emitted when reservation of a unique symbol released\n     * @param uniquenessFactor unique symbol to release reservation\n     */\n    event ReservedSymbolReleased(uint64 uniquenessFactor);\n\n    /** @dev set {_address} to TreeToken contract address */\n    function setTreeTokenAddress(address _address) external;\n\n    /**\n     * @dev admin set Dai contract address\n     * @param _baseTokenAddress set to the address of Dai contract\n     */\n\n    function setBaseTokenAddress(address _baseTokenAddress) external;\n\n    function setDexTokens(address[] calldata _tokens) external;\n\n    function setDexRouterAddress(address _dexRouterAddress) external;\n\n    /**\n     * @dev reserve a unique symbol\n     * @param _uniquenessFactor unique symbol to reserve\n     * NOTE emit a {SymbolReserved} event\n     */\n    function reserveSymbol(uint64 _uniquenessFactor) external;\n\n    /**\n     * @dev release reservation of a unique symbol by admin\n     * @param _uniquenessFactor unique symbol to release reservation\n     * NOTE emit a {ReservedSymbolReleased} event\n     */\n    function releaseReservedSymbolByAdmin(uint64 _uniquenessFactor) external;\n\n    /**\n     * @dev release reservation of a unique symbol\n     * @param _uniquenessFactor unique symbol to release reservation\n     * NOTE emit a {ReservedSymbolReleased} event\n     */\n    function releaseReservedSymbol(uint64 _uniquenessFactor) external;\n\n    /**\n     * @dev admin assigns symbol and attribute to the specified treeId\n     * @param _treeId id of tree\n     * @param _attributeUniquenessFactor unique attribute code to assign\n     * @param _symbolUniquenessFactor unique symbol to assign\n     * @param _generationType type of attribute assignement\n     * @param _coefficient coefficient value\n     * NOTE emit a {AttributeGenerated} event\n     */\n    function setAttribute(\n        uint256 _treeId,\n        uint64 _attributeUniquenessFactor,\n        uint64 _symbolUniquenessFactor,\n        uint8 _generationType,\n        uint64 _coefficient\n    ) external;\n\n    /**\n     * @dev generate a random unique symbol using tree attributes 64 bit value\n     * @param _treeId id of tree\n     * @param _randomValue base random value\n     * @param _funder address of funder\n     * @param _funderRank rank of funder based on trees owned in treejer\n     * @param _generationType type of attribute assignement\n     * NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\n     * @return if unique symbol generated successfully\n     */\n    function createSymbol(\n        uint256 _treeId,\n        bytes32 _randomValue,\n        address _funder,\n        uint8 _funderRank,\n        uint8 _generationType\n    ) external returns (bool);\n\n    /**\n     * @dev generate a random unique attribute using tree attributes 64 bit value\n     * @param _treeId id of tree\n     * @param _generationType generation type\n     * NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\n     * @return if unique attribute generated successfully\n     */\n    function createAttribute(uint256 _treeId, uint8 _generationType)\n        external\n        returns (bool);\n\n    /**\n     * @dev check and generate random attributes for honorary trees\n     * @param _treeId id of tree\n     * @return a unique random value\n     */\n    function manageAttributeUniquenessFactor(uint256 _treeId)\n        external\n        returns (uint64);\n\n    function initialize(address _accessRestrictionAddress) external;\n\n    /** @return true in case of Attribute contract has been initialized */\n    function isAttribute() external view returns (bool);\n\n    /** @return total number of special tree created */\n    function specialTreeCount() external view returns (uint8);\n\n    /**\n     * @return DaiToken address\n     */\n    function baseTokenAddress() external view returns (address);\n\n    /**\n     * @dev return generation count\n     * @param _attribute generated attributes\n     * @return generation count\n     */\n    function uniquenessFactorToGeneratedAttributesCount(uint64 _attribute)\n        external\n        view\n        returns (uint32);\n\n    /**\n     * @dev return SymbolStatus\n     * @param _uniqueSymbol unique symbol\n     * @return generatedCount\n     * @return status\n     */\n    function uniquenessFactorToSymbolStatus(uint64 _uniqueSymbol)\n        external\n        view\n        returns (uint128 generatedCount, uint128 status);\n\n    function dexTokens(uint256 _index) external view returns (address);\n\n    /**\n     * @dev the function tries to calculate the rank of funder based trees owned in Treejer\n     * @param _funder address of funder\n     */\n    function getFunderRank(address _funder) external view returns (uint8);\n}\n",
+  "sourcePath": "/home/ali/Desktop/treejer/contract/contracts/tree/IAttribute.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/tree/IAttribute.sol",
+    "exportedSymbols": {
+      "IAttribute": [
+        25147
+      ]
+    },
+    "id": 25148,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 24980,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "36:23:77"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 24981,
+          "nodeType": "StructuredDocumentation",
+          "src": "61:32:77",
+          "text": "@title Attribute interfce "
+        },
+        "fullyImplemented": false,
+        "id": 25147,
+        "linearizedBaseContracts": [
+          25147
+        ],
+        "name": "IAttribute",
+        "nameLocation": "104:10:77",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24982,
+              "nodeType": "StructuredDocumentation",
+              "src": "121:134:77",
+              "text": " @dev emitted when unique attribute generated successfully\n @param treeId id of tree to generate attribute for"
+            },
+            "id": 24986,
+            "name": "AttributeGenerated",
+            "nameLocation": "266:18:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 24985,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24984,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "293:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24986,
+                  "src": "285:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 24983,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "285:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "284:16:77"
+            },
+            "src": "260:41:77"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24987,
+              "nodeType": "StructuredDocumentation",
+              "src": "307:128:77",
+              "text": " @dev emitted when attribute genertion failed\n @param treeId id of tree that attribute generation failed"
+            },
+            "id": 24991,
+            "name": "AttributeGenerationFailed",
+            "nameLocation": "446:25:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 24990,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24989,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "480:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24991,
+                  "src": "472:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 24988,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "472:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "471:16:77"
+            },
+            "src": "440:48:77"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24992,
+              "nodeType": "StructuredDocumentation",
+              "src": "494:110:77",
+              "text": " @dev emitted when a symbol reserved\n @param uniquenessFactor unique symbol to reserve"
+            },
+            "id": 24996,
+            "name": "SymbolReserved",
+            "nameLocation": "615:14:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 24995,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24994,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "uniquenessFactor",
+                  "nameLocation": "637:16:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24996,
+                  "src": "630:23:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 24993,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "630:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "629:25:77"
+            },
+            "src": "609:46:77"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24997,
+              "nodeType": "StructuredDocumentation",
+              "src": "661:144:77",
+              "text": " @dev emitted when reservation of a unique symbol released\n @param uniquenessFactor unique symbol to release reservation"
+            },
+            "id": 25001,
+            "name": "ReservedSymbolReleased",
+            "nameLocation": "816:22:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 25000,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24999,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "uniquenessFactor",
+                  "nameLocation": "846:16:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25001,
+                  "src": "839:23:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 24998,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "839:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "838:25:77"
+            },
+            "src": "810:54:77"
+          },
+          {
+            "documentation": {
+              "id": 25002,
+              "nodeType": "StructuredDocumentation",
+              "src": "870:56:77",
+              "text": "@dev set {_address} to TreeToken contract address "
+            },
+            "functionSelector": "38f1f40f",
+            "id": 25007,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setTreeTokenAddress",
+            "nameLocation": "940:19:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25005,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25004,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "968:8:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25007,
+                  "src": "960:16:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25003,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "960:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "959:18:77"
+            },
+            "returnParameters": {
+              "id": 25006,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "986:0:77"
+            },
+            "scope": 25147,
+            "src": "931:56:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25008,
+              "nodeType": "StructuredDocumentation",
+              "src": "993:121:77",
+              "text": " @dev admin set Dai contract address\n @param _baseTokenAddress set to the address of Dai contract"
+            },
+            "functionSelector": "5dfc34d4",
+            "id": 25013,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setBaseTokenAddress",
+            "nameLocation": "1129:19:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25011,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25010,
+                  "mutability": "mutable",
+                  "name": "_baseTokenAddress",
+                  "nameLocation": "1157:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25013,
+                  "src": "1149:25:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25009,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1149:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1148:27:77"
+            },
+            "returnParameters": {
+              "id": 25012,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1184:0:77"
+            },
+            "scope": 25147,
+            "src": "1120:65:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "2e7e400d",
+            "id": 25019,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setDexTokens",
+            "nameLocation": "1200:12:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25017,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25016,
+                  "mutability": "mutable",
+                  "name": "_tokens",
+                  "nameLocation": "1232:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25019,
+                  "src": "1213:26:77",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 25014,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1213:7:77",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 25015,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1213:9:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1212:28:77"
+            },
+            "returnParameters": {
+              "id": 25018,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1249:0:77"
+            },
+            "scope": 25147,
+            "src": "1191:59:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c0762e5e",
+            "id": 25024,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setDexRouterAddress",
+            "nameLocation": "1265:19:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25022,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25021,
+                  "mutability": "mutable",
+                  "name": "_dexRouterAddress",
+                  "nameLocation": "1293:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25024,
+                  "src": "1285:25:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25020,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1285:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1284:27:77"
+            },
+            "returnParameters": {
+              "id": 25023,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1320:0:77"
+            },
+            "scope": 25147,
+            "src": "1256:65:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25025,
+              "nodeType": "StructuredDocumentation",
+              "src": "1327:146:77",
+              "text": " @dev reserve a unique symbol\n @param _uniquenessFactor unique symbol to reserve\n NOTE emit a {SymbolReserved} event"
+            },
+            "functionSelector": "39438660",
+            "id": 25030,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserveSymbol",
+            "nameLocation": "1487:13:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25028,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25027,
+                  "mutability": "mutable",
+                  "name": "_uniquenessFactor",
+                  "nameLocation": "1508:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25030,
+                  "src": "1501:24:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25026,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1501:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1500:26:77"
+            },
+            "returnParameters": {
+              "id": 25029,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1535:0:77"
+            },
+            "scope": 25147,
+            "src": "1478:58:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25031,
+              "nodeType": "StructuredDocumentation",
+              "src": "1542:190:77",
+              "text": " @dev release reservation of a unique symbol by admin\n @param _uniquenessFactor unique symbol to release reservation\n NOTE emit a {ReservedSymbolReleased} event"
+            },
+            "functionSelector": "0b9cd004",
+            "id": 25036,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseReservedSymbolByAdmin",
+            "nameLocation": "1746:28:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25034,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25033,
+                  "mutability": "mutable",
+                  "name": "_uniquenessFactor",
+                  "nameLocation": "1782:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25036,
+                  "src": "1775:24:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25032,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1775:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1774:26:77"
+            },
+            "returnParameters": {
+              "id": 25035,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1809:0:77"
+            },
+            "scope": 25147,
+            "src": "1737:73:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25037,
+              "nodeType": "StructuredDocumentation",
+              "src": "1816:181:77",
+              "text": " @dev release reservation of a unique symbol\n @param _uniquenessFactor unique symbol to release reservation\n NOTE emit a {ReservedSymbolReleased} event"
+            },
+            "functionSelector": "69959714",
+            "id": 25042,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseReservedSymbol",
+            "nameLocation": "2011:21:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25040,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25039,
+                  "mutability": "mutable",
+                  "name": "_uniquenessFactor",
+                  "nameLocation": "2040:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25042,
+                  "src": "2033:24:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25038,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2033:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2032:26:77"
+            },
+            "returnParameters": {
+              "id": 25041,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2067:0:77"
+            },
+            "scope": 25147,
+            "src": "2002:66:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25043,
+              "nodeType": "StructuredDocumentation",
+              "src": "2074:401:77",
+              "text": " @dev admin assigns symbol and attribute to the specified treeId\n @param _treeId id of tree\n @param _attributeUniquenessFactor unique attribute code to assign\n @param _symbolUniquenessFactor unique symbol to assign\n @param _generationType type of attribute assignement\n @param _coefficient coefficient value\n NOTE emit a {AttributeGenerated} event"
+            },
+            "functionSelector": "96da9497",
+            "id": 25056,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setAttribute",
+            "nameLocation": "2489:12:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25054,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25045,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "2519:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2511:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25044,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2511:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25047,
+                  "mutability": "mutable",
+                  "name": "_attributeUniquenessFactor",
+                  "nameLocation": "2543:26:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2536:33:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25046,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2536:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25049,
+                  "mutability": "mutable",
+                  "name": "_symbolUniquenessFactor",
+                  "nameLocation": "2586:23:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2579:30:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25048,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2579:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25051,
+                  "mutability": "mutable",
+                  "name": "_generationType",
+                  "nameLocation": "2625:15:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2619:21:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25050,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2619:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25053,
+                  "mutability": "mutable",
+                  "name": "_coefficient",
+                  "nameLocation": "2657:12:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2650:19:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25052,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2650:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2501:174:77"
+            },
+            "returnParameters": {
+              "id": 25055,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2684:0:77"
+            },
+            "scope": 25147,
+            "src": "2480:205:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25057,
+              "nodeType": "StructuredDocumentation",
+              "src": "2691:473:77",
+              "text": " @dev generate a random unique symbol using tree attributes 64 bit value\n @param _treeId id of tree\n @param _randomValue base random value\n @param _funder address of funder\n @param _funderRank rank of funder based on trees owned in treejer\n @param _generationType type of attribute assignement\n NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\n @return if unique symbol generated successfully"
+            },
+            "functionSelector": "ca3dac2d",
+            "id": 25072,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createSymbol",
+            "nameLocation": "3178:12:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25068,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25059,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3208:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3200:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25058,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3200:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25061,
+                  "mutability": "mutable",
+                  "name": "_randomValue",
+                  "nameLocation": "3233:12:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3225:20:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 25060,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3225:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25063,
+                  "mutability": "mutable",
+                  "name": "_funder",
+                  "nameLocation": "3263:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3255:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25062,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3255:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25065,
+                  "mutability": "mutable",
+                  "name": "_funderRank",
+                  "nameLocation": "3286:11:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3280:17:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25064,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3280:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25067,
+                  "mutability": "mutable",
+                  "name": "_generationType",
+                  "nameLocation": "3313:15:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3307:21:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25066,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3307:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3190:144:77"
+            },
+            "returnParameters": {
+              "id": 25071,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25070,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3353:4:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 25069,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3353:4:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3352:6:77"
+            },
+            "scope": 25147,
+            "src": "3169:190:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25073,
+              "nodeType": "StructuredDocumentation",
+              "src": "3365:307:77",
+              "text": " @dev generate a random unique attribute using tree attributes 64 bit value\n @param _treeId id of tree\n @param _generationType generation type\n NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\n @return if unique attribute generated successfully"
+            },
+            "functionSelector": "ed21496d",
+            "id": 25082,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createAttribute",
+            "nameLocation": "3686:15:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25078,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25075,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3710:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25082,
+                  "src": "3702:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25074,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3702:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25077,
+                  "mutability": "mutable",
+                  "name": "_generationType",
+                  "nameLocation": "3725:15:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25082,
+                  "src": "3719:21:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25076,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3719:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3701:40:77"
+            },
+            "returnParameters": {
+              "id": 25081,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25080,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25082,
+                  "src": "3776:4:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 25079,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3776:4:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3775:6:77"
+            },
+            "scope": 25147,
+            "src": "3677:105:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25083,
+              "nodeType": "StructuredDocumentation",
+              "src": "3788:149:77",
+              "text": " @dev check and generate random attributes for honorary trees\n @param _treeId id of tree\n @return a unique random value"
+            },
+            "functionSelector": "76f97e06",
+            "id": 25090,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "manageAttributeUniquenessFactor",
+            "nameLocation": "3951:31:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25086,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25085,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3991:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25090,
+                  "src": "3983:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25084,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3983:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3982:17:77"
+            },
+            "returnParameters": {
+              "id": 25089,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25088,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25090,
+                  "src": "4034:6:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25087,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4034:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4033:8:77"
+            },
+            "scope": 25147,
+            "src": "3942:100:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c4d66de8",
+            "id": 25095,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initialize",
+            "nameLocation": "4057:10:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25093,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25092,
+                  "mutability": "mutable",
+                  "name": "_accessRestrictionAddress",
+                  "nameLocation": "4076:25:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25095,
+                  "src": "4068:33:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25091,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4068:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4067:35:77"
+            },
+            "returnParameters": {
+              "id": 25094,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4111:0:77"
+            },
+            "scope": 25147,
+            "src": "4048:64:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25096,
+              "nodeType": "StructuredDocumentation",
+              "src": "4118:70:77",
+              "text": "@return true in case of Attribute contract has been initialized "
+            },
+            "functionSelector": "13e939e2",
+            "id": 25101,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isAttribute",
+            "nameLocation": "4202:11:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25097,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4213:2:77"
+            },
+            "returnParameters": {
+              "id": 25100,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25099,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25101,
+                  "src": "4239:4:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 25098,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4239:4:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4238:6:77"
+            },
+            "scope": 25147,
+            "src": "4193:52:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25102,
+              "nodeType": "StructuredDocumentation",
+              "src": "4251:51:77",
+              "text": "@return total number of special tree created "
+            },
+            "functionSelector": "84d20722",
+            "id": 25107,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "specialTreeCount",
+            "nameLocation": "4316:16:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25103,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4332:2:77"
+            },
+            "returnParameters": {
+              "id": 25106,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25105,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25107,
+                  "src": "4358:5:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25104,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4358:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4357:7:77"
+            },
+            "scope": 25147,
+            "src": "4307:58:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25108,
+              "nodeType": "StructuredDocumentation",
+              "src": "4371:43:77",
+              "text": " @return DaiToken address"
+            },
+            "functionSelector": "7cb374bd",
+            "id": 25113,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "baseTokenAddress",
+            "nameLocation": "4428:16:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25109,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4444:2:77"
+            },
+            "returnParameters": {
+              "id": 25112,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25111,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25113,
+                  "src": "4470:7:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25110,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4470:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4469:9:77"
+            },
+            "scope": 25147,
+            "src": "4419:60:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25114,
+              "nodeType": "StructuredDocumentation",
+              "src": "4485:125:77",
+              "text": " @dev return generation count\n @param _attribute generated attributes\n @return generation count"
+            },
+            "functionSelector": "10720cd6",
+            "id": 25121,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "uniquenessFactorToGeneratedAttributesCount",
+            "nameLocation": "4624:42:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25117,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25116,
+                  "mutability": "mutable",
+                  "name": "_attribute",
+                  "nameLocation": "4674:10:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25121,
+                  "src": "4667:17:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25115,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4667:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4666:19:77"
+            },
+            "returnParameters": {
+              "id": 25120,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25119,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25121,
+                  "src": "4733:6:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  },
+                  "typeName": {
+                    "id": 25118,
+                    "name": "uint32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4733:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint32",
+                      "typeString": "uint32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4732:8:77"
+            },
+            "scope": 25147,
+            "src": "4615:126:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25122,
+              "nodeType": "StructuredDocumentation",
+              "src": "4747:137:77",
+              "text": " @dev return SymbolStatus\n @param _uniqueSymbol unique symbol\n @return generatedCount\n @return status"
+            },
+            "functionSelector": "697d198a",
+            "id": 25131,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "uniquenessFactorToSymbolStatus",
+            "nameLocation": "4898:30:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25125,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25124,
+                  "mutability": "mutable",
+                  "name": "_uniqueSymbol",
+                  "nameLocation": "4936:13:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25131,
+                  "src": "4929:20:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25123,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4929:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4928:22:77"
+            },
+            "returnParameters": {
+              "id": 25130,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25127,
+                  "mutability": "mutable",
+                  "name": "generatedCount",
+                  "nameLocation": "5006:14:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25131,
+                  "src": "4998:22:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 25126,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4998:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25129,
+                  "mutability": "mutable",
+                  "name": "status",
+                  "nameLocation": "5030:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25131,
+                  "src": "5022:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 25128,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5022:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4997:40:77"
+            },
+            "scope": 25147,
+            "src": "4889:149:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "7d7bf229",
+            "id": 25138,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "dexTokens",
+            "nameLocation": "5053:9:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25134,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25133,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nameLocation": "5071:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25138,
+                  "src": "5063:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25132,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5063:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5062:16:77"
+            },
+            "returnParameters": {
+              "id": 25137,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25136,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25138,
+                  "src": "5102:7:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25135,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5102:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5101:9:77"
+            },
+            "scope": 25147,
+            "src": "5044:67:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25139,
+              "nodeType": "StructuredDocumentation",
+              "src": "5117:143:77",
+              "text": " @dev the function tries to calculate the rank of funder based trees owned in Treejer\n @param _funder address of funder"
+            },
+            "functionSelector": "912cbe10",
+            "id": 25146,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getFunderRank",
+            "nameLocation": "5274:13:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25142,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25141,
+                  "mutability": "mutable",
+                  "name": "_funder",
+                  "nameLocation": "5296:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25146,
+                  "src": "5288:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25140,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5288:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5287:17:77"
+            },
+            "returnParameters": {
+              "id": 25145,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25144,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25146,
+                  "src": "5328:5:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25143,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5328:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5327:7:77"
+            },
+            "scope": 25147,
+            "src": "5265:70:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 25148,
+        "src": "94:5243:77",
+        "usedErrors": []
+      }
+    ],
+    "src": "36:5302:77"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/tree/IAttribute.sol",
+    "exportedSymbols": {
+      "IAttribute": [
+        25147
+      ]
+    },
+    "id": 25148,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 24980,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "36:23:77"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 24981,
+          "nodeType": "StructuredDocumentation",
+          "src": "61:32:77",
+          "text": "@title Attribute interfce "
+        },
+        "fullyImplemented": false,
+        "id": 25147,
+        "linearizedBaseContracts": [
+          25147
+        ],
+        "name": "IAttribute",
+        "nameLocation": "104:10:77",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24982,
+              "nodeType": "StructuredDocumentation",
+              "src": "121:134:77",
+              "text": " @dev emitted when unique attribute generated successfully\n @param treeId id of tree to generate attribute for"
+            },
+            "id": 24986,
+            "name": "AttributeGenerated",
+            "nameLocation": "266:18:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 24985,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24984,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "293:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24986,
+                  "src": "285:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 24983,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "285:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "284:16:77"
+            },
+            "src": "260:41:77"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24987,
+              "nodeType": "StructuredDocumentation",
+              "src": "307:128:77",
+              "text": " @dev emitted when attribute genertion failed\n @param treeId id of tree that attribute generation failed"
+            },
+            "id": 24991,
+            "name": "AttributeGenerationFailed",
+            "nameLocation": "446:25:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 24990,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24989,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "480:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24991,
+                  "src": "472:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 24988,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "472:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "471:16:77"
+            },
+            "src": "440:48:77"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24992,
+              "nodeType": "StructuredDocumentation",
+              "src": "494:110:77",
+              "text": " @dev emitted when a symbol reserved\n @param uniquenessFactor unique symbol to reserve"
+            },
+            "id": 24996,
+            "name": "SymbolReserved",
+            "nameLocation": "615:14:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 24995,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24994,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "uniquenessFactor",
+                  "nameLocation": "637:16:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24996,
+                  "src": "630:23:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 24993,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "630:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "629:25:77"
+            },
+            "src": "609:46:77"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 24997,
+              "nodeType": "StructuredDocumentation",
+              "src": "661:144:77",
+              "text": " @dev emitted when reservation of a unique symbol released\n @param uniquenessFactor unique symbol to release reservation"
+            },
+            "id": 25001,
+            "name": "ReservedSymbolReleased",
+            "nameLocation": "816:22:77",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 25000,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24999,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "uniquenessFactor",
+                  "nameLocation": "846:16:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25001,
+                  "src": "839:23:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 24998,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "839:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "838:25:77"
+            },
+            "src": "810:54:77"
+          },
+          {
+            "documentation": {
+              "id": 25002,
+              "nodeType": "StructuredDocumentation",
+              "src": "870:56:77",
+              "text": "@dev set {_address} to TreeToken contract address "
+            },
+            "functionSelector": "38f1f40f",
+            "id": 25007,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setTreeTokenAddress",
+            "nameLocation": "940:19:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25005,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25004,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "968:8:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25007,
+                  "src": "960:16:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25003,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "960:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "959:18:77"
+            },
+            "returnParameters": {
+              "id": 25006,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "986:0:77"
+            },
+            "scope": 25147,
+            "src": "931:56:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25008,
+              "nodeType": "StructuredDocumentation",
+              "src": "993:121:77",
+              "text": " @dev admin set Dai contract address\n @param _baseTokenAddress set to the address of Dai contract"
+            },
+            "functionSelector": "5dfc34d4",
+            "id": 25013,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setBaseTokenAddress",
+            "nameLocation": "1129:19:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25011,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25010,
+                  "mutability": "mutable",
+                  "name": "_baseTokenAddress",
+                  "nameLocation": "1157:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25013,
+                  "src": "1149:25:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25009,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1149:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1148:27:77"
+            },
+            "returnParameters": {
+              "id": 25012,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1184:0:77"
+            },
+            "scope": 25147,
+            "src": "1120:65:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "2e7e400d",
+            "id": 25019,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setDexTokens",
+            "nameLocation": "1200:12:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25017,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25016,
+                  "mutability": "mutable",
+                  "name": "_tokens",
+                  "nameLocation": "1232:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25019,
+                  "src": "1213:26:77",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 25014,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1213:7:77",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 25015,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1213:9:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1212:28:77"
+            },
+            "returnParameters": {
+              "id": 25018,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1249:0:77"
+            },
+            "scope": 25147,
+            "src": "1191:59:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c0762e5e",
+            "id": 25024,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setDexRouterAddress",
+            "nameLocation": "1265:19:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25022,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25021,
+                  "mutability": "mutable",
+                  "name": "_dexRouterAddress",
+                  "nameLocation": "1293:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25024,
+                  "src": "1285:25:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25020,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1285:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1284:27:77"
+            },
+            "returnParameters": {
+              "id": 25023,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1320:0:77"
+            },
+            "scope": 25147,
+            "src": "1256:65:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25025,
+              "nodeType": "StructuredDocumentation",
+              "src": "1327:146:77",
+              "text": " @dev reserve a unique symbol\n @param _uniquenessFactor unique symbol to reserve\n NOTE emit a {SymbolReserved} event"
+            },
+            "functionSelector": "39438660",
+            "id": 25030,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reserveSymbol",
+            "nameLocation": "1487:13:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25028,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25027,
+                  "mutability": "mutable",
+                  "name": "_uniquenessFactor",
+                  "nameLocation": "1508:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25030,
+                  "src": "1501:24:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25026,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1501:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1500:26:77"
+            },
+            "returnParameters": {
+              "id": 25029,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1535:0:77"
+            },
+            "scope": 25147,
+            "src": "1478:58:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25031,
+              "nodeType": "StructuredDocumentation",
+              "src": "1542:190:77",
+              "text": " @dev release reservation of a unique symbol by admin\n @param _uniquenessFactor unique symbol to release reservation\n NOTE emit a {ReservedSymbolReleased} event"
+            },
+            "functionSelector": "0b9cd004",
+            "id": 25036,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseReservedSymbolByAdmin",
+            "nameLocation": "1746:28:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25034,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25033,
+                  "mutability": "mutable",
+                  "name": "_uniquenessFactor",
+                  "nameLocation": "1782:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25036,
+                  "src": "1775:24:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25032,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1775:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1774:26:77"
+            },
+            "returnParameters": {
+              "id": 25035,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1809:0:77"
+            },
+            "scope": 25147,
+            "src": "1737:73:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25037,
+              "nodeType": "StructuredDocumentation",
+              "src": "1816:181:77",
+              "text": " @dev release reservation of a unique symbol\n @param _uniquenessFactor unique symbol to release reservation\n NOTE emit a {ReservedSymbolReleased} event"
+            },
+            "functionSelector": "69959714",
+            "id": 25042,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseReservedSymbol",
+            "nameLocation": "2011:21:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25040,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25039,
+                  "mutability": "mutable",
+                  "name": "_uniquenessFactor",
+                  "nameLocation": "2040:17:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25042,
+                  "src": "2033:24:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25038,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2033:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2032:26:77"
+            },
+            "returnParameters": {
+              "id": 25041,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2067:0:77"
+            },
+            "scope": 25147,
+            "src": "2002:66:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25043,
+              "nodeType": "StructuredDocumentation",
+              "src": "2074:401:77",
+              "text": " @dev admin assigns symbol and attribute to the specified treeId\n @param _treeId id of tree\n @param _attributeUniquenessFactor unique attribute code to assign\n @param _symbolUniquenessFactor unique symbol to assign\n @param _generationType type of attribute assignement\n @param _coefficient coefficient value\n NOTE emit a {AttributeGenerated} event"
+            },
+            "functionSelector": "96da9497",
+            "id": 25056,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setAttribute",
+            "nameLocation": "2489:12:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25054,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25045,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "2519:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2511:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25044,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2511:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25047,
+                  "mutability": "mutable",
+                  "name": "_attributeUniquenessFactor",
+                  "nameLocation": "2543:26:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2536:33:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25046,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2536:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25049,
+                  "mutability": "mutable",
+                  "name": "_symbolUniquenessFactor",
+                  "nameLocation": "2586:23:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2579:30:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25048,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2579:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25051,
+                  "mutability": "mutable",
+                  "name": "_generationType",
+                  "nameLocation": "2625:15:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2619:21:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25050,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2619:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25053,
+                  "mutability": "mutable",
+                  "name": "_coefficient",
+                  "nameLocation": "2657:12:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25056,
+                  "src": "2650:19:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25052,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2650:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2501:174:77"
+            },
+            "returnParameters": {
+              "id": 25055,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2684:0:77"
+            },
+            "scope": 25147,
+            "src": "2480:205:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25057,
+              "nodeType": "StructuredDocumentation",
+              "src": "2691:473:77",
+              "text": " @dev generate a random unique symbol using tree attributes 64 bit value\n @param _treeId id of tree\n @param _randomValue base random value\n @param _funder address of funder\n @param _funderRank rank of funder based on trees owned in treejer\n @param _generationType type of attribute assignement\n NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\n @return if unique symbol generated successfully"
+            },
+            "functionSelector": "ca3dac2d",
+            "id": 25072,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createSymbol",
+            "nameLocation": "3178:12:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25068,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25059,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3208:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3200:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25058,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3200:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25061,
+                  "mutability": "mutable",
+                  "name": "_randomValue",
+                  "nameLocation": "3233:12:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3225:20:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 25060,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3225:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25063,
+                  "mutability": "mutable",
+                  "name": "_funder",
+                  "nameLocation": "3263:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3255:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25062,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3255:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25065,
+                  "mutability": "mutable",
+                  "name": "_funderRank",
+                  "nameLocation": "3286:11:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3280:17:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25064,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3280:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25067,
+                  "mutability": "mutable",
+                  "name": "_generationType",
+                  "nameLocation": "3313:15:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3307:21:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25066,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3307:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3190:144:77"
+            },
+            "returnParameters": {
+              "id": 25071,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25070,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25072,
+                  "src": "3353:4:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 25069,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3353:4:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3352:6:77"
+            },
+            "scope": 25147,
+            "src": "3169:190:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25073,
+              "nodeType": "StructuredDocumentation",
+              "src": "3365:307:77",
+              "text": " @dev generate a random unique attribute using tree attributes 64 bit value\n @param _treeId id of tree\n @param _generationType generation type\n NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event\n @return if unique attribute generated successfully"
+            },
+            "functionSelector": "ed21496d",
+            "id": 25082,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createAttribute",
+            "nameLocation": "3686:15:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25078,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25075,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3710:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25082,
+                  "src": "3702:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25074,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3702:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25077,
+                  "mutability": "mutable",
+                  "name": "_generationType",
+                  "nameLocation": "3725:15:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25082,
+                  "src": "3719:21:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25076,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3719:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3701:40:77"
+            },
+            "returnParameters": {
+              "id": 25081,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25080,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25082,
+                  "src": "3776:4:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 25079,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3776:4:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3775:6:77"
+            },
+            "scope": 25147,
+            "src": "3677:105:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25083,
+              "nodeType": "StructuredDocumentation",
+              "src": "3788:149:77",
+              "text": " @dev check and generate random attributes for honorary trees\n @param _treeId id of tree\n @return a unique random value"
+            },
+            "functionSelector": "76f97e06",
+            "id": 25090,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "manageAttributeUniquenessFactor",
+            "nameLocation": "3951:31:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25086,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25085,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3991:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25090,
+                  "src": "3983:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25084,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3983:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3982:17:77"
+            },
+            "returnParameters": {
+              "id": 25089,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25088,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25090,
+                  "src": "4034:6:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25087,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4034:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4033:8:77"
+            },
+            "scope": 25147,
+            "src": "3942:100:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c4d66de8",
+            "id": 25095,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initialize",
+            "nameLocation": "4057:10:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25093,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25092,
+                  "mutability": "mutable",
+                  "name": "_accessRestrictionAddress",
+                  "nameLocation": "4076:25:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25095,
+                  "src": "4068:33:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25091,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4068:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4067:35:77"
+            },
+            "returnParameters": {
+              "id": 25094,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4111:0:77"
+            },
+            "scope": 25147,
+            "src": "4048:64:77",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25096,
+              "nodeType": "StructuredDocumentation",
+              "src": "4118:70:77",
+              "text": "@return true in case of Attribute contract has been initialized "
+            },
+            "functionSelector": "13e939e2",
+            "id": 25101,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isAttribute",
+            "nameLocation": "4202:11:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25097,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4213:2:77"
+            },
+            "returnParameters": {
+              "id": 25100,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25099,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25101,
+                  "src": "4239:4:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 25098,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4239:4:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4238:6:77"
+            },
+            "scope": 25147,
+            "src": "4193:52:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25102,
+              "nodeType": "StructuredDocumentation",
+              "src": "4251:51:77",
+              "text": "@return total number of special tree created "
+            },
+            "functionSelector": "84d20722",
+            "id": 25107,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "specialTreeCount",
+            "nameLocation": "4316:16:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25103,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4332:2:77"
+            },
+            "returnParameters": {
+              "id": 25106,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25105,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25107,
+                  "src": "4358:5:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25104,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4358:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4357:7:77"
+            },
+            "scope": 25147,
+            "src": "4307:58:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25108,
+              "nodeType": "StructuredDocumentation",
+              "src": "4371:43:77",
+              "text": " @return DaiToken address"
+            },
+            "functionSelector": "7cb374bd",
+            "id": 25113,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "baseTokenAddress",
+            "nameLocation": "4428:16:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25109,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4444:2:77"
+            },
+            "returnParameters": {
+              "id": 25112,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25111,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25113,
+                  "src": "4470:7:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25110,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4470:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4469:9:77"
+            },
+            "scope": 25147,
+            "src": "4419:60:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25114,
+              "nodeType": "StructuredDocumentation",
+              "src": "4485:125:77",
+              "text": " @dev return generation count\n @param _attribute generated attributes\n @return generation count"
+            },
+            "functionSelector": "10720cd6",
+            "id": 25121,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "uniquenessFactorToGeneratedAttributesCount",
+            "nameLocation": "4624:42:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25117,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25116,
+                  "mutability": "mutable",
+                  "name": "_attribute",
+                  "nameLocation": "4674:10:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25121,
+                  "src": "4667:17:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25115,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4667:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4666:19:77"
+            },
+            "returnParameters": {
+              "id": 25120,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25119,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25121,
+                  "src": "4733:6:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint32",
+                    "typeString": "uint32"
+                  },
+                  "typeName": {
+                    "id": 25118,
+                    "name": "uint32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4733:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint32",
+                      "typeString": "uint32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4732:8:77"
+            },
+            "scope": 25147,
+            "src": "4615:126:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25122,
+              "nodeType": "StructuredDocumentation",
+              "src": "4747:137:77",
+              "text": " @dev return SymbolStatus\n @param _uniqueSymbol unique symbol\n @return generatedCount\n @return status"
+            },
+            "functionSelector": "697d198a",
+            "id": 25131,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "uniquenessFactorToSymbolStatus",
+            "nameLocation": "4898:30:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25125,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25124,
+                  "mutability": "mutable",
+                  "name": "_uniqueSymbol",
+                  "nameLocation": "4936:13:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25131,
+                  "src": "4929:20:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 25123,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4929:6:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4928:22:77"
+            },
+            "returnParameters": {
+              "id": 25130,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25127,
+                  "mutability": "mutable",
+                  "name": "generatedCount",
+                  "nameLocation": "5006:14:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25131,
+                  "src": "4998:22:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 25126,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4998:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 25129,
+                  "mutability": "mutable",
+                  "name": "status",
+                  "nameLocation": "5030:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25131,
+                  "src": "5022:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 25128,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5022:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4997:40:77"
+            },
+            "scope": 25147,
+            "src": "4889:149:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "7d7bf229",
+            "id": 25138,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "dexTokens",
+            "nameLocation": "5053:9:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25134,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25133,
+                  "mutability": "mutable",
+                  "name": "_index",
+                  "nameLocation": "5071:6:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25138,
+                  "src": "5063:14:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25132,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5063:7:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5062:16:77"
+            },
+            "returnParameters": {
+              "id": 25137,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25136,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25138,
+                  "src": "5102:7:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25135,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5102:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5101:9:77"
+            },
+            "scope": 25147,
+            "src": "5044:67:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 25139,
+              "nodeType": "StructuredDocumentation",
+              "src": "5117:143:77",
+              "text": " @dev the function tries to calculate the rank of funder based trees owned in Treejer\n @param _funder address of funder"
+            },
+            "functionSelector": "912cbe10",
+            "id": 25146,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getFunderRank",
+            "nameLocation": "5274:13:77",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 25142,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25141,
+                  "mutability": "mutable",
+                  "name": "_funder",
+                  "nameLocation": "5296:7:77",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25146,
+                  "src": "5288:15:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 25140,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5288:7:77",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5287:17:77"
+            },
+            "returnParameters": {
+              "id": 25145,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 25144,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25146,
+                  "src": "5328:5:77",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 25143,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5328:5:77",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5327:7:77"
+            },
+            "scope": 25147,
+            "src": "5265:70:77",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 25148,
+        "src": "94:5243:77",
+        "usedErrors": []
+      }
+    ],
+    "src": "36:5302:77"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.6+commit.11564f7e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2022-01-11T11:00:42.089Z",
+  "devdoc": {
+    "events": {
+      "AttributeGenerated(uint256)": {
+        "details": "emitted when unique attribute generated successfully",
+        "params": {
+          "treeId": "id of tree to generate attribute for"
+        }
+      },
+      "AttributeGenerationFailed(uint256)": {
+        "details": "emitted when attribute genertion failed",
+        "params": {
+          "treeId": "id of tree that attribute generation failed"
+        }
+      },
+      "ReservedSymbolReleased(uint64)": {
+        "details": "emitted when reservation of a unique symbol released",
+        "params": {
+          "uniquenessFactor": "unique symbol to release reservation"
+        }
+      },
+      "SymbolReserved(uint64)": {
+        "details": "emitted when a symbol reserved",
+        "params": {
+          "uniquenessFactor": "unique symbol to reserve"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "baseTokenAddress()": {
+        "returns": {
+          "_0": "DaiToken address"
+        }
+      },
+      "createAttribute(uint256,uint8)": {
+        "details": "generate a random unique attribute using tree attributes 64 bit value",
+        "params": {
+          "_generationType": "generation type NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event",
+          "_treeId": "id of tree"
+        },
+        "returns": {
+          "_0": "if unique attribute generated successfully"
+        }
+      },
+      "createSymbol(uint256,bytes32,address,uint8,uint8)": {
+        "details": "generate a random unique symbol using tree attributes 64 bit value",
+        "params": {
+          "_funder": "address of funder",
+          "_funderRank": "rank of funder based on trees owned in treejer",
+          "_generationType": "type of attribute assignement NOTE emit a {AttributeGenerated} or {AttributeGenerationFailed} event",
+          "_randomValue": "base random value",
+          "_treeId": "id of tree"
+        },
+        "returns": {
+          "_0": "if unique symbol generated successfully"
+        }
+      },
+      "getFunderRank(address)": {
+        "details": "the function tries to calculate the rank of funder based trees owned in Treejer",
+        "params": {
+          "_funder": "address of funder"
+        }
+      },
+      "isAttribute()": {
+        "returns": {
+          "_0": "true in case of Attribute contract has been initialized "
+        }
+      },
+      "manageAttributeUniquenessFactor(uint256)": {
+        "details": "check and generate random attributes for honorary trees",
+        "params": {
+          "_treeId": "id of tree"
+        },
+        "returns": {
+          "_0": "a unique random value"
+        }
+      },
+      "releaseReservedSymbol(uint64)": {
+        "details": "release reservation of a unique symbol",
+        "params": {
+          "_uniquenessFactor": "unique symbol to release reservation NOTE emit a {ReservedSymbolReleased} event"
+        }
+      },
+      "releaseReservedSymbolByAdmin(uint64)": {
+        "details": "release reservation of a unique symbol by admin",
+        "params": {
+          "_uniquenessFactor": "unique symbol to release reservation NOTE emit a {ReservedSymbolReleased} event"
+        }
+      },
+      "reserveSymbol(uint64)": {
+        "details": "reserve a unique symbol",
+        "params": {
+          "_uniquenessFactor": "unique symbol to reserve NOTE emit a {SymbolReserved} event"
+        }
+      },
+      "setAttribute(uint256,uint64,uint64,uint8,uint64)": {
+        "details": "admin assigns symbol and attribute to the specified treeId",
+        "params": {
+          "_attributeUniquenessFactor": "unique attribute code to assign",
+          "_coefficient": "coefficient value NOTE emit a {AttributeGenerated} event",
+          "_generationType": "type of attribute assignement",
+          "_symbolUniquenessFactor": "unique symbol to assign",
+          "_treeId": "id of tree"
+        }
+      },
+      "setBaseTokenAddress(address)": {
+        "details": "admin set Dai contract address",
+        "params": {
+          "_baseTokenAddress": "set to the address of Dai contract"
+        }
+      },
+      "setTreeTokenAddress(address)": {
+        "details": "set {_address} to TreeToken contract address "
+      },
+      "specialTreeCount()": {
+        "returns": {
+          "_0": "total number of special tree created "
+        }
+      },
+      "uniquenessFactorToGeneratedAttributesCount(uint64)": {
+        "details": "return generation count",
+        "params": {
+          "_attribute": "generated attributes"
+        },
+        "returns": {
+          "_0": "generation count"
+        }
+      },
+      "uniquenessFactorToSymbolStatus(uint64)": {
+        "details": "return SymbolStatus",
+        "params": {
+          "_uniqueSymbol": "unique symbol"
+        },
+        "returns": {
+          "generatedCount": "generatedCount",
+          "status": "status"
+        }
+      }
+    },
+    "title": "Attribute interfce ",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

@@ -1,11 +1,11 @@
 
 import {
-    IncrementalSale as IncrementalSaleContract,
+    IIncrementalSale as IncrementalSaleContract,
     IncrementalSaleUpdated,
     IncrementalSaleDataUpdated,
     TreeFunded,
-    IncrementalSale__incrementalSaleDataResult
-} from "../../generated/IncrementalSale/IncrementalSale";
+    IIncrementalSale__incrementalSaleDataResult
+} from "../../generated/IncrementalSale/IIncrementalSale";
 import { IncrementalSale, Funder, Tree } from "../../generated/schema";
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { INCREMENTAL_SELL_ID,addTreeHistory, getGlobalData, addAddressHistory } from '../helpers';
@@ -49,7 +49,7 @@ function newFunder(id: string): Funder {
         uint64 priceJump;
     }
  */
-function setIncSellData(incSell: IncrementalSale | null, c_incSell: IncrementalSale__incrementalSaleDataResult): void {
+function setIncSellData(incSell: IncrementalSale | null, c_incSell: IIncrementalSale__incrementalSaleDataResult): void {
     if(!incSell) return;
     incSell.startTree = c_incSell.value0.toHexString();
     incSell.endTree = c_incSell.value1.toHexString();

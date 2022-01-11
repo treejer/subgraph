@@ -1,12 +1,12 @@
 
 import {
     RegularMint,
-    RegularSale as RegularSaleContract,
+    IRegularSale as RegularSaleContract,
     TreeFunded,
     TreeFundedById,
     PriceUpdated,
     ReferralRewardClaimed
-} from "../../generated/RegularSale/RegularSale";
+} from "../../generated/RegularSale/IRegularSale";
 import { RegularRequest, Funder, Tree,Referrer } from "../../generated/schema";
 import { BigInt } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_RegularRequest, getGlobalData,addTreeHistory, addAddressHistory } from '../helpers';

@@ -4,45 +4,10 @@ import { Counter, GlobalData, TreeHistory, AddressHistory } from "../generated/s
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
 export const INCREMENTAL_SELL_ID = "0001";
-export const TREE_CONTRACT_ADDRESS = "0xa69aB5Cb498a854e16eb88a1545D6e5B03c72034"
-export const REGULAR_SALE_CONTRACT_ADDRESS = "0x183c89063392E1565ccCe42B02d97BefB01E4D42"
+export const CONTRACT_TREE_ADDRESS = "0x7F8EEf6369C96986d79ca9690026174245A471AE";
+export const CONTRACT_REGULAR_SELL_ADDRESS = "0xAD5C550719B01AdEb699474DF38a3bb357EfE860";
 
-// let COUNTER_FIELDS = {
-//     UPDATE_SPECS: "updateSpec"
-// };
-// export function getCount(id: string, fieldName: string, inc: boolean): BigInt {
-//     // let COUNTER_FIELDS = ["updateSpec"];
-//     // // if (!Object.values(COUNTER_FIELDS).includes(fieldName)) return BigInt.fromI32(0);
-//     // if (!COUNTER_FIELDS.includes(fieldName)) return BigInt.fromI32(0);
 
-//     let counter = Counter.load(id);
-//     if (counter) {
-//         let cnt: BigInt = counter[fieldName] as BigInt;
-//         if (inc) {
-//             counter[fieldName] = cnt.plus(BigInt.fromI32(1));
-//             counter.save();
-//             return cnt;
-//         }
-//         return counter[fieldName] as BigInt;
-//     }
-//     counter = new Counter(id);
-//     counter.updateSpec = BigInt.fromString(inc ? "1" : "0");
-//     counter.save();
-//     return BigInt.fromI32(0);
-// }
-// tempTrees {
-//     id
-//     status
-//   }
-//   trees {
-//     id
-//     treeStatus
-//   }
-  
-//   treeSpecs {
-//     id
-//     name
-//   }
 function newCounter(id: string): Counter {
     let counter = new Counter(id);
     let _zero = BigInt.fromI32(0);

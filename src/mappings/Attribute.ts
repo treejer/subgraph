@@ -1,11 +1,11 @@
-import { Attribute as AttributeContract, AttributeGenerated, AttributeGenerationFailed } from "../../generated/Attribute/Attribute";
-import { Tree as TreeContract, Tree__attributesResult, Tree__symbolsResult } from "../../generated/Attribute/Tree";
+import { IAttribute as AttributeContract, AttributeGenerated, AttributeGenerationFailed } from "../../generated/Attribute/IAttribute";
+import { ITree as TreeContract, ITree__attributesResult, ITree__symbolsResult } from "../../generated/Tree/ITree";
 import { Tree, Attribute, Symbol, TreeWithAttributeProblem } from "../../generated/schema";
 import { Address, BigInt } from '@graphprotocol/graph-ts';
-import { TREE_CONTRACT_ADDRESS } from '../helpers';
+import { CONTRACT_TREE_ADDRESS } from '../helpers';
 
 
-function setAttributeFields(attribute: Attribute, attributesRes: Tree__attributesResult): void {
+function setAttributeFields(attribute: Attribute, attributesRes: ITree__attributesResult): void {
     attribute.attribute1 = BigInt.fromI32(attributesRes.value0) as BigInt;
     attribute.attribute2 = BigInt.fromI32(attributesRes.value1) as BigInt;
     attribute.attribute3 = BigInt.fromI32(attributesRes.value2) as BigInt;
@@ -17,18 +17,17 @@ function setAttributeFields(attribute: Attribute, attributesRes: Tree__attribute
     attribute.generationType = BigInt.fromI32(attributesRes.value8) as BigInt;
 }
 
-function setSymbolFields(symbol: Symbol, symbolRes: Tree__symbolsResult): void {
+function setSymbolFields(symbol: Symbol, symbolRes: ITree__symbolsResult): void {
     symbol.shape = BigInt.fromI32(symbolRes.value0) as BigInt;
     symbol.trunkColor = BigInt.fromI32(symbolRes.value1) as BigInt;
     symbol.crownColor = BigInt.fromI32(symbolRes.value2) as BigInt;
-    symbol.effect = BigInt.fromI32(symbolRes.value3) as BigInt;
-    symbol.coefficient = BigInt.fromI32(symbolRes.value4) as BigInt;
-    symbol.generationType = BigInt.fromI32(symbolRes.value5) as BigInt;
+    symbol.coefficient = BigInt.fromI32(symbolRes.value3) as BigInt;
+    symbol.generationType = BigInt.fromI32(symbolRes.value4) as BigInt;
 }
 
 export function handleAttributeGenerated(event: AttributeGenerated): void {
 
-    let treeContract = TreeContract.bind(Address.fromString(TREE_CONTRACT_ADDRESS));
+    let treeContract = TreeContract.bind(Address.fromString(CONTRACT_TREE_ADDRESS));
 
 
     let attributesRes = treeContract.attributes(event.params.treeId);
@@ -43,7 +42,7 @@ export function handleAttributeGenerated(event: AttributeGenerated): void {
 
 
     let symbolRes = treeContract.symbols(event.params.treeId);
-    if (BigInt.fromI32(symbolRes.value5).gt(new BigInt(0))) {
+    if (BigInt.fromI32(symbolRes.value4).gt(new BigInt(0))) {
         let symbol = new Symbol(event.params.treeId.toHexString());
 
         setSymbolFields(symbol, symbolRes);

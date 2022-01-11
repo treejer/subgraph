@@ -1,19 +1,19 @@
 import { Planter } from '../../generated/schema';
 import {
     PlanterJoined,
-    Planter as PlanterContract,
-    Planter__plantersResult,
+    IPlanter as PlanterContract,
+    IPlanter__plantersResult,
     OrganizationJoined,
     PlanterUpdated,
     AcceptedByOrganization,
     RejectedByOrganization,
     OrganizationMemberShareUpdated
-} from '../../generated/Planter/Planter';
+} from '../../generated/Planter/IPlanter';
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { getGlobalData, ZERO_ADDRESS } from '../helpers';
 
 
-function setPlanterFields(planter: Planter | null, net_planter: Planter__plantersResult): void {
+function setPlanterFields(planter: Planter | null, net_planter: IPlanter__plantersResult): void {
     if (planter === null) return;
     planter.planterType = BigInt.fromString(net_planter.value0.toString());
     planter.status = BigInt.fromString(net_planter.value1.toString());

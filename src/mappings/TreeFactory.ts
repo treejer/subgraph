@@ -12,14 +12,14 @@ import {
     TreeUpdatedVerified,
     TreeUpdateRejected,
     TreeSpecsUpdated,
-    TreeFactory__treesResult,
-    TreeFactory__tempTreesResult,
-    TreeFactory__treeUpdatesResult, TreeFactory as TreeFactoryContract
-} from '../../generated/TreeFactory/TreeFactory';
+    ITreeFactory__treesResult,
+    ITreeFactory__tempTreesResult,
+    ITreeFactory__treeUpdatesResult, ITreeFactory as TreeFactoryContract
+} from '../../generated/TreeFactory/ITreeFactory';
 import { BigInt, JSONValue, log, Value, ipfs, json, Bytes, store, JSONValueKind } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_treeSpecs, getCount_treeUpdates, ZERO_ADDRESS, addTreeHistory } from '../helpers';
 
-function setTempTreeData(tempTree: TempTree | null, c_tempTree: TreeFactory__tempTreesResult): void {
+function setTempTreeData(tempTree: TempTree | null, c_tempTree: ITreeFactory__tempTreesResult): void {
     if (tempTree === null) return;
     tempTree.birthDate = c_tempTree.value0 as BigInt;
     tempTree.plantDate = c_tempTree.value1 as BigInt;
@@ -28,7 +28,7 @@ function setTempTreeData(tempTree: TempTree | null, c_tempTree: TreeFactory__tem
     tempTree.treeSpecs = c_tempTree.value5;
 
 }
-function setTreeData(tree: Tree | null, c_tree: TreeFactory__treesResult): void {
+function setTreeData(tree: Tree | null, c_tree: ITreeFactory__treesResult): void {
     if (tree === null) return;
     tree.planter = c_tree.value0.toHexString();
     tree.species = c_tree.value1 as BigInt;
@@ -39,7 +39,7 @@ function setTreeData(tree: Tree | null, c_tree: TreeFactory__treesResult): void 
     tree.birthDate = c_tree.value6 as BigInt;
     tree.treeSpecs = c_tree.value7.toString();
 }
-function setTreeUpdateData(treeUpdate: TreeUpdate | null, c_treeUpdate: TreeFactory__treeUpdatesResult): void {
+function setTreeUpdateData(treeUpdate: TreeUpdate | null, c_treeUpdate: ITreeFactory__treeUpdatesResult): void {
     if (treeUpdate === null) return;
     treeUpdate.updateSpecs = c_treeUpdate.value0.toString();
     treeUpdate.updateStatus = c_treeUpdate.value1 as BigInt;
@@ -85,6 +85,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     let location = obj.get('location');
     let attributes = obj.get('attributes');
     let updates = obj.get('updates');
+    let locations = obj.get('locations');
     let nursery = obj.get('nursery');
 
 
@@ -147,6 +148,31 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
         updateStr += "]";
     }
 
+    let locationsStr = '';
+    if (locations != null) {
+        let locationsArray = locations.toArray();
+
+
+        locationsStr = "[";
+        for (let i = 0; i < locationsArray.length; i++) {
+            let el = locationsArray[i];
+            locationsStr += "{";
+
+            let longitude_obj = el.toObject().get("longitude");
+            let latitude_obj = el.toObject().get("latitude");
+            if (longitude_obj != null && latitude_obj != null) {
+                locationsStr += '"longitude":"' + longitude_obj.toString() + '","latitude":"' + latitude_obj.toString() + '"';
+            }
+
+            if (i == locationsArray.length - 1) {
+                locationsStr += "}";
+            } else {
+                locationsStr += "},";
+            }
+        }
+        locationsStr += "]";
+    }
+
 
     let treeSpec = new TreeSpec(getCount_treeSpecs(COUNTER_ID).toHexString());
     treeSpec.name = name == null ? '' : name.toString();
@@ -178,6 +204,7 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
 
     treeSpec.attributes = attrStr;
     treeSpec.updates = updateStr;
+    treeSpec.locations = locationsStr;
     treeSpec.save();
 
     let tree = Tree.load(userData.toString());

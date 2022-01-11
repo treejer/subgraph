@@ -4,9 +4,9 @@ import {
     TreeFunded,
     TreasuryBalanceWithdrew,
     ResearchBalanceWithdrew,
-    DaiFund as DaiFundcontract
-} from "../../generated/DaiFund/DaiFund";
-import { Allocation as AllocationContract } from "../../generated/DaiFund/Allocation";
+    IDaiFund as DaiFundcontract
+} from "../../generated/DaiFund/IDaiFund";
+import { IAllocation as AllocationContract } from "../../generated/Allocation/IAllocation";
 import { TotalFund, TreeFund, Withdraw } from "../../generated/schema";
 import { Address, BigInt, log, store } from '@graphprotocol/graph-ts';
 import { COUNTER_ID, getCount_treeFund, getCount_withdraws } from '../helpers';

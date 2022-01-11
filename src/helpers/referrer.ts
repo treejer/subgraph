@@ -1,8 +1,8 @@
 import {
-    RegularSale as RegularSaleContract
-} from "../../generated/RegularSale/RegularSale";
+    IRegularSale as RegularSaleContract
+} from "../../generated/RegularSale/IRegularSale";
 import { BigInt, Address } from '@graphprotocol/graph-ts';
-import { REGULAR_SALE_CONTRACT_ADDRESS, ZERO_ADDRESS } from "../helpers";
+import { CONTRACT_REGULAR_SELL_ADDRESS, ZERO_ADDRESS } from "../helpers";
 import { Referrer } from "../../generated/schema";
 
 
@@ -11,7 +11,7 @@ export function updateReferrer(id: Address, timestamp: BigInt): void {
         return;
     }
 
-    let regularSaleContract = RegularSaleContract.bind(Address.fromString(REGULAR_SALE_CONTRACT_ADDRESS));
+    let regularSaleContract = RegularSaleContract.bind(Address.fromString(CONTRACT_REGULAR_SELL_ADDRESS));
 
     let referrer = Referrer.load(id.toHexString());
     if (!referrer) {

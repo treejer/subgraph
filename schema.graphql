@@ -134,6 +134,7 @@ type TreeSpec @entity {
   attributes: String!
   updates: String!
   nursery: String!
+  locations: String!
 }
 
 type TreeUpdate @entity {

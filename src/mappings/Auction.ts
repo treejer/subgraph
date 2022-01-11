@@ -5,9 +5,9 @@ import {
     AuctionEndTimeIncreased,
     AuctionSettled,
     HighestBidIncreased,
-    Auction as AuctionContract,
-    Auction__auctionsResult
-} from "../../generated/Auction/Auction";
+    IAuction as AuctionContract,
+    IAuction__auctionsResult
+} from "../../generated/Auction/IAuction";
 import { Auction, Bid, Funder, Tree } from "../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts";
 import { COUNTER_ID, getCount_bid, ZERO_ADDRESS, addTreeHistory, addAddressHistory } from "../helpers";
@@ -24,7 +24,7 @@ import { updateReferrer } from '../helpers/referrer';
     }
  */
 
-function setAuctionData(auction: Auction, c_auction: Auction__auctionsResult): void {
+function setAuctionData(auction: Auction, c_auction: IAuction__auctionsResult): void {
     auction.tree = c_auction.value0.toHexString();
     auction.startDate = c_auction.value2 as BigInt;
     auction.endDate = c_auction.value3 as BigInt;

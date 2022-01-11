@@ -1,0 +1,4350 @@
+{
+  "contractName": "IPlanterFund",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "BalanceWithdrew",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "MinWithdrawableAmountUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "NoAmbsassadorBalanceWithdrew",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "treeId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "planter",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "ambassador",
+          "type": "address"
+        }
+      ],
+      "name": "PlanterTotalClaimedUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "treeId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "planterAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "ambassadorAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ProjectedEarningUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "setTrustedForwarder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "setPlanterContractAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "setDaiTokenAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "setOutgoingAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateWithdrawableAmount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_planterAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_ambassadorAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateProjectedEarnings",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_planter",
+          "type": "address"
+        },
+        {
+          "internalType": "uint64",
+          "name": "_treeStatus",
+          "type": "uint64"
+        }
+      ],
+      "name": "updatePlanterTotalClaimed",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_reason",
+          "type": "string"
+        }
+      ],
+      "name": "withdrawNoAmbsassadorBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_accessRestrictionAddress",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "isPlanterFund",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minWithdrawable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "outgoingAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalBalances",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "planter",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "ambassador",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "noAmbsassador",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "treeToPlanterProjectedEarning",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "treeToAmbassadorProjectedEarning",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_treeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "treeToPlanterTotalClaimed",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_planter",
+          "type": "address"
+        }
+      ],
+      "name": "balances",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"BalanceWithdrew\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"MinWithdrawableAmountUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"name\":\"NoAmbsassadorBalanceWithdrew\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"treeId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"planter\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"ambassador\",\"type\":\"address\"}],\"name\":\"PlanterTotalClaimedUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"treeId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"planterAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"ambassadorAmount\",\"type\":\"uint256\"}],\"name\":\"ProjectedEarningUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_planter\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_accessRestrictionAddress\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isPlanterFund\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minWithdrawable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"outgoingAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"setDaiTokenAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"setOutgoingAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"setPlanterContractAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"setTrustedForwarder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalBalances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"planter\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"ambassador\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"noAmbsassador\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"}],\"name\":\"treeToAmbassadorProjectedEarning\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"}],\"name\":\"treeToPlanterProjectedEarning\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"}],\"name\":\"treeToPlanterTotalClaimed\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_planter\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"_treeStatus\",\"type\":\"uint64\"}],\"name\":\"updatePlanterTotalClaimed\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_treeId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_planterAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ambassadorAmount\",\"type\":\"uint256\"}],\"name\":\"updateProjectedEarnings\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"updateWithdrawableAmount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdrawBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_reason\",\"type\":\"string\"}],\"name\":\"withdrawNoAmbsassadorBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"BalanceWithdrew(uint256,address)\":{\"details\":\"emitted when a planter withdraw\",\"params\":{\"account\":\"address of planter\",\"amount\":\"amount of withdraw\"}},\"MinWithdrawableAmountUpdated()\":{\"details\":\"emitted when minimum withdrable amount set \"},\"NoAmbsassadorBalanceWithdrew(uint256,address,string)\":{\"details\":\"emitted when admin withdraw noAmbsassador balance\",\"params\":{\"account\":\"address of destination account\",\"amount\":\"amount to withdraw\",\"reason\":\"reason of withdraw\"}},\"PlanterTotalClaimedUpdated(uint256,address,uint256,address)\":{\"details\":\"emitted when planter total claimable amount updated\",\"params\":{\"ambassador\":\"address of ambassador\",\"amount\":\"amount added to planter total claimable amount\",\"planter\":\"address of planter\",\"treeId\":\"id of tree that planter total claimable amount updated for\"}},\"ProjectedEarningUpdated(uint256,uint256,uint256)\":{\"details\":\"emitted when ProjectedEarning set for tree\",\"params\":{\"ambassadorAmount\":\"ambassador amount\",\"planterAmount\":\"planter amount\",\"treeId\":\"id of tree ProjectedEarning set for\"}}},\"kind\":\"dev\",\"methods\":{\"balances(address)\":{\"returns\":{\"_0\":\"balance of {_planter}\"}},\"isPlanterFund()\":{\"returns\":{\"_0\":\"true in case of PlanterFund contract has been initialized\"}},\"minWithdrawable()\":{\"returns\":{\"_0\":\"minimum amount to withdraw \"}},\"outgoingAddress()\":{\"returns\":{\"_0\":\"outgoing address\"}},\"setDaiTokenAddress(address)\":{\"details\":\"set {_address} to DaiToken contract address \"},\"setOutgoingAddress(address)\":{\"details\":\"set {_address} to outgoingAddress\"},\"setPlanterContractAddress(address)\":{\"details\":\"set {_address} to Planter contract address \"},\"setTrustedForwarder(address)\":{\"details\":\"set {_address} to trusted forwarder \"},\"totalBalances()\":{\"details\":\"return totalBalances struct data\",\"returns\":{\"ambassador\":\"total balance\",\"noAmbsassador\":\"total balance\",\"planter\":\"total balance\"}},\"treeToAmbassadorProjectedEarning(uint256)\":{\"returns\":{\"_0\":\"treeToAmbassadorProjectedEarning of {_treeId}\"}},\"treeToPlanterProjectedEarning(uint256)\":{\"returns\":{\"_0\":\"treeToPlanterProjectedEarning of {_treeId}\"}},\"treeToPlanterTotalClaimed(uint256)\":{\"returns\":{\"_0\":\"treeToPlanterTotalClaimed of {_treeId}\"}},\"updatePlanterTotalClaimed(uint256,address,uint64)\":{\"details\":\"based on the {_treeStatus} planter total claimable amount updated in every tree update verifying NOTE emit a {PlanterTotalClaimedUpdated} event\",\"params\":{\"_planter\":\"address of planter to fund\",\"_treeId\":\"id of a tree that planter's total claimable amount updated for\",\"_treeStatus\":\"status of tree\"}},\"updateProjectedEarnings(uint256,uint256,uint256)\":{\"details\":\"set projected earnings NOTE emit a {ProjectedEarningUpdated} event\",\"params\":{\"_ambassadorAmount\":\"ambassador amount\",\"_planterAmount\":\"planter amount\",\"_treeId\":\"id of tree to set projected earning for\"}},\"updateWithdrawableAmount(uint256)\":{\"details\":\"admin set the minimum amount to withdraw NOTE emit a {MinWithdrawableAmountUpdated} event\",\"params\":{\"_amount\":\"is minimum withdrawable amount\"}},\"withdrawBalance(uint256)\":{\"details\":\"planter withdraw {_amount} from balances NOTE emit a {BalanceWithdrew} event\",\"params\":{\"_amount\":\"amount to withdraw\"}},\"withdrawNoAmbsassadorBalance(uint256,string)\":{\"details\":\"admin withdraw from noAmbsassador totalBalances NOTE amount transfer to outgoingAddress NOTE emit a {NoAmbsassadorBalanceWithdrew} event\",\"params\":{\"_amount\":\"amount to withdraw\",\"_reason\":\"reason to withdraw\"}}},\"title\":\"PlanterFund interfce \",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/treasury/IPlanterFund.sol\":\"IPlanterFund\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":4294967295},\"remappings\":[]},\"sources\":{\"project:/contracts/treasury/IPlanterFund.sol\":{\"keccak256\":\"0x7ded2b860cbf6aa24980aeb90330e47b255f769ca926663dfcfcb904a9514172\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://f16cd8370d282dddd6a594f223a74114b63fcef80358977e8ff2fb77b01e4245\",\"dweb:/ipfs/QmWhA4gKfdou96gMNHyvo3oEQrpMSWEFNa1ZAwk6ER2Tne\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: GPL-3.0\n\npragma solidity ^0.8.6;\n\n/** @title PlanterFund interfce */\ninterface IPlanterFund {\n    /**\n     * @dev emitted when planter total claimable amount updated\n     * @param treeId id of tree that planter total claimable amount updated for\n     * @param planter address of planter\n     * @param amount amount added to planter total claimable amount\n     * @param ambassador address of ambassador\n     */\n    event PlanterTotalClaimedUpdated(\n        uint256 treeId,\n        address planter,\n        uint256 amount,\n        address ambassador\n    );\n\n    /**\n     * @dev emitted when a planter withdraw\n     * @param amount amount of withdraw\n     * @param account address of planter\n     */\n    event BalanceWithdrew(uint256 amount, address account);\n\n    /**\n     * @dev emitted when admin withdraw noAmbsassador balance\n     * @param amount amount to withdraw\n     * @param account address of destination account\n     * @param reason reason of withdraw\n     */\n    event NoAmbsassadorBalanceWithdrew(\n        uint256 amount,\n        address account,\n        string reason\n    );\n\n    /**\n     * @dev emitted when ProjectedEarning set for tree\n     * @param treeId id of tree ProjectedEarning set for\n     * @param planterAmount planter amount\n     * @param ambassadorAmount ambassador amount\n     */\n    event ProjectedEarningUpdated(\n        uint256 treeId,\n        uint256 planterAmount,\n        uint256 ambassadorAmount\n    );\n\n    /** @dev emitted when minimum withdrable amount set */\n    event MinWithdrawableAmountUpdated();\n\n    /** @dev set {_address} to trusted forwarder */\n    function setTrustedForwarder(address _address) external;\n\n    /** @dev set {_address} to Planter contract address */\n    function setPlanterContractAddress(address _address) external;\n\n    /** @dev set {_address} to DaiToken contract address */\n    function setDaiTokenAddress(address _address) external;\n\n    /**\n     * @dev set {_address} to outgoingAddress\n     */\n    function setOutgoingAddress(address payable _address) external;\n\n    /**\n     * @dev admin set the minimum amount to withdraw\n     * NOTE emit a {MinWithdrawableAmountUpdated} event\n     * @param _amount is minimum withdrawable amount\n     */\n    function updateWithdrawableAmount(uint256 _amount) external;\n\n    /**\n     * @dev set projected earnings\n     * NOTE emit a {ProjectedEarningUpdated} event\n     * @param _treeId id of tree to set projected earning for\n     * @param _planterAmount planter amount\n     * @param _ambassadorAmount ambassador amount\n     */\n    function updateProjectedEarnings(\n        uint256 _treeId,\n        uint256 _planterAmount,\n        uint256 _ambassadorAmount\n    ) external;\n\n    /**\n     * @dev based on the {_treeStatus} planter total claimable amount updated in every tree\n     * update verifying\n     * NOTE emit a {PlanterTotalClaimedUpdated} event\n     * @param _treeId id of a tree that planter's total claimable amount updated for\n     * @param _planter  address of planter to fund\n     * @param _treeStatus status of tree\n     */\n    function updatePlanterTotalClaimed(\n        uint256 _treeId,\n        address _planter,\n        uint64 _treeStatus\n    ) external;\n\n    /**\n     * @dev planter withdraw {_amount} from balances\n     * NOTE emit a {BalanceWithdrew} event\n     * @param _amount amount to withdraw\n     */\n    function withdrawBalance(uint256 _amount) external;\n\n    /**\n     * @dev admin withdraw from noAmbsassador totalBalances\n     * NOTE amount transfer to outgoingAddress\n     * NOTE emit a {NoAmbsassadorBalanceWithdrew} event\n     * @param _amount amount to withdraw\n     * @param _reason reason to withdraw\n     */\n    function withdrawNoAmbsassadorBalance(\n        uint256 _amount,\n        string calldata _reason\n    ) external;\n\n    function initialize(address _accessRestrictionAddress) external;\n\n    /**\n     * @return true in case of PlanterFund contract has been initialized\n     */\n    function isPlanterFund() external view returns (bool);\n\n    /** @return minimum amount to withdraw */\n    function minWithdrawable() external view returns (uint256);\n\n    /**\n     * @return outgoing address\n     */\n    function outgoingAddress() external view returns (address);\n\n    /**\n     * @dev return totalBalances struct data\n     * @return planter total balance\n     * @return ambassador total balance\n     * @return noAmbsassador total balance\n     */\n    function totalBalances()\n        external\n        view\n        returns (\n            uint256 planter,\n            uint256 ambassador,\n            uint256 noAmbsassador\n        );\n\n    /**\n     * @return treeToPlanterProjectedEarning of {_treeId}\n     */\n    function treeToPlanterProjectedEarning(uint256 _treeId)\n        external\n        view\n        returns (uint256);\n\n    /**\n     * @return treeToAmbassadorProjectedEarning of {_treeId}\n     */\n    function treeToAmbassadorProjectedEarning(uint256 _treeId)\n        external\n        view\n        returns (uint256);\n\n    /**\n     * @return treeToPlanterTotalClaimed of {_treeId}\n     */\n    function treeToPlanterTotalClaimed(uint256 _treeId)\n        external\n        view\n        returns (uint256);\n\n    /**\n     * @return balance of {_planter}\n     */\n    function balances(address _planter) external view returns (uint256);\n}\n",
+  "sourcePath": "/home/ali/Desktop/treejer/contract/contracts/treasury/IPlanterFund.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/treasury/IPlanterFund.sol",
+    "exportedSymbols": {
+      "IPlanterFund": [
+        20613
+      ]
+    },
+    "id": 20614,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 20443,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "37:23:70"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 20444,
+          "nodeType": "StructuredDocumentation",
+          "src": "62:34:70",
+          "text": "@title PlanterFund interfce "
+        },
+        "fullyImplemented": false,
+        "id": 20613,
+        "linearizedBaseContracts": [
+          20613
+        ],
+        "name": "IPlanterFund",
+        "nameLocation": "107:12:70",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20445,
+              "nodeType": "StructuredDocumentation",
+              "src": "126:311:70",
+              "text": " @dev emitted when planter total claimable amount updated\n @param treeId id of tree that planter total claimable amount updated for\n @param planter address of planter\n @param amount amount added to planter total claimable amount\n @param ambassador address of ambassador"
+            },
+            "id": 20455,
+            "name": "PlanterTotalClaimedUpdated",
+            "nameLocation": "448:26:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20454,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20447,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "492:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "484:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20446,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "484:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20449,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "planter",
+                  "nameLocation": "516:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "508:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20448,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "508:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20451,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "541:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "533:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20450,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "533:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20453,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "ambassador",
+                  "nameLocation": "565:10:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "557:18:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20452,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "557:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "474:107:70"
+            },
+            "src": "442:140:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20456,
+              "nodeType": "StructuredDocumentation",
+              "src": "588:136:70",
+              "text": " @dev emitted when a planter withdraw\n @param amount amount of withdraw\n @param account address of planter"
+            },
+            "id": 20462,
+            "name": "BalanceWithdrew",
+            "nameLocation": "735:15:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20461,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20458,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "759:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20462,
+                  "src": "751:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20457,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "751:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20460,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "775:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20462,
+                  "src": "767:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20459,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "767:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "750:33:70"
+            },
+            "src": "729:55:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20463,
+              "nodeType": "StructuredDocumentation",
+              "src": "790:206:70",
+              "text": " @dev emitted when admin withdraw noAmbsassador balance\n @param amount amount to withdraw\n @param account address of destination account\n @param reason reason of withdraw"
+            },
+            "id": 20471,
+            "name": "NoAmbsassadorBalanceWithdrew",
+            "nameLocation": "1007:28:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20470,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20465,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1053:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20471,
+                  "src": "1045:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20464,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1045:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20467,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1077:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20471,
+                  "src": "1069:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20466,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1069:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20469,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "reason",
+                  "nameLocation": "1101:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20471,
+                  "src": "1094:13:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 20468,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1094:6:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1035:78:70"
+            },
+            "src": "1001:113:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20472,
+              "nodeType": "StructuredDocumentation",
+              "src": "1120:215:70",
+              "text": " @dev emitted when ProjectedEarning set for tree\n @param treeId id of tree ProjectedEarning set for\n @param planterAmount planter amount\n @param ambassadorAmount ambassador amount"
+            },
+            "id": 20480,
+            "name": "ProjectedEarningUpdated",
+            "nameLocation": "1346:23:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20479,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20474,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "1387:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20480,
+                  "src": "1379:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20473,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1379:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20476,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "planterAmount",
+                  "nameLocation": "1411:13:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20480,
+                  "src": "1403:21:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20475,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1403:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20478,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "ambassadorAmount",
+                  "nameLocation": "1442:16:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20480,
+                  "src": "1434:24:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20477,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1434:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1369:95:70"
+            },
+            "src": "1340:125:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20481,
+              "nodeType": "StructuredDocumentation",
+              "src": "1471:54:70",
+              "text": "@dev emitted when minimum withdrable amount set "
+            },
+            "id": 20483,
+            "name": "MinWithdrawableAmountUpdated",
+            "nameLocation": "1536:28:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20482,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1564:2:70"
+            },
+            "src": "1530:37:70"
+          },
+          {
+            "documentation": {
+              "id": 20484,
+              "nodeType": "StructuredDocumentation",
+              "src": "1573:47:70",
+              "text": "@dev set {_address} to trusted forwarder "
+            },
+            "functionSelector": "da742228",
+            "id": 20489,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setTrustedForwarder",
+            "nameLocation": "1634:19:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20487,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20486,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "1662:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20489,
+                  "src": "1654:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20485,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1654:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1653:18:70"
+            },
+            "returnParameters": {
+              "id": 20488,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1680:0:70"
+            },
+            "scope": 20613,
+            "src": "1625:56:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20490,
+              "nodeType": "StructuredDocumentation",
+              "src": "1687:54:70",
+              "text": "@dev set {_address} to Planter contract address "
+            },
+            "functionSelector": "fa9ee503",
+            "id": 20495,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setPlanterContractAddress",
+            "nameLocation": "1755:25:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20493,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20492,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "1789:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20495,
+                  "src": "1781:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20491,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1781:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1780:18:70"
+            },
+            "returnParameters": {
+              "id": 20494,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1807:0:70"
+            },
+            "scope": 20613,
+            "src": "1746:62:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20496,
+              "nodeType": "StructuredDocumentation",
+              "src": "1814:55:70",
+              "text": "@dev set {_address} to DaiToken contract address "
+            },
+            "functionSelector": "f1326b15",
+            "id": 20501,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setDaiTokenAddress",
+            "nameLocation": "1883:18:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20499,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20498,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "1910:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20501,
+                  "src": "1902:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20497,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1902:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1901:18:70"
+            },
+            "returnParameters": {
+              "id": 20500,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1928:0:70"
+            },
+            "scope": 20613,
+            "src": "1874:55:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20502,
+              "nodeType": "StructuredDocumentation",
+              "src": "1935:57:70",
+              "text": " @dev set {_address} to outgoingAddress"
+            },
+            "functionSelector": "871dfb10",
+            "id": 20507,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setOutgoingAddress",
+            "nameLocation": "2006:18:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20505,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20504,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "2041:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20507,
+                  "src": "2025:24:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  },
+                  "typeName": {
+                    "id": 20503,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2025:15:70",
+                    "stateMutability": "payable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2024:26:70"
+            },
+            "returnParameters": {
+              "id": 20506,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2059:0:70"
+            },
+            "scope": 20613,
+            "src": "1997:63:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20508,
+              "nodeType": "StructuredDocumentation",
+              "src": "2066:173:70",
+              "text": " @dev admin set the minimum amount to withdraw\n NOTE emit a {MinWithdrawableAmountUpdated} event\n @param _amount is minimum withdrawable amount"
+            },
+            "functionSelector": "b0b82469",
+            "id": 20513,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateWithdrawableAmount",
+            "nameLocation": "2253:24:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20511,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20510,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nameLocation": "2286:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20513,
+                  "src": "2278:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20509,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2278:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2277:17:70"
+            },
+            "returnParameters": {
+              "id": 20512,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2303:0:70"
+            },
+            "scope": 20613,
+            "src": "2244:60:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20514,
+              "nodeType": "StructuredDocumentation",
+              "src": "2310:253:70",
+              "text": " @dev set projected earnings\n NOTE emit a {ProjectedEarningUpdated} event\n @param _treeId id of tree to set projected earning for\n @param _planterAmount planter amount\n @param _ambassadorAmount ambassador amount"
+            },
+            "functionSelector": "97795c66",
+            "id": 20523,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateProjectedEarnings",
+            "nameLocation": "2577:23:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20521,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20516,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "2618:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20523,
+                  "src": "2610:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20515,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2610:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20518,
+                  "mutability": "mutable",
+                  "name": "_planterAmount",
+                  "nameLocation": "2643:14:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20523,
+                  "src": "2635:22:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20517,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2635:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20520,
+                  "mutability": "mutable",
+                  "name": "_ambassadorAmount",
+                  "nameLocation": "2675:17:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20523,
+                  "src": "2667:25:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20519,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2667:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2600:98:70"
+            },
+            "returnParameters": {
+              "id": 20522,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2707:0:70"
+            },
+            "scope": 20613,
+            "src": "2568:140:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20524,
+              "nodeType": "StructuredDocumentation",
+              "src": "2714:358:70",
+              "text": " @dev based on the {_treeStatus} planter total claimable amount updated in every tree\n update verifying\n NOTE emit a {PlanterTotalClaimedUpdated} event\n @param _treeId id of a tree that planter's total claimable amount updated for\n @param _planter  address of planter to fund\n @param _treeStatus status of tree"
+            },
+            "functionSelector": "c0ba4aff",
+            "id": 20533,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updatePlanterTotalClaimed",
+            "nameLocation": "3086:25:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20531,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20526,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3129:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20533,
+                  "src": "3121:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20525,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3121:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20528,
+                  "mutability": "mutable",
+                  "name": "_planter",
+                  "nameLocation": "3154:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20533,
+                  "src": "3146:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20527,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3146:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20530,
+                  "mutability": "mutable",
+                  "name": "_treeStatus",
+                  "nameLocation": "3179:11:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20533,
+                  "src": "3172:18:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 20529,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3172:6:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3111:85:70"
+            },
+            "returnParameters": {
+              "id": 20532,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3205:0:70"
+            },
+            "scope": 20613,
+            "src": "3077:129:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20534,
+              "nodeType": "StructuredDocumentation",
+              "src": "3212:148:70",
+              "text": " @dev planter withdraw {_amount} from balances\n NOTE emit a {BalanceWithdrew} event\n @param _amount amount to withdraw"
+            },
+            "functionSelector": "da76d5cd",
+            "id": 20539,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawBalance",
+            "nameLocation": "3374:15:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20537,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20536,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nameLocation": "3398:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20539,
+                  "src": "3390:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20535,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3390:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3389:17:70"
+            },
+            "returnParameters": {
+              "id": 20538,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3415:0:70"
+            },
+            "scope": 20613,
+            "src": "3365:51:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20540,
+              "nodeType": "StructuredDocumentation",
+              "src": "3422:256:70",
+              "text": " @dev admin withdraw from noAmbsassador totalBalances\n NOTE amount transfer to outgoingAddress\n NOTE emit a {NoAmbsassadorBalanceWithdrew} event\n @param _amount amount to withdraw\n @param _reason reason to withdraw"
+            },
+            "functionSelector": "b094a350",
+            "id": 20547,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawNoAmbsassadorBalance",
+            "nameLocation": "3692:28:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20545,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20542,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nameLocation": "3738:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20547,
+                  "src": "3730:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20541,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3730:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20544,
+                  "mutability": "mutable",
+                  "name": "_reason",
+                  "nameLocation": "3771:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20547,
+                  "src": "3755:23:70",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 20543,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3755:6:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3720:64:70"
+            },
+            "returnParameters": {
+              "id": 20546,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3793:0:70"
+            },
+            "scope": 20613,
+            "src": "3683:111:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c4d66de8",
+            "id": 20552,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initialize",
+            "nameLocation": "3809:10:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20550,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20549,
+                  "mutability": "mutable",
+                  "name": "_accessRestrictionAddress",
+                  "nameLocation": "3828:25:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20552,
+                  "src": "3820:33:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20548,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3820:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3819:35:70"
+            },
+            "returnParameters": {
+              "id": 20551,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3863:0:70"
+            },
+            "scope": 20613,
+            "src": "3800:64:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20553,
+              "nodeType": "StructuredDocumentation",
+              "src": "3870:84:70",
+              "text": " @return true in case of PlanterFund contract has been initialized"
+            },
+            "functionSelector": "349904da",
+            "id": 20558,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPlanterFund",
+            "nameLocation": "3968:13:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20554,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3981:2:70"
+            },
+            "returnParameters": {
+              "id": 20557,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20556,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20558,
+                  "src": "4007:4:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 20555,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4007:4:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4006:6:70"
+            },
+            "scope": 20613,
+            "src": "3959:54:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20559,
+              "nodeType": "StructuredDocumentation",
+              "src": "4019:41:70",
+              "text": "@return minimum amount to withdraw "
+            },
+            "functionSelector": "2ed1fc5c",
+            "id": 20564,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "minWithdrawable",
+            "nameLocation": "4074:15:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20560,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4089:2:70"
+            },
+            "returnParameters": {
+              "id": 20563,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20562,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20564,
+                  "src": "4115:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20561,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4115:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4114:9:70"
+            },
+            "scope": 20613,
+            "src": "4065:59:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20565,
+              "nodeType": "StructuredDocumentation",
+              "src": "4130:43:70",
+              "text": " @return outgoing address"
+            },
+            "functionSelector": "09c357c1",
+            "id": 20570,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "outgoingAddress",
+            "nameLocation": "4187:15:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20566,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4202:2:70"
+            },
+            "returnParameters": {
+              "id": 20569,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20568,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20570,
+                  "src": "4228:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20567,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4228:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4227:9:70"
+            },
+            "scope": 20613,
+            "src": "4178:59:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20571,
+              "nodeType": "StructuredDocumentation",
+              "src": "4243:176:70",
+              "text": " @dev return totalBalances struct data\n @return planter total balance\n @return ambassador total balance\n @return noAmbsassador total balance"
+            },
+            "functionSelector": "a69a2ad1",
+            "id": 20580,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "totalBalances",
+            "nameLocation": "4433:13:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20572,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4446:2:70"
+            },
+            "returnParameters": {
+              "id": 20579,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20574,
+                  "mutability": "mutable",
+                  "name": "planter",
+                  "nameLocation": "4517:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20580,
+                  "src": "4509:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20573,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4509:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20576,
+                  "mutability": "mutable",
+                  "name": "ambassador",
+                  "nameLocation": "4546:10:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20580,
+                  "src": "4538:18:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20575,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4538:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20578,
+                  "mutability": "mutable",
+                  "name": "noAmbsassador",
+                  "nameLocation": "4578:13:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20580,
+                  "src": "4570:21:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20577,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4570:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4495:106:70"
+            },
+            "scope": 20613,
+            "src": "4424:178:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20581,
+              "nodeType": "StructuredDocumentation",
+              "src": "4608:69:70",
+              "text": " @return treeToPlanterProjectedEarning of {_treeId}"
+            },
+            "functionSelector": "30295d06",
+            "id": 20588,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "treeToPlanterProjectedEarning",
+            "nameLocation": "4691:29:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20584,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20583,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "4729:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20588,
+                  "src": "4721:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20582,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4721:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4720:17:70"
+            },
+            "returnParameters": {
+              "id": 20587,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20586,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20588,
+                  "src": "4785:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20585,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4785:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4784:9:70"
+            },
+            "scope": 20613,
+            "src": "4682:112:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20589,
+              "nodeType": "StructuredDocumentation",
+              "src": "4800:72:70",
+              "text": " @return treeToAmbassadorProjectedEarning of {_treeId}"
+            },
+            "functionSelector": "8012b743",
+            "id": 20596,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "treeToAmbassadorProjectedEarning",
+            "nameLocation": "4886:32:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20592,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20591,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "4927:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20596,
+                  "src": "4919:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20590,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4919:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4918:17:70"
+            },
+            "returnParameters": {
+              "id": 20595,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20594,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20596,
+                  "src": "4983:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20593,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4983:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4982:9:70"
+            },
+            "scope": 20613,
+            "src": "4877:115:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20597,
+              "nodeType": "StructuredDocumentation",
+              "src": "4998:65:70",
+              "text": " @return treeToPlanterTotalClaimed of {_treeId}"
+            },
+            "functionSelector": "c7414693",
+            "id": 20604,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "treeToPlanterTotalClaimed",
+            "nameLocation": "5077:25:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20600,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20599,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "5111:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20604,
+                  "src": "5103:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20598,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5103:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5102:17:70"
+            },
+            "returnParameters": {
+              "id": 20603,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20602,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20604,
+                  "src": "5167:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20601,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5167:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5166:9:70"
+            },
+            "scope": 20613,
+            "src": "5068:108:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20605,
+              "nodeType": "StructuredDocumentation",
+              "src": "5182:48:70",
+              "text": " @return balance of {_planter}"
+            },
+            "functionSelector": "27e235e3",
+            "id": 20612,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balances",
+            "nameLocation": "5244:8:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20608,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20607,
+                  "mutability": "mutable",
+                  "name": "_planter",
+                  "nameLocation": "5261:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20612,
+                  "src": "5253:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20606,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5253:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5252:18:70"
+            },
+            "returnParameters": {
+              "id": 20611,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20610,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20612,
+                  "src": "5294:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20609,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5294:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5293:9:70"
+            },
+            "scope": 20613,
+            "src": "5235:68:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 20614,
+        "src": "97:5208:70",
+        "usedErrors": []
+      }
+    ],
+    "src": "37:5269:70"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/treasury/IPlanterFund.sol",
+    "exportedSymbols": {
+      "IPlanterFund": [
+        20613
+      ]
+    },
+    "id": 20614,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 20443,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "37:23:70"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 20444,
+          "nodeType": "StructuredDocumentation",
+          "src": "62:34:70",
+          "text": "@title PlanterFund interfce "
+        },
+        "fullyImplemented": false,
+        "id": 20613,
+        "linearizedBaseContracts": [
+          20613
+        ],
+        "name": "IPlanterFund",
+        "nameLocation": "107:12:70",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20445,
+              "nodeType": "StructuredDocumentation",
+              "src": "126:311:70",
+              "text": " @dev emitted when planter total claimable amount updated\n @param treeId id of tree that planter total claimable amount updated for\n @param planter address of planter\n @param amount amount added to planter total claimable amount\n @param ambassador address of ambassador"
+            },
+            "id": 20455,
+            "name": "PlanterTotalClaimedUpdated",
+            "nameLocation": "448:26:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20454,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20447,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "492:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "484:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20446,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "484:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20449,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "planter",
+                  "nameLocation": "516:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "508:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20448,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "508:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20451,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "541:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "533:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20450,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "533:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20453,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "ambassador",
+                  "nameLocation": "565:10:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20455,
+                  "src": "557:18:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20452,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "557:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "474:107:70"
+            },
+            "src": "442:140:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20456,
+              "nodeType": "StructuredDocumentation",
+              "src": "588:136:70",
+              "text": " @dev emitted when a planter withdraw\n @param amount amount of withdraw\n @param account address of planter"
+            },
+            "id": 20462,
+            "name": "BalanceWithdrew",
+            "nameLocation": "735:15:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20461,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20458,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "759:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20462,
+                  "src": "751:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20457,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "751:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20460,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "775:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20462,
+                  "src": "767:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20459,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "767:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "750:33:70"
+            },
+            "src": "729:55:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20463,
+              "nodeType": "StructuredDocumentation",
+              "src": "790:206:70",
+              "text": " @dev emitted when admin withdraw noAmbsassador balance\n @param amount amount to withdraw\n @param account address of destination account\n @param reason reason of withdraw"
+            },
+            "id": 20471,
+            "name": "NoAmbsassadorBalanceWithdrew",
+            "nameLocation": "1007:28:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20470,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20465,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1053:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20471,
+                  "src": "1045:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20464,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1045:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20467,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "account",
+                  "nameLocation": "1077:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20471,
+                  "src": "1069:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20466,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1069:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20469,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "reason",
+                  "nameLocation": "1101:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20471,
+                  "src": "1094:13:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 20468,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1094:6:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1035:78:70"
+            },
+            "src": "1001:113:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20472,
+              "nodeType": "StructuredDocumentation",
+              "src": "1120:215:70",
+              "text": " @dev emitted when ProjectedEarning set for tree\n @param treeId id of tree ProjectedEarning set for\n @param planterAmount planter amount\n @param ambassadorAmount ambassador amount"
+            },
+            "id": 20480,
+            "name": "ProjectedEarningUpdated",
+            "nameLocation": "1346:23:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20479,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20474,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "treeId",
+                  "nameLocation": "1387:6:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20480,
+                  "src": "1379:14:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20473,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1379:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20476,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "planterAmount",
+                  "nameLocation": "1411:13:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20480,
+                  "src": "1403:21:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20475,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1403:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20478,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "ambassadorAmount",
+                  "nameLocation": "1442:16:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20480,
+                  "src": "1434:24:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20477,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1434:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1369:95:70"
+            },
+            "src": "1340:125:70"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 20481,
+              "nodeType": "StructuredDocumentation",
+              "src": "1471:54:70",
+              "text": "@dev emitted when minimum withdrable amount set "
+            },
+            "id": 20483,
+            "name": "MinWithdrawableAmountUpdated",
+            "nameLocation": "1536:28:70",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 20482,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1564:2:70"
+            },
+            "src": "1530:37:70"
+          },
+          {
+            "documentation": {
+              "id": 20484,
+              "nodeType": "StructuredDocumentation",
+              "src": "1573:47:70",
+              "text": "@dev set {_address} to trusted forwarder "
+            },
+            "functionSelector": "da742228",
+            "id": 20489,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setTrustedForwarder",
+            "nameLocation": "1634:19:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20487,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20486,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "1662:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20489,
+                  "src": "1654:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20485,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1654:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1653:18:70"
+            },
+            "returnParameters": {
+              "id": 20488,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1680:0:70"
+            },
+            "scope": 20613,
+            "src": "1625:56:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20490,
+              "nodeType": "StructuredDocumentation",
+              "src": "1687:54:70",
+              "text": "@dev set {_address} to Planter contract address "
+            },
+            "functionSelector": "fa9ee503",
+            "id": 20495,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setPlanterContractAddress",
+            "nameLocation": "1755:25:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20493,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20492,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "1789:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20495,
+                  "src": "1781:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20491,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1781:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1780:18:70"
+            },
+            "returnParameters": {
+              "id": 20494,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1807:0:70"
+            },
+            "scope": 20613,
+            "src": "1746:62:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20496,
+              "nodeType": "StructuredDocumentation",
+              "src": "1814:55:70",
+              "text": "@dev set {_address} to DaiToken contract address "
+            },
+            "functionSelector": "f1326b15",
+            "id": 20501,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setDaiTokenAddress",
+            "nameLocation": "1883:18:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20499,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20498,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "1910:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20501,
+                  "src": "1902:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20497,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1902:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1901:18:70"
+            },
+            "returnParameters": {
+              "id": 20500,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1928:0:70"
+            },
+            "scope": 20613,
+            "src": "1874:55:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20502,
+              "nodeType": "StructuredDocumentation",
+              "src": "1935:57:70",
+              "text": " @dev set {_address} to outgoingAddress"
+            },
+            "functionSelector": "871dfb10",
+            "id": 20507,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setOutgoingAddress",
+            "nameLocation": "2006:18:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20505,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20504,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nameLocation": "2041:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20507,
+                  "src": "2025:24:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  },
+                  "typeName": {
+                    "id": 20503,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2025:15:70",
+                    "stateMutability": "payable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2024:26:70"
+            },
+            "returnParameters": {
+              "id": 20506,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2059:0:70"
+            },
+            "scope": 20613,
+            "src": "1997:63:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20508,
+              "nodeType": "StructuredDocumentation",
+              "src": "2066:173:70",
+              "text": " @dev admin set the minimum amount to withdraw\n NOTE emit a {MinWithdrawableAmountUpdated} event\n @param _amount is minimum withdrawable amount"
+            },
+            "functionSelector": "b0b82469",
+            "id": 20513,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateWithdrawableAmount",
+            "nameLocation": "2253:24:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20511,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20510,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nameLocation": "2286:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20513,
+                  "src": "2278:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20509,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2278:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2277:17:70"
+            },
+            "returnParameters": {
+              "id": 20512,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2303:0:70"
+            },
+            "scope": 20613,
+            "src": "2244:60:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20514,
+              "nodeType": "StructuredDocumentation",
+              "src": "2310:253:70",
+              "text": " @dev set projected earnings\n NOTE emit a {ProjectedEarningUpdated} event\n @param _treeId id of tree to set projected earning for\n @param _planterAmount planter amount\n @param _ambassadorAmount ambassador amount"
+            },
+            "functionSelector": "97795c66",
+            "id": 20523,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateProjectedEarnings",
+            "nameLocation": "2577:23:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20521,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20516,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "2618:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20523,
+                  "src": "2610:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20515,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2610:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20518,
+                  "mutability": "mutable",
+                  "name": "_planterAmount",
+                  "nameLocation": "2643:14:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20523,
+                  "src": "2635:22:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20517,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2635:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20520,
+                  "mutability": "mutable",
+                  "name": "_ambassadorAmount",
+                  "nameLocation": "2675:17:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20523,
+                  "src": "2667:25:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20519,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2667:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2600:98:70"
+            },
+            "returnParameters": {
+              "id": 20522,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2707:0:70"
+            },
+            "scope": 20613,
+            "src": "2568:140:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20524,
+              "nodeType": "StructuredDocumentation",
+              "src": "2714:358:70",
+              "text": " @dev based on the {_treeStatus} planter total claimable amount updated in every tree\n update verifying\n NOTE emit a {PlanterTotalClaimedUpdated} event\n @param _treeId id of a tree that planter's total claimable amount updated for\n @param _planter  address of planter to fund\n @param _treeStatus status of tree"
+            },
+            "functionSelector": "c0ba4aff",
+            "id": 20533,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updatePlanterTotalClaimed",
+            "nameLocation": "3086:25:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20531,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20526,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "3129:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20533,
+                  "src": "3121:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20525,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3121:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20528,
+                  "mutability": "mutable",
+                  "name": "_planter",
+                  "nameLocation": "3154:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20533,
+                  "src": "3146:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20527,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3146:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20530,
+                  "mutability": "mutable",
+                  "name": "_treeStatus",
+                  "nameLocation": "3179:11:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20533,
+                  "src": "3172:18:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint64",
+                    "typeString": "uint64"
+                  },
+                  "typeName": {
+                    "id": 20529,
+                    "name": "uint64",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3172:6:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint64",
+                      "typeString": "uint64"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3111:85:70"
+            },
+            "returnParameters": {
+              "id": 20532,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3205:0:70"
+            },
+            "scope": 20613,
+            "src": "3077:129:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20534,
+              "nodeType": "StructuredDocumentation",
+              "src": "3212:148:70",
+              "text": " @dev planter withdraw {_amount} from balances\n NOTE emit a {BalanceWithdrew} event\n @param _amount amount to withdraw"
+            },
+            "functionSelector": "da76d5cd",
+            "id": 20539,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawBalance",
+            "nameLocation": "3374:15:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20537,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20536,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nameLocation": "3398:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20539,
+                  "src": "3390:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20535,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3390:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3389:17:70"
+            },
+            "returnParameters": {
+              "id": 20538,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3415:0:70"
+            },
+            "scope": 20613,
+            "src": "3365:51:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20540,
+              "nodeType": "StructuredDocumentation",
+              "src": "3422:256:70",
+              "text": " @dev admin withdraw from noAmbsassador totalBalances\n NOTE amount transfer to outgoingAddress\n NOTE emit a {NoAmbsassadorBalanceWithdrew} event\n @param _amount amount to withdraw\n @param _reason reason to withdraw"
+            },
+            "functionSelector": "b094a350",
+            "id": 20547,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawNoAmbsassadorBalance",
+            "nameLocation": "3692:28:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20545,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20542,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nameLocation": "3738:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20547,
+                  "src": "3730:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20541,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3730:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20544,
+                  "mutability": "mutable",
+                  "name": "_reason",
+                  "nameLocation": "3771:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20547,
+                  "src": "3755:23:70",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 20543,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3755:6:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3720:64:70"
+            },
+            "returnParameters": {
+              "id": 20546,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3793:0:70"
+            },
+            "scope": 20613,
+            "src": "3683:111:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "c4d66de8",
+            "id": 20552,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initialize",
+            "nameLocation": "3809:10:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20550,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20549,
+                  "mutability": "mutable",
+                  "name": "_accessRestrictionAddress",
+                  "nameLocation": "3828:25:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20552,
+                  "src": "3820:33:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20548,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3820:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3819:35:70"
+            },
+            "returnParameters": {
+              "id": 20551,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3863:0:70"
+            },
+            "scope": 20613,
+            "src": "3800:64:70",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20553,
+              "nodeType": "StructuredDocumentation",
+              "src": "3870:84:70",
+              "text": " @return true in case of PlanterFund contract has been initialized"
+            },
+            "functionSelector": "349904da",
+            "id": 20558,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPlanterFund",
+            "nameLocation": "3968:13:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20554,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3981:2:70"
+            },
+            "returnParameters": {
+              "id": 20557,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20556,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20558,
+                  "src": "4007:4:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 20555,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4007:4:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4006:6:70"
+            },
+            "scope": 20613,
+            "src": "3959:54:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20559,
+              "nodeType": "StructuredDocumentation",
+              "src": "4019:41:70",
+              "text": "@return minimum amount to withdraw "
+            },
+            "functionSelector": "2ed1fc5c",
+            "id": 20564,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "minWithdrawable",
+            "nameLocation": "4074:15:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20560,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4089:2:70"
+            },
+            "returnParameters": {
+              "id": 20563,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20562,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20564,
+                  "src": "4115:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20561,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4115:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4114:9:70"
+            },
+            "scope": 20613,
+            "src": "4065:59:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20565,
+              "nodeType": "StructuredDocumentation",
+              "src": "4130:43:70",
+              "text": " @return outgoing address"
+            },
+            "functionSelector": "09c357c1",
+            "id": 20570,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "outgoingAddress",
+            "nameLocation": "4187:15:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20566,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4202:2:70"
+            },
+            "returnParameters": {
+              "id": 20569,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20568,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20570,
+                  "src": "4228:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20567,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4228:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4227:9:70"
+            },
+            "scope": 20613,
+            "src": "4178:59:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20571,
+              "nodeType": "StructuredDocumentation",
+              "src": "4243:176:70",
+              "text": " @dev return totalBalances struct data\n @return planter total balance\n @return ambassador total balance\n @return noAmbsassador total balance"
+            },
+            "functionSelector": "a69a2ad1",
+            "id": 20580,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "totalBalances",
+            "nameLocation": "4433:13:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20572,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4446:2:70"
+            },
+            "returnParameters": {
+              "id": 20579,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20574,
+                  "mutability": "mutable",
+                  "name": "planter",
+                  "nameLocation": "4517:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20580,
+                  "src": "4509:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20573,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4509:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20576,
+                  "mutability": "mutable",
+                  "name": "ambassador",
+                  "nameLocation": "4546:10:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20580,
+                  "src": "4538:18:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20575,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4538:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20578,
+                  "mutability": "mutable",
+                  "name": "noAmbsassador",
+                  "nameLocation": "4578:13:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20580,
+                  "src": "4570:21:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20577,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4570:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4495:106:70"
+            },
+            "scope": 20613,
+            "src": "4424:178:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20581,
+              "nodeType": "StructuredDocumentation",
+              "src": "4608:69:70",
+              "text": " @return treeToPlanterProjectedEarning of {_treeId}"
+            },
+            "functionSelector": "30295d06",
+            "id": 20588,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "treeToPlanterProjectedEarning",
+            "nameLocation": "4691:29:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20584,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20583,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "4729:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20588,
+                  "src": "4721:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20582,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4721:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4720:17:70"
+            },
+            "returnParameters": {
+              "id": 20587,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20586,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20588,
+                  "src": "4785:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20585,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4785:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4784:9:70"
+            },
+            "scope": 20613,
+            "src": "4682:112:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20589,
+              "nodeType": "StructuredDocumentation",
+              "src": "4800:72:70",
+              "text": " @return treeToAmbassadorProjectedEarning of {_treeId}"
+            },
+            "functionSelector": "8012b743",
+            "id": 20596,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "treeToAmbassadorProjectedEarning",
+            "nameLocation": "4886:32:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20592,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20591,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "4927:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20596,
+                  "src": "4919:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20590,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4919:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4918:17:70"
+            },
+            "returnParameters": {
+              "id": 20595,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20594,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20596,
+                  "src": "4983:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20593,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4983:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4982:9:70"
+            },
+            "scope": 20613,
+            "src": "4877:115:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20597,
+              "nodeType": "StructuredDocumentation",
+              "src": "4998:65:70",
+              "text": " @return treeToPlanterTotalClaimed of {_treeId}"
+            },
+            "functionSelector": "c7414693",
+            "id": 20604,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "treeToPlanterTotalClaimed",
+            "nameLocation": "5077:25:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20600,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20599,
+                  "mutability": "mutable",
+                  "name": "_treeId",
+                  "nameLocation": "5111:7:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20604,
+                  "src": "5103:15:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20598,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5103:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5102:17:70"
+            },
+            "returnParameters": {
+              "id": 20603,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20602,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20604,
+                  "src": "5167:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20601,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5167:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5166:9:70"
+            },
+            "scope": 20613,
+            "src": "5068:108:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20605,
+              "nodeType": "StructuredDocumentation",
+              "src": "5182:48:70",
+              "text": " @return balance of {_planter}"
+            },
+            "functionSelector": "27e235e3",
+            "id": 20612,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balances",
+            "nameLocation": "5244:8:70",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 20608,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20607,
+                  "mutability": "mutable",
+                  "name": "_planter",
+                  "nameLocation": "5261:8:70",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20612,
+                  "src": "5253:16:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20606,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5253:7:70",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5252:18:70"
+            },
+            "returnParameters": {
+              "id": 20611,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 20610,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 20612,
+                  "src": "5294:7:70",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 20609,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5294:7:70",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5293:9:70"
+            },
+            "scope": 20613,
+            "src": "5235:68:70",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 20614,
+        "src": "97:5208:70",
+        "usedErrors": []
+      }
+    ],
+    "src": "37:5269:70"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.6+commit.11564f7e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2022-01-11T11:00:41.989Z",
+  "devdoc": {
+    "events": {
+      "BalanceWithdrew(uint256,address)": {
+        "details": "emitted when a planter withdraw",
+        "params": {
+          "account": "address of planter",
+          "amount": "amount of withdraw"
+        }
+      },
+      "MinWithdrawableAmountUpdated()": {
+        "details": "emitted when minimum withdrable amount set "
+      },
+      "NoAmbsassadorBalanceWithdrew(uint256,address,string)": {
+        "details": "emitted when admin withdraw noAmbsassador balance",
+        "params": {
+          "account": "address of destination account",
+          "amount": "amount to withdraw",
+          "reason": "reason of withdraw"
+        }
+      },
+      "PlanterTotalClaimedUpdated(uint256,address,uint256,address)": {
+        "details": "emitted when planter total claimable amount updated",
+        "params": {
+          "ambassador": "address of ambassador",
+          "amount": "amount added to planter total claimable amount",
+          "planter": "address of planter",
+          "treeId": "id of tree that planter total claimable amount updated for"
+        }
+      },
+      "ProjectedEarningUpdated(uint256,uint256,uint256)": {
+        "details": "emitted when ProjectedEarning set for tree",
+        "params": {
+          "ambassadorAmount": "ambassador amount",
+          "planterAmount": "planter amount",
+          "treeId": "id of tree ProjectedEarning set for"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "balances(address)": {
+        "returns": {
+          "_0": "balance of {_planter}"
+        }
+      },
+      "isPlanterFund()": {
+        "returns": {
+          "_0": "true in case of PlanterFund contract has been initialized"
+        }
+      },
+      "minWithdrawable()": {
+        "returns": {
+          "_0": "minimum amount to withdraw "
+        }
+      },
+      "outgoingAddress()": {
+        "returns": {
+          "_0": "outgoing address"
+        }
+      },
+      "setDaiTokenAddress(address)": {
+        "details": "set {_address} to DaiToken contract address "
+      },
+      "setOutgoingAddress(address)": {
+        "details": "set {_address} to outgoingAddress"
+      },
+      "setPlanterContractAddress(address)": {
+        "details": "set {_address} to Planter contract address "
+      },
+      "setTrustedForwarder(address)": {
+        "details": "set {_address} to trusted forwarder "
+      },
+      "totalBalances()": {
+        "details": "return totalBalances struct data",
+        "returns": {
+          "ambassador": "total balance",
+          "noAmbsassador": "total balance",
+          "planter": "total balance"
+        }
+      },
+      "treeToAmbassadorProjectedEarning(uint256)": {
+        "returns": {
+          "_0": "treeToAmbassadorProjectedEarning of {_treeId}"
+        }
+      },
+      "treeToPlanterProjectedEarning(uint256)": {
+        "returns": {
+          "_0": "treeToPlanterProjectedEarning of {_treeId}"
+        }
+      },
+      "treeToPlanterTotalClaimed(uint256)": {
+        "returns": {
+          "_0": "treeToPlanterTotalClaimed of {_treeId}"
+        }
+      },
+      "updatePlanterTotalClaimed(uint256,address,uint64)": {
+        "details": "based on the {_treeStatus} planter total claimable amount updated in every tree update verifying NOTE emit a {PlanterTotalClaimedUpdated} event",
+        "params": {
+          "_planter": "address of planter to fund",
+          "_treeId": "id of a tree that planter's total claimable amount updated for",
+          "_treeStatus": "status of tree"
+        }
+      },
+      "updateProjectedEarnings(uint256,uint256,uint256)": {
+        "details": "set projected earnings NOTE emit a {ProjectedEarningUpdated} event",
+        "params": {
+          "_ambassadorAmount": "ambassador amount",
+          "_planterAmount": "planter amount",
+          "_treeId": "id of tree to set projected earning for"
+        }
+      },
+      "updateWithdrawableAmount(uint256)": {
+        "details": "admin set the minimum amount to withdraw NOTE emit a {MinWithdrawableAmountUpdated} event",
+        "params": {
+          "_amount": "is minimum withdrawable amount"
+        }
+      },
+      "withdrawBalance(uint256)": {
+        "details": "planter withdraw {_amount} from balances NOTE emit a {BalanceWithdrew} event",
+        "params": {
+          "_amount": "amount to withdraw"
+        }
+      },
+      "withdrawNoAmbsassadorBalance(uint256,string)": {
+        "details": "admin withdraw from noAmbsassador totalBalances NOTE amount transfer to outgoingAddress NOTE emit a {NoAmbsassadorBalanceWithdrew} event",
+        "params": {
+          "_amount": "amount to withdraw",
+          "_reason": "reason to withdraw"
+        }
+      }
+    },
+    "title": "PlanterFund interfce ",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
