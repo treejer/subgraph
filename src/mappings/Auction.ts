@@ -62,6 +62,13 @@ export function handleAuctionCreated(event: AuctionCreated): void {
         tree.saleType = BigInt.fromI32(1);
         tree.updatedAt = event.block.timestamp as BigInt;
         tree.save();
+    } else {
+
+        tree = new Tree(auction.tree);
+        tree.saleType = BigInt.fromI32(1);
+        tree.createdAt = event.block.timestamp as BigInt;
+        tree.updatedAt = event.block.timestamp as BigInt;
+        tree.save();
     }
 
     addTreeHistory(auction.tree,
