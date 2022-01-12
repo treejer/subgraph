@@ -123,6 +123,8 @@ dataSources:
       abis:
         - name: IAuction
           file: ./abis/IAuction.json
+        - name: IRegularSale
+          file: ./abis/IRegularSale.json
       eventHandlers:
         - event: AuctionCreated(uint256)
           handler: handleAuctionCreated
@@ -154,6 +156,8 @@ dataSources:
       abis:
         - name: IIncrementalSale
           file: ./abis/IIncrementalSale.json
+        - name: IRegularSale
+          file: ./abis/IRegularSale.json
       eventHandlers:
         - event: IncrementalSaleUpdated()
           handler: handleIncrementalSaleUpdated
