@@ -13,23 +13,15 @@ import { BigInt } from "@graphprotocol/graph-ts";
 import { COUNTER_ID, getCount_bid, ZERO_ADDRESS, addTreeHistory, addAddressHistory } from "../helpers";
 import { updateReferrer } from '../helpers/referrer';
 
-/**
-     struct Auction {
-        uint256 treeId;
-        address bidder;
-        uint64 startDate;
-        uint64 endDate;
-        uint256 highestBid;
-        uint256 bidInterval;
-    }
- */
-
 function setAuctionData(auction: Auction, c_auction: IAuction__auctionsResult): void {
     auction.tree = c_auction.value0.toHexString();
     auction.startDate = c_auction.value2 as BigInt;
     auction.endDate = c_auction.value3 as BigInt;
-    auction.initialPrice = c_auction.value4 as BigInt;
-    auction.priceInterval = c_auction.value5 as BigInt;
+
+    auction.priceInterval = c_auction.value4 as BigInt;
+
+    auction.initialPrice = c_auction.value5 as BigInt;
+    auction.highestBid = c_auction.value5 as BigInt;
 }
 
 
