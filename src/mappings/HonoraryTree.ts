@@ -15,7 +15,7 @@ import { addTreeHistory, addAddressHistory } from '../helpers';
 function setRecipientFields(recipient: HonoraryTreeRecipient, recipientRes: IHonoraryTree__recipientsResult): void {
     recipient.expiryDate = recipientRes.value0 as BigInt;
     recipient.startDate = recipientRes.value1 as BigInt;
-    recipient.status = recipientRes.value2 as BigInt;
+    // recipient.status = recipientRes.value2 as BigInt;
 }
 
 export function handleTreeRangeSet(event: TreeRangeSet): void {
@@ -93,6 +93,7 @@ export function handleRecipientAdded(event: RecipientAdded): void {
 
     let recipient = new HonoraryTreeRecipient(event.params.recipient.toHexString());
     setRecipientFields(recipient, c_recipient);
+    recipient.status = BigInt.fromI32(0);
     recipient.createdAt = event.block.timestamp as BigInt;
     recipient.updatedAt = event.block.timestamp as BigInt;
     recipient.claimedFailed = false;
@@ -123,6 +124,12 @@ export function handleClaimed(event: Claimed): void {
         honoraryTree.claimed = true;
         honoraryTree.updatedAt = event.block.timestamp as BigInt;
         honoraryTree.save();
+    }
+
+    let recipient = HonoraryTreeRecipient.load(event.transaction.from.toHexString());
+    if(recipient) {
+        recipient.status = BigInt.fromI32(1);
+        recipient.save();
     }
 
     let tree = Tree.load(treeId);
