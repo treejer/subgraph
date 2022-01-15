@@ -4,8 +4,8 @@ import { Counter, GlobalData, TreeHistory, AddressHistory } from "../generated/s
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
 export const INCREMENTAL_SELL_ID = "0001";
-export const CONTRACT_TREE_ADDRESS = "0x4551825CAb498443FaD30D8fCb1da76b023d48a5";
-export const CONTRACT_REGULAR_SELL_ADDRESS = "0x9eb27C5d314836A0c654f1D18f5dd6773604EC33";
+export const CONTRACT_TREE_ADDRESS = "0x3aBbc23F3303EF36fd9f6CEC0e585b2C23e47FD9";
+export const CONTRACT_REGULAR_SELL_ADDRESS = "0xFBDaB242bc3e439e0CF59F5E8C3BaF5A8ec38475";
 
 
 function newCounter(id: string): Counter {

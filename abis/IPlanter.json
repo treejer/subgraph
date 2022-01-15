@@ -5789,7 +5789,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-14T15:38:30.433Z",
+  "updatedAt": "2022-01-15T01:48:06.007Z",
   "devdoc": {
     "events": {
       "AcceptedByOrganization(address)": {

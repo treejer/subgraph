@@ -3832,7 +3832,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-14T15:38:30.278Z",
+  "updatedAt": "2022-01-15T01:48:05.848Z",
   "devdoc": {
     "events": {
       "AuctionCreated(uint256)": {
