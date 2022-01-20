@@ -55,6 +55,7 @@ export function handleAttributeGenerated(event: AttributeGenerated): void {
     let tree = Tree.load(event.params.treeId.toHexString());
     if (tree) {
         tree.attribute = event.params.treeId.toHexString();
+        tree.symbol = event.params.treeId.toHexString();
         tree.updatedAt = event.block.timestamp as BigInt;
         tree.save();
     }
