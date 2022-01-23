@@ -1,7 +1,7 @@
 import { IAttribute as AttributeContract, AttributeGenerated, AttributeGenerationFailed } from "../../generated/Attribute/IAttribute";
 import { ITree as TreeContract, ITree__attributesResult, ITree__symbolsResult } from "../../generated/Tree/ITree";
 import { Tree, Attribute, Symbol, TreeWithAttributeProblem } from "../../generated/schema";
-import { Address, BigInt } from '@graphprotocol/graph-ts';
+import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { CONTRACT_TREE_ADDRESS } from '../helpers';
 
 
@@ -30,25 +30,38 @@ export function handleAttributeGenerated(event: AttributeGenerated): void {
     let treeContract = TreeContract.bind(Address.fromString(CONTRACT_TREE_ADDRESS));
 
 
-    let attributesRes = treeContract.attributes(event.params.treeId);
-    if (BigInt.fromI32(attributesRes.value8).gt(new BigInt(0))) {
-        let attribute = new Attribute(event.params.treeId.toHexString());
-        setAttributeFields(attribute, attributesRes);
-        attribute.tree = event.params.treeId.toHexString();
-        attribute.createdAt = event.block.timestamp as BigInt;
-        attribute.save();
+    let checkAttr = treeContract.try_attributes(event.params.treeId);
+    if(checkAttr.reverted) {
+       log.info('get attributes reverted {}', [event.params.treeId.toHexString()])
     }
+    else {
+        let attributesRes = treeContract.attributes(event.params.treeId);
+
+        if (BigInt.fromI32(attributesRes.value8).gt(new BigInt(0))) {
+            let attribute = new Attribute(event.params.treeId.toHexString());
+            setAttributeFields(attribute, attributesRes);
+            attribute.tree = event.params.treeId.toHexString();
+            attribute.createdAt = event.block.timestamp as BigInt;
+            attribute.save();
+        }
+    }
+    
 
 
+    let checkSymbol = treeContract.try_symbols(event.params.treeId);
+    if(checkSymbol.reverted) {
+       log.info('get symbols reverted {}', [event.params.treeId.toHexString()])
+    }
+    else {
+        let symbolRes = treeContract.symbols(event.params.treeId);
+        if (BigInt.fromI32(symbolRes.value4).gt(new BigInt(0))) {
+            let symbol = new Symbol(event.params.treeId.toHexString());
 
-    let symbolRes = treeContract.symbols(event.params.treeId);
-    if (BigInt.fromI32(symbolRes.value4).gt(new BigInt(0))) {
-        let symbol = new Symbol(event.params.treeId.toHexString());
-
-        setSymbolFields(symbol, symbolRes);
-        symbol.tree = event.params.treeId.toHexString();
-        symbol.createdAt = event.block.timestamp as BigInt;
-        symbol.save();
+            setSymbolFields(symbol, symbolRes);
+            symbol.tree = event.params.treeId.toHexString();
+            symbol.createdAt = event.block.timestamp as BigInt;
+            symbol.save();
+        }
     }
 
 

@@ -7,9 +7,9 @@ import {
     PriceUpdated,
     ReferralRewardClaimed
 } from "../../generated/RegularSale/IRegularSale";
-import { RegularRequest, Funder, Tree,Referrer } from "../../generated/schema";
-import { BigInt } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_RegularRequest, getGlobalData,addTreeHistory, addAddressHistory } from '../helpers';
+import { RegularRequest, Funder, Tree, Referrer } from "../../generated/schema";
+import { BigInt, log } from '@graphprotocol/graph-ts';
+import { COUNTER_ID, getCount_RegularRequest, getGlobalData, addTreeHistory, addAddressHistory } from '../helpers';
 import { updateReferrer } from '../helpers/referrer';
 
 
@@ -59,23 +59,23 @@ export function handleTreeFunded(event: TreeFunded): void {
     if (flag) gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
     gb.save();
 
-    
+
 
     addAddressHistory(event.params.funder.toHexString(),
-    'RegularTreeFunded',
-    '',
-    '',
-    event.transaction.from.toHexString(),
-    event.transaction.hash.toHexString(),
-    event.block.number as BigInt,
-    event.block.timestamp as BigInt, event.params.amount as BigInt, event.params.count as BigInt);
+        'RegularTreeFunded',
+        '',
+        '',
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, event.params.amount as BigInt, event.params.count as BigInt);
 
     updateReferrer(event.params.referrer, event.block.timestamp as BigInt);
 }
 
 export function handleRegularMint(event: RegularMint): void {
     let funder = Funder.load(event.transaction.from.toHexString());
-    if (!funder){
+    if (!funder) {
         funder = newFunder(event.transaction.from.toHexString());
         funder.createdAt = event.block.timestamp as BigInt;
 
@@ -94,7 +94,7 @@ export function handleRegularMint(event: RegularMint): void {
     funder.save();
 
 
-    
+
     let tree = Tree.load(event.params.treeId.toHexString());
     if (!tree) {
         tree = new Tree(event.params.treeId.toHexString());
@@ -110,11 +110,11 @@ export function handleRegularMint(event: RegularMint): void {
     tree.save();
 
     addTreeHistory(event.params.treeId.toHexString(),
-    'RegularMint',
-    event.transaction.from.toHexString(),
-    event.transaction.hash.toHexString(),
-    event.block.number as BigInt,
-    event.block.timestamp as BigInt, event.params.price);
+        'RegularMint',
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, event.params.price);
 }
 function newFunder(id: string): Funder {
     let funder = new Funder(id);
@@ -176,14 +176,38 @@ export function handleReferralRewardClaimed(event: ReferralRewardClaimed): void 
 
     let referrer = Referrer.load(event.params.referrer.toHexString());
     if (referrer) {
-        referrer.claimableTreesDai = regularSaleContract.referrerClaimableTreesDai(event.params.referrer);
-        referrer.claimableTreesWeth = regularSaleContract.referrerClaimableTreesWeth(event.params.referrer);;
-        referrer.referrerCount = regularSaleContract.referrerCount(event.params.referrer);
+
+
+        let checkreferrerClaimableTreesDai = regularSaleContract.try_referrerClaimableTreesDai(event.params.referrer);
+        if (checkreferrerClaimableTreesDai.reverted) {
+            log.info('checkreferrerClaimableTreesDai reverted {}', [event.params.referrer.toHexString()])
+        }
+        else {
+            referrer.claimableTreesDai = regularSaleContract.referrerClaimableTreesDai(event.params.referrer);
+        }
+
+
+        let checkreferrerClaimableTreesWeth = regularSaleContract.try_referrerClaimableTreesWeth(event.params.referrer);
+        if (checkreferrerClaimableTreesWeth.reverted) {
+            log.info('checkreferrerClaimableTreesWeth reverted {}', [event.params.referrer.toHexString()])
+        }
+        else {
+            referrer.claimableTreesWeth = regularSaleContract.referrerClaimableTreesWeth(event.params.referrer);
+        }
+
+
+        let checkreferrerCount = regularSaleContract.try_referrerCount(event.params.referrer);
+        if (checkreferrerCount.reverted) {
+            log.info('checkreferrerCount reverted {}', [event.params.referrer.toHexString()])
+        }
+        else {
+            referrer.referrerCount = regularSaleContract.referrerCount(event.params.referrer);
+        }
 
         referrer.claimedCount = referrer.claimedCount.plus(event.params.count);
 
         referrer.updatedAt = event.block.timestamp as BigInt;
-    
+
         referrer.save();
     }
 }
