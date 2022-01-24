@@ -552,6 +552,7 @@ export function handleTreeUpdated(event: TreeUpdated): void {
 
 
 export function handleTreeUpdatedVerified(event: TreeUpdatedVerified): void {
+
     let tree = Tree.load(event.params.treeId.toHexString());
     if (!tree) {
         return;
