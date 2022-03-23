@@ -22,8 +22,8 @@
     "build-deploy:rinkeby": "npm run prepare:rinkeby; npm run codegen; npm run build; npm run deploy:rinkeby; rm subgraph.yaml"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.22.0",
-    "@graphprotocol/graph-ts": "^0.22.0"
+    "@graphprotocol/graph-cli": "^0.29.0",
+    "@graphprotocol/graph-ts": "^0.26.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
