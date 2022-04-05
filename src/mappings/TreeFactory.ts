@@ -431,7 +431,7 @@ export function handleTreePlanted(event: TreePlanted): void {
         planter.save();
     }
 
-    // handleTreeSpecs(tempTree.treeSpecs, tempTree.id);
+    handleTreeSpecs(tempTree.treeSpecs, tempTree.id);
 
 }
 
