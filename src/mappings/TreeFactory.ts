@@ -69,7 +69,7 @@ function upsertTree(tree: Tree | null): void {
     }
 }
 
-export function saveTreeSpec(value: JSONValue, userData: Value): void {
+export function saveTreeSpec(value: JSONValue, userData: Value, type: string): void {
     if (value.isNull()) { return; }
     let obj = value.toObject();
 
@@ -205,24 +205,27 @@ export function saveTreeSpec(value: JSONValue, userData: Value): void {
     treeSpec.attributes = attrStr;
     treeSpec.updates = updateStr;
     treeSpec.locations = locationsStr;
-    treeSpec.save();
 
-    let tree = Tree.load(userData.toString());
-    if (tree) {
-        tree.treeSpecsEntity = treeSpec.id;
-        tree.save();
+    if(type === 'tree') {
+        let tree = Tree.load(userData.toString());
+        if (tree) {
+            tree.treeSpecsEntity = treeSpec.id;
+            treeSpec.tree = tree.id;
+            tree.save();
+        }
     } else {
         let tempTree = TempTree.load(userData.toString());
-        if (tempTree == null) {
-            log.info('Undefined tempTree in saveTreeSpec {}', [userData.toString()]);
-            return;
+        if (tempTree) {
+            tempTree.treeSpecsEntity = treeSpec.id;
+            treeSpec.tempTree = tempTree.id;
+            tempTree.save();
         }
-        tempTree.treeSpecsEntity = treeSpec.id;
-        tempTree.save();
     }
+
+    treeSpec.save();
 }
 
-function handleTreeSpecs(hash: string | null, treeId: string): void {
+function handleTreeSpecs(hash: string | null, treeId: string, type: string): void {
     // TODO: uncomment this
     // return;
 
@@ -240,7 +243,7 @@ function handleTreeSpecs(hash: string | null, treeId: string): void {
         let dd = data.toString();
         if (dd.length > 0) {
             let jsonValue = json.fromBytes(data as Bytes);
-            saveTreeSpec(jsonValue, Value.fromString(treeId));
+            saveTreeSpec(jsonValue, Value.fromString(treeId), type);
         }
     }
 }
@@ -256,7 +259,7 @@ export function handleTreeListed(event: TreeListed): void {
     tree.createdAt = event.block.timestamp as BigInt;
     tree.save();
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id, 'tree');
 
     addTreeHistory(event.params.treeId.toHexString(),
         'TreeListed',
@@ -360,7 +363,7 @@ export function handleAssignedTreeVerified(event: AssignedTreeVerified): void {
         }
     }
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id, 'tree');
 
     addTreeHistory(event.params.treeId.toHexString(),
     'AssignedTreeVerified',
@@ -431,7 +434,7 @@ export function handleTreePlanted(event: TreePlanted): void {
         planter.save();
     }
 
-    handleTreeSpecs(tempTree.treeSpecs, tempTree.id);
+    handleTreeSpecs(tempTree.treeSpecs, tempTree.id, 'tempTree');
 
 }
 
@@ -452,7 +455,7 @@ export function handleTreeVerified(event: TreeVerified): void {
     tree.createdAt = event.block.timestamp as BigInt;
     tree.save();
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id, 'tree');
 
     store.remove('TempTree', event.params.tempTreeId.toHexString());
 
@@ -577,7 +580,7 @@ export function handleTreeUpdatedVerified(event: TreeUpdatedVerified): void {
     treeUpdate.updatedAt = event.block.timestamp as BigInt;
     treeUpdate.save();
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id, 'tree');
 
     addTreeHistory(event.params.treeId.toHexString(),
     'TreeUpdatedVerified',
@@ -626,7 +629,7 @@ export function handleTreeSpecsUpdated(event: TreeSpecsUpdated): void {
     tree.updatedAt = event.block.timestamp as BigInt;
     tree.save();
 
-    handleTreeSpecs(tree.treeSpecs, tree.id);
+    handleTreeSpecs(tree.treeSpecs, tree.id, 'tree');
 
     addTreeHistory(event.params.treeId.toHexString(),
     'TreeSpecsUpdated',

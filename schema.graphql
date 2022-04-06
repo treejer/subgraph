@@ -119,6 +119,8 @@ type AddressHistory @entity {
 
 type TreeSpec @entity {
   id: ID!
+  tree: Tree
+  tempTree: TempTree
   name: String!
   description: String!
   externalUrl: String!
