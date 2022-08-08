@@ -142,10 +142,25 @@ export function handleAuctionSettled(event: AuctionSettled): void {
 
     let winnerId: string = winner.toHexString();
     let funder: Funder | null = Funder.load(winnerId);
-    if (!funder) funder = newFunder(winner.toHexString());
+    if (!funder) {
+        funder = newFunder(winner.toHexString());
+        funder.treeCount = BigInt.fromI32(0);
+        funder.spentWeth = BigInt.fromI32(0);
+        funder.spentDai = BigInt.fromI32(0);
+        funder.auctionCount = BigInt.fromI32(0);
+        funder.regularCount = BigInt.fromI32(0);
+        funder.incrementalCount = BigInt.fromI32(0);
+        funder.auctionSpent = BigInt.fromI32(0);
+        funder.regularSpent = BigInt.fromI32(0);
+        funder.incrementalSpent = BigInt.fromI32(0);
+        funder.rank = BigInt.fromI32(0);
+        funder.lastRequestId = '';
+    }
     funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
     funder.spentWeth = funder.spentWeth.plus(amount as BigInt);
     funder.updatedAt = event.block.timestamp as BigInt;
+    funder.createdAt = event.block.timestamp as BigInt;
+
     funder.save();
 
     addAddressHistory(winnerId,

@@ -166,6 +166,18 @@ export function handleTreeFunded(event: TreeFunded): void {
         funder = newFunder(event.params.funder.toHexString());
         flag = true;
         funder.createdAt = event.block.timestamp as BigInt;
+        
+        funder.treeCount = BigInt.fromI32(0);
+        funder.spentWeth = BigInt.fromI32(0);
+        funder.spentDai = BigInt.fromI32(0);
+        funder.auctionCount = BigInt.fromI32(0);
+        funder.regularCount = BigInt.fromI32(0);
+        funder.incrementalCount = BigInt.fromI32(0);
+        funder.auctionSpent = BigInt.fromI32(0);
+        funder.regularSpent = BigInt.fromI32(0);
+        funder.incrementalSpent = BigInt.fromI32(0);
+        funder.rank = BigInt.fromI32(0);
+        funder.lastRequestId = '';
     }
     funder.incrementalCount = funder.incrementalCount.plus(event.params.count as BigInt);
     // funder.incrementalSpent = funder.incrementalSpent.plus(event.params.amount as BigInt);

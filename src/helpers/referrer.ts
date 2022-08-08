@@ -17,6 +17,10 @@ export function updateReferrer(id: Address, timestamp: BigInt): void {
     if (!referrer) {
         referrer = new Referrer(id.toHexString());
         referrer.createdAt = timestamp as BigInt;
+        referrer.claimedCount = BigInt.fromI32(0);
+        referrer.referrerCount = BigInt.fromI32(0);
+        referrer.claimableTreesWeth = BigInt.fromI32(0);
+        referrer.claimableTreesDai = BigInt.fromI32(0);
     }
 
     let checkreferrerClaimableTreesDai = regularSaleContract.try_referrerClaimableTreesDai(id);

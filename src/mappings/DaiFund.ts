@@ -108,6 +108,7 @@ export function handleTreeFunded(event: TreeFunded): void {
     // treeFunds.allocation = modelId.toHexString();
     treeFunds.amount = event.params.amount as BigInt;
     treeFunds.createdAt = event.block.timestamp as BigInt;
+    treeFunds.updatedAt = event.block.timestamp as BigInt;
     treeFunds.save();
 
     let dfc = DaiFundcontract.bind(event.address);
