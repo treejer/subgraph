@@ -66,13 +66,15 @@ export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdat
 
     if (planter.invitedBy && planter.invitedBy != null) {
         let ref = Planter.load(planter.invitedBy as string);
+        if(!ref) {
+            return;
+        }
         let pp = new PlanterPayment(getCount_planterPayment(COUNTER_ID).toHexString());
 
-        if (ref) {
-            ref.balance = planterFundContract.balances(Address.fromString(ref.id));
-            pp.planter = ref.id;
-            ref.save();
-        }
+
+        ref.balance = planterFundContract.balances(Address.fromString(ref.id));
+        pp.planter = ref.id;
+        ref.save();
 
         pp.createdAt = event.block.timestamp as BigInt;
         if (tpf) {

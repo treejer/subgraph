@@ -60,6 +60,8 @@ export function handleAttributeGenerated(event: AttributeGenerated): void {
             setSymbolFields(symbol, symbolRes);
             symbol.tree = event.params.treeId.toHexString();
             symbol.createdAt = event.block.timestamp as BigInt;
+            symbol.effect = BigInt.fromI32(0);
+
             symbol.save();
         }
     }

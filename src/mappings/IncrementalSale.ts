@@ -63,7 +63,11 @@ export function handleIncrementalSaleUpdated(event: IncrementalSaleUpdated): voi
     let incrementalSellContract = IncrementalSaleContract.bind(event.address);
     let c_incSell = incrementalSellContract.incrementalSaleData();
     let incSell = IncrementalSale.load(INCREMENTAL_SELL_ID);
-    if (!incSell) incSell = new IncrementalSale(INCREMENTAL_SELL_ID);
+    if (!incSell)  {
+        incSell = new IncrementalSale(INCREMENTAL_SELL_ID);
+        incSell.createdAt = event.block.timestamp as BigInt;
+        incSell.updatedAt = event.block.timestamp as BigInt;
+    }
     setIncSellData(incSell, c_incSell);
     for (let i = parseInt(incSell.startTree); i <= parseInt(incSell.endTree); i++) {
 
@@ -77,6 +81,22 @@ export function handleIncrementalSaleUpdated(event: IncrementalSaleUpdated): voi
             tree.createdAt = (event.block.timestamp as BigInt).plus(BigInt.fromString(i.toString().split(".")[0]));
             tree.updatedAt = event.block.timestamp as BigInt;
             tree.saleType = BigInt.fromI32(2);
+
+            tree.createdAt = event.block.timestamp as BigInt;
+            tree.updatedAt = event.block.timestamp as BigInt;
+            tree.saleType = BigInt.fromI32(5);
+
+            tree.species = BigInt.fromI32(0);
+            tree.countryCode = '';
+            tree.soldType = new BigInt(0);
+            tree.requestId = "";
+            tree.treeStatus = BigInt.fromI32(0);
+            tree.plantDate = BigInt.fromI32(0);
+            tree.birthDate = BigInt.fromI32(0);
+            tree.treeSpecs = '';
+
+
+
             tree.save();
 
             addTreeHistory(treeId,
@@ -104,7 +124,6 @@ export function handleIncrementalSaleUpdated(event: IncrementalSaleUpdated): voi
         }
     
     }
-
     incSell.save();
 }
 export function handleIncrementalSaleDataUpdated(event: IncrementalSaleDataUpdated): void {

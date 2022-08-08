@@ -38,6 +38,17 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
             tree.createdAt = event.block.timestamp as BigInt;
             tree.updatedAt = event.block.timestamp as BigInt;
             tree.saleType = BigInt.fromI32(5);
+
+
+            tree.species = BigInt.fromI32(0);
+            tree.countryCode = '';
+            tree.soldType = new BigInt(0);
+            tree.requestId = "";
+            tree.treeStatus = BigInt.fromI32(0);
+            tree.plantDate = BigInt.fromI32(0);
+            tree.birthDate = BigInt.fromI32(0);
+            tree.treeSpecs = '';
+
             tree.save();
 
 

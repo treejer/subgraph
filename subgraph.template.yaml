@@ -1,6 +1,8 @@
-specVersion: 0.0.2
+specVersion: 0.0.6
 description: Treejer subgraph v1
 repository: https://github.com/treejer/subgraph
+features:
+  - ipfsOnEthereumContracts
 schema:
   file: ./schema.graphql
 dataSources:
@@ -13,7 +15,7 @@ dataSources:
       startBlock: {{CONTRACT_TREE_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree
@@ -34,7 +36,7 @@ dataSources:
       startBlock: {{CONTRACT_PLANTER_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Planter
@@ -65,7 +67,7 @@ dataSources:
       startBlock: {{CONTRACT_TREE_FACTORY_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree
@@ -112,7 +114,7 @@ dataSources:
       startBlock: {{CONTRACT_TREE_AUCTION_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree
@@ -147,7 +149,7 @@ dataSources:
       startBlock: {{CONTRACT_INCREMENTAL_SELL_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree
@@ -176,7 +178,7 @@ dataSources:
       startBlock: {{CONTRACT_REGULAR_SELL_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree
@@ -207,7 +209,7 @@ dataSources:
       startBlock: {{CONTRACT_PLANTER_FUND_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TotalFund
@@ -232,7 +234,7 @@ dataSources:
       startBlock: {{CONTRACT_FINANCIAL_MODEL_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TotalFund
@@ -255,7 +257,7 @@ dataSources:
       startBlock: {{CONTRACT_DAI_FUNDS_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TotalFund
@@ -284,7 +286,7 @@ dataSources:
       startBlock: {{CONTRACT_WETH_FUNDS_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - TotalFund
@@ -313,7 +315,7 @@ dataSources:
       startBlock: {{CONTRACT_TREE_ATTRIBUTE_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree
@@ -340,7 +342,7 @@ dataSources:
       startBlock: {{CONTRACT_COMMUNITY_GIFTS_START_BLOCK}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Tree

@@ -13,6 +13,16 @@ export function handleTransfer(event: Transfer): void {
     if (!tree) {
         tree = new Tree(event.params.tokenId.toHexString());
         tree.createdAt = event.block.timestamp as BigInt;
+        
+        tree.saleType = BigInt.fromI32(0);
+        tree.species = BigInt.fromI32(0);
+        tree.countryCode = '';
+        tree.soldType = new BigInt(0);
+        tree.requestId = "";
+        tree.treeStatus = BigInt.fromI32(0);
+        tree.plantDate = BigInt.fromI32(0);
+        tree.birthDate = BigInt.fromI32(0);
+        tree.treeSpecs = '';
     }
     tree.updatedAt = event.block.timestamp as BigInt;
     tree.owner = event.params.to.toHexString();
@@ -22,6 +32,9 @@ export function handleTransfer(event: Transfer): void {
     if (!ownerTo) {
         ownerTo = new Owner(event.params.to.toHexString());
         ownerTo.createdAt = event.block.timestamp as BigInt;
+        ownerTo.treeCount = BigInt.fromI32(0);
+        ownerTo.regularTreeCount = BigInt.fromI32(0);
+        ownerTo.genesisTreeCount = BigInt.fromI32(0);
     }
     ownerTo.treeCount = ownerTo.treeCount.plus(BigInt.fromI32(1));
 
@@ -40,6 +53,10 @@ export function handleTransfer(event: Transfer): void {
         if (!ownerFrom) {
             ownerFrom = new Owner(event.params.from.toHexString());
             ownerFrom.createdAt = event.block.timestamp as BigInt;
+            ownerFrom.regularTreeCount = BigInt.fromI32(0);
+            ownerFrom.treeCount = BigInt.fromI32(0);
+            ownerFrom.genesisTreeCount = BigInt.fromI32(0);
+
         }
 
         ownerFrom.treeCount = ownerFrom.treeCount.minus(BigInt.fromI32(1));

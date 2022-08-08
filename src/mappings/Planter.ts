@@ -52,6 +52,21 @@ export function handlePlanterJoined(event: PlanterJoined): void {
     planter.memberOf = planterContract.memberOf(event.params.planter).toHexString();
     planter.createdAt = event.block.timestamp as BigInt;
     planter.updatedAt = event.block.timestamp as BigInt;
+
+    planter.organizationShare = BigInt.fromI32(0);
+    planter.memberCount = BigInt.fromI32(0);
+    planter.invitedCount = BigInt.fromI32(0);
+    planter.balance = BigInt.fromI32(0);
+
+
+    planter.verifiedPlantedCount = BigInt.fromI32(0);
+    planter.totalOrganizationPlantedCount = BigInt.fromI32(0);
+    planter.totalOrganizationVerifiedPlantedCount = BigInt.fromI32(0);
+    planter.regularPlantedCount = BigInt.fromI32(0);
+    planter.regularVerifiedPlantedCount = BigInt.fromI32(0);
+    planter.organizationRegularPlantedCount = BigInt.fromI32(0);
+    planter.organizationRegularVerifiedPlantedCount = BigInt.fromI32(0);
+
     planter.save();
 
     handleInviteBy(invitedBy);
@@ -87,6 +102,22 @@ export function handleOrganizationJoined(event: OrganizationJoined): void {
     planter.memberOf = planterContract.memberOf(event.params.organization).toHexString();
     planter.createdAt = event.block.timestamp as BigInt;
     planter.updatedAt = event.block.timestamp as BigInt;
+
+    planter.organizationShare = BigInt.fromI32(0);
+    planter.memberCount = BigInt.fromI32(0);
+    planter.invitedCount = BigInt.fromI32(0);
+    planter.balance = BigInt.fromI32(0);
+
+
+    planter.verifiedPlantedCount = BigInt.fromI32(0);
+    planter.totalOrganizationPlantedCount = BigInt.fromI32(0);
+    planter.totalOrganizationVerifiedPlantedCount = BigInt.fromI32(0);
+    planter.regularPlantedCount = BigInt.fromI32(0);
+    planter.regularVerifiedPlantedCount = BigInt.fromI32(0);
+    planter.organizationRegularPlantedCount = BigInt.fromI32(0);
+    planter.organizationRegularVerifiedPlantedCount = BigInt.fromI32(0);
+
+
     planter.save();
     handleInviteBy(invitedBy);
 

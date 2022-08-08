@@ -1,4 +1,4 @@
-import { Planter, TempTree, Tree, TreeSpec, TreeUpdate } from '../../generated/schema';
+import { Planter, TempTree, Tree, TreeSpec, TreeUpdate, UpdateSpec } from '../../generated/schema';
 import {
     TreeListed,
     TreeAssigned,
@@ -34,6 +34,8 @@ function setTreeData(tree: Tree | null, c_tree: ITreeFactory__treesResult): void
     tree.species = c_tree.value1 as BigInt;
     tree.countryCode = c_tree.value2.toString();
     tree.saleType = c_tree.value3 as BigInt;
+    tree.soldType = new BigInt(0);
+    tree.requestId = "";
     tree.treeStatus = c_tree.value4 as BigInt;
     tree.plantDate = c_tree.value5 as BigInt;
     tree.birthDate = c_tree.value6 as BigInt;
@@ -194,12 +196,20 @@ export function saveTreeSpec(value: JSONValue, userData: Value, type: string): v
 
         if (longitude != null) {
             treeSpec.longitude = longitude.toString();
+        } else {
+            treeSpec.longitude = '';
         }
 
         if (latitude != null) {
             treeSpec.latitude = latitude.toString();
+        } else {
+            treeSpec.latitude = '';
         }
 
+    } else {
+
+        treeSpec.longitude = '';
+        treeSpec.latitude = '';
     }
 
     treeSpec.attributes = attrStr;
@@ -225,6 +235,106 @@ export function saveTreeSpec(value: JSONValue, userData: Value, type: string): v
     treeSpec.save();
 }
 
+export function saveUpdateSpec(value: JSONValue, treeUpdateId: Value): void {
+    if (value.isNull()) { return; }
+    let obj = value.toObject();
+
+
+
+    let location = obj.get('location');
+    let updates = obj.get('updates');
+    let locations = obj.get('locations');
+    let nursery = obj.get('nursery');
+
+    let updateSpec = new UpdateSpec(treeUpdateId.toString());
+
+    let updateStr = '';
+    if (updates != null) {
+        let updatesArray = updates.toArray();
+
+
+        updateStr = "[";
+        for (let i = 0; i < updatesArray.length; i++) {
+            let el = updatesArray[i];
+            updateStr += "{";
+
+            let image_obj = el.toObject().get("image");
+            let image_hash_obj = el.toObject().get("image_hash");
+            let created_at_obj = el.toObject().get("created_at");
+            if (image_obj != null && image_hash_obj != null && created_at_obj != null) {
+                updateStr += '"image":"' + image_obj.toString() + '","image_hash":"' + image_hash_obj.toString() + '","created_at":"' + created_at_obj.toString() + '"';
+            }
+
+            if (i == updatesArray.length - 1) {
+                updateStr += "}";
+            } else {
+                updateStr += "},";
+            }
+        }
+        updateStr += "]";
+    }
+
+    let locationsStr = '';
+    if (locations != null) {
+        let locationsArray = locations.toArray();
+
+
+        locationsStr = "[";
+        for (let i = 0; i < locationsArray.length; i++) {
+            let el = locationsArray[i];
+            locationsStr += "{";
+
+            let longitude_obj = el.toObject().get("longitude");
+            let latitude_obj = el.toObject().get("latitude");
+            if (longitude_obj != null && latitude_obj != null) {
+                locationsStr += '"longitude":"' + longitude_obj.toString() + '","latitude":"' + latitude_obj.toString() + '"';
+            }
+
+            if (i == locationsArray.length - 1) {
+                locationsStr += "}";
+            } else {
+                locationsStr += "},";
+            }
+        }
+        locationsStr += "]";
+    }
+
+
+    updateSpec.nursery = nursery == null ? '' : nursery.toString();
+
+    if (location != null) {
+        let locationObj = location.toObject();
+
+        let longitude = locationObj.get('longitude');
+        let latitude = locationObj.get('latitude');
+
+        if (longitude != null) {
+            updateSpec.longitude = longitude.toString();
+        } else {
+            updateSpec.longitude = '';
+        }
+
+        if (latitude != null) {
+            updateSpec.latitude = latitude.toString();
+        } else {
+            updateSpec.latitude = '';
+        }
+
+    } else {
+
+        updateSpec.longitude = '';
+        updateSpec.latitude = '';
+    }
+
+    updateSpec.updates = updateStr;
+    updateSpec.locations = locationsStr;
+
+    updateSpec.treeUpdate = treeUpdateId.toString();
+
+
+    updateSpec.save();
+}
+
 function handleTreeSpecs(hash: string | null, treeId: string, type: string): void {
     // TODO: uncomment this
     // return;
@@ -235,7 +345,7 @@ function handleTreeSpecs(hash: string | null, treeId: string, type: string): voi
         return;
     }
     
-    log.debug("TreeId: {} Hash: {}", [treeId, hash as string]);
+    log.debug("handleTreeSpecs TreeId: {} Hash: {}", [treeId, hash as string]);
 
 
     let data = ipfs.cat(hash as string);
@@ -247,6 +357,30 @@ function handleTreeSpecs(hash: string | null, treeId: string, type: string): voi
         }
     }
 }
+
+function handleUpdateSpecs(hash: string | null, treeUpdateId: string): void {
+    // TODO: uncomment this
+    // return;
+
+    if (hash == null || hash == "") {
+        return;
+    }
+    
+    log.debug("handleUpdateSpecs treeUpdateId: {} Hash: {}", [treeUpdateId, hash as string]);
+
+
+    let data = ipfs.cat(hash as string);
+    if (data) {
+        let dd = data.toString();
+        if (dd.length > 0) {
+            let jsonValue = json.fromBytes(data as Bytes);
+            saveUpdateSpec(jsonValue, Value.fromString(treeUpdateId));
+        }
+    }
+}
+
+
+
 
 export function handleTreeListed(event: TreeListed): void {
     let tree = new Tree(event.params.treeId.toHexString());
@@ -538,11 +672,15 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     treeUpdate.tree = tree.id;
     treeUpdate.createdAt = event.block.timestamp as BigInt;
     treeUpdate.updatedAt = event.block.timestamp as BigInt;
+    treeUpdate.updateSpecEntity = treeUpdate.id;
     treeUpdate.save();
 
 
     tree.lastUpdate = treeUpdate.id;
     tree.updatedAt = event.block.timestamp as BigInt;
+    tree.treeSpecsEntity = treeUpdate.id;
+
+
     tree.save();
 
     addTreeHistory(event.params.treeId.toHexString(),
@@ -551,6 +689,9 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
+
+    handleUpdateSpecs(treeUpdate.updateSpecs, treeUpdate.id);
+
 }
 
 

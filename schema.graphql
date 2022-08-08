@@ -144,8 +144,19 @@ type TreeUpdate @entity {
   tree: Tree!
   updateStatus: BigInt!
   updateSpecs: String!
+  updateSpecEntity: UpdateSpec
   createdAt: BigInt!
   updatedAt: BigInt!
+}
+
+type UpdateSpec @entity {
+  id: ID!
+  treeUpdate: TreeUpdate!
+  updates: String!
+  longitude: String!
+  latitude: String!
+  nursery: String!
+  locations: String!
 }
 
 type TempTree @entity {

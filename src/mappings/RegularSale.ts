@@ -41,6 +41,17 @@ export function handleTreeFunded(event: TreeFunded): void {
         funder = new Funder(event.params.funder.toHexString());
         flag = true;
         funder.createdAt = event.block.timestamp as BigInt;
+        funder.regularSpent = BigInt.fromI32(0);
+        funder.spentDai = BigInt.fromI32(0);
+        funder.treeCount = BigInt.fromI32(0);
+        funder.regularCount = BigInt.fromI32(0);
+        funder.spentWeth = BigInt.fromI32(0);
+        funder.incrementalCount = BigInt.fromI32(0);
+        funder.auctionCount = BigInt.fromI32(0);
+        funder.rank = BigInt.fromI32(0);
+        funder.auctionSpent = BigInt.fromI32(0);
+        funder.incrementalSpent = BigInt.fromI32(0);
+
     }
     funder.regularSpent = funder.regularSpent.plus(event.params.amount as BigInt);
     funder.spentDai = funder.spentDai.plus(event.params.amount as BigInt);
@@ -58,8 +69,6 @@ export function handleTreeFunded(event: TreeFunded): void {
     gb.totalRegularTreeSaleCount = gb.totalRegularTreeSaleCount.plus(event.params.count as BigInt);
     if (flag) gb.funderCount = gb.funderCount.plus(BigInt.fromI32(1));
     gb.save();
-
-
 
     addAddressHistory(event.params.funder.toHexString(),
         'RegularTreeFunded',
@@ -88,6 +97,8 @@ export function handleRegularMint(event: RegularMint): void {
         funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
         funder.spentDai = funder.spentDai.plus(event.params.price as BigInt);
         funder.treeCount = funder.treeCount.plus(BigInt.fromI32(1));
+        funder.lastRequestId = '';
+        funder.rank = BigInt.fromI32(0);
     }
 
     funder.updatedAt = event.block.timestamp as BigInt;
@@ -136,6 +147,8 @@ export function handleTreeFundedById(event: TreeFundedById): void {
     if (!funder) {
         funder = newFunder(event.params.funder.toHexString());
         funder.createdAt = event.block.timestamp as BigInt;
+        funder.regularSpent = BigInt.fromI32(0);
+        funder.spentDai = BigInt.fromI32(0);
         flag = true;
     }
     funder.regularSpent = funder.regularSpent.plus(event.params.amount as BigInt);
