@@ -675,11 +675,8 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     treeUpdate.updateSpecEntity = treeUpdate.id;
     treeUpdate.save();
 
-
     tree.lastUpdate = treeUpdate.id;
     tree.updatedAt = event.block.timestamp as BigInt;
-    tree.treeSpecsEntity = treeUpdate.id;
-
 
     tree.save();
 
