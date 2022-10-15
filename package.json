@@ -15,11 +15,14 @@
     "prepare:matic": "mustache config/matic.json subgraph.template.yaml > subgraph.yaml",
     "prepare:matictest": "mustache config/matictest.json subgraph.template.yaml > subgraph.yaml",
     "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
     "deploy:matic": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ treejer/treejer-subgraph",
     "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ treejer/treejer-subgraph-rinkeby",
+    "deploy:goerli": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ treejer/treejer-subgraph-goerli",
     "deploy:matictest": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ treejer/treejer-subgraph-mprivate",
     "build-deploy:matic": "npm run prepare:matic; npm run codegen; npm run build; npm run deploy:matic; rm subgraph.yaml",
-    "build-deploy:rinkeby": "npm run prepare:rinkeby; npm run codegen; npm run build; npm run deploy:rinkeby; rm subgraph.yaml"
+    "build-deploy:rinkeby": "npm run prepare:rinkeby; npm run codegen; npm run build; npm run deploy:rinkeby; rm subgraph.yaml",
+    "build-deploy:goerli": "npm run prepare:goerli; npm run codegen; npm run build; npm run deploy:goerli; rm subgraph.yaml"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.29.0",
