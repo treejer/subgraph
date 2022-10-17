@@ -1,11 +1,11 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { Counter, GlobalData, TreeHistory, AddressHistory } from "../generated/schema";
+import { Counter, GlobalData, TreeHistory, AddressHistory, Funder } from "../generated/schema";
 // import { Counter } from "../generated/schema";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const COUNTER_ID = "0001";
 export const INCREMENTAL_SELL_ID = "0001";
-export const CONTRACT_TREE_ADDRESS = "0x3aBbc23F3303EF36fd9f6CEC0e585b2C23e47FD9";
-export const CONTRACT_REGULAR_SELL_ADDRESS = "0xFBDaB242bc3e439e0CF59F5E8C3BaF5A8ec38475";
+export const CONTRACT_TREE_ADDRESS = "0x263579189B97732ae455E6981d2fBa435060ba84";
+export const CONTRACT_REGULAR_SELL_ADDRESS = "0xc7b164c26eb3c08fC6F303D17228E3150C5D8B3a";
 
 
 function newCounter(id: string): Counter {
@@ -236,6 +236,8 @@ export function getGlobalData(): GlobalData {
         gb.totalRegularTreeSaleAmount = new BigInt(0);
         gb.totalAuctionTreeSaleAmount = new BigInt(0);
         gb.totalIncrementalSaleAmount = new BigInt(0);
+        gb.totalMarketPlaceTreeSaleAmount = new BigInt(0);
+        gb.totalMarketPlaceTreeSaleCount = new BigInt(0);
         gb.totalClaimedGiftTrees = new BigInt(0);
         gb.regularTreePrice = new BigInt(0);
         gb.lastIncrementalSold = new BigInt(0);
@@ -248,7 +250,25 @@ export function getGlobalData(): GlobalData {
     return gb;
 
 }
+export function newFunder(id: string): Funder {
+    let funder = new Funder(id);
+    funder.treeCount = BigInt.fromI32(0);
+    funder.spentWeth = BigInt.fromI32(0);
+    funder.spentDai = BigInt.fromI32(0);
+    funder.rank = BigInt.fromI32(0);
 
+    funder.auctionCount = BigInt.fromI32(0);
+    funder.regularCount = BigInt.fromI32(0);
+    funder.marketPlaceCount = BigInt.fromI32(0);
+    funder.marketPlaceSpent = BigInt.fromI32(0);
+    funder.incrementalCount = BigInt.fromI32(0);
+    funder.auctionSpent = BigInt.fromI32(0);
+    funder.regularSpent = BigInt.fromI32(0);
+    funder.incrementalSpent = BigInt.fromI32(0);
+    funder.lastRequestId = "";
+
+    return funder;
+}
 
 
 // export enum withdrawTypes {

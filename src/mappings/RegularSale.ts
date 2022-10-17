@@ -9,7 +9,7 @@ import {
 } from "../../generated/RegularSale/IRegularSale";
 import { RegularRequest, Funder, Tree, Referrer } from "../../generated/schema";
 import { BigInt, log } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_RegularRequest, getGlobalData, addTreeHistory, addAddressHistory } from '../helpers';
+import { COUNTER_ID, getCount_RegularRequest, getGlobalData, addTreeHistory, addAddressHistory, newFunder } from '../helpers';
 import { updateReferrer } from '../helpers/referrer';
 
 
@@ -45,6 +45,7 @@ export function handleTreeFunded(event: TreeFunded): void {
         funder.spentDai = BigInt.fromI32(0);
         funder.treeCount = BigInt.fromI32(0);
         funder.regularCount = BigInt.fromI32(0);
+        funder.marketPlaceCount = BigInt.fromI32(0);
         funder.spentWeth = BigInt.fromI32(0);
         funder.incrementalCount = BigInt.fromI32(0);
         funder.auctionCount = BigInt.fromI32(0);
@@ -126,19 +127,6 @@ export function handleRegularMint(event: RegularMint): void {
         event.transaction.hash.toHexString(),
         event.block.number as BigInt,
         event.block.timestamp as BigInt, event.params.price);
-}
-function newFunder(id: string): Funder {
-    let funder = new Funder(id);
-    funder.treeCount = BigInt.fromI32(0);
-    funder.spentWeth = BigInt.fromI32(0);
-    funder.spentDai = BigInt.fromI32(0);
-    funder.auctionCount = BigInt.fromI32(0);
-    funder.regularCount = BigInt.fromI32(0);
-    funder.incrementalCount = BigInt.fromI32(0);
-    funder.auctionSpent = BigInt.fromI32(0);
-    funder.regularSpent = BigInt.fromI32(0);
-    funder.incrementalSpent = BigInt.fromI32(0);
-    return funder;
 }
 
 export function handleTreeFundedById(event: TreeFundedById): void {

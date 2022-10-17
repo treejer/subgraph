@@ -182,6 +182,9 @@ type Funder @entity {
   lastRequestId: String!
   auctionCount: BigInt!
   regularCount: BigInt!
+  marketPlaceCount: BigInt!
+  marketPlaceSpent: BigInt!
+
   incrementalCount: BigInt!
   auctionSpent: BigInt!
   incrementalSpent: BigInt!
@@ -392,6 +395,8 @@ type GlobalData @entity {
   totalRegularTreeSaleAmount: BigInt!
   totalAuctionTreeSaleAmount: BigInt!
   totalIncrementalSaleAmount: BigInt!
+  totalMarketPlaceTreeSaleAmount: BigInt!
+  totalMarketPlaceTreeSaleCount: BigInt!
   totalClaimedGiftTrees: BigInt!
   regularTreePrice: BigInt!
   lastIncrementalSold: BigInt!
@@ -418,6 +423,23 @@ type RegularRequest @entity {
   funder: Funder
   count: BigInt!
   amount: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+
+type Model @entity {
+  id: ID!
+  planter: Planter!
+  country: BigInt!
+  species: BigInt!
+  status: BigInt! # 1-can't buy but can plan && 2-finish model(plant and fund)
+  price: BigInt!
+  count: BigInt!
+  start: BigInt!
+  lastFund: BigInt!
+  lastPlant: BigInt!
+  lastReservePlant: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
 }

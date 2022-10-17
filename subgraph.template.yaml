@@ -363,4 +363,38 @@ dataSources:
         - event: RecipientUpdated(address)
           handler: handleRecipientUpdated
       file: ./src/mappings/HonoraryTree.ts    
-
+  - kind: ethereum/contract
+    name: MarketPlace
+    network: {{NETWORK}}
+    source:
+      address: '{{CONTRACT_MARKET_PLACE_ADDRESS}}'
+      abi: MarketPlace
+      startBlock: {{CONTRACT_MARKET_PLACE_START_BLOCK}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Tree
+        - Model
+      abis:
+        - name: MarketPlace
+          file: ./abis/MarketPlace.json
+      eventHandlers:
+        - event: ModelAdded(uint256,uint8,uint8,uint256,uint256,address,uint256,uint256,uint256,uint256)
+          handler: handleModelAdded
+        - event: ModelDataUpdated(uint256,uint8,uint8)
+          handler: handleModelDataUpdated
+        - event: PriceUpdated(uint256,uint256)
+          handler: handlePriceUpdated
+        - event: ModelDeactivated(uint256,uint256)
+          handler: handleModelDeactivated
+        - event: ModelDeleted(uint256)
+          handler: handleModelDeleted
+        - event: TreeFunded((uint256,uint256)[],address,address,address,uint256,uint256)
+          handler: handleTreeFunded
+        - event: MarketPlaceMint(address,uint256,uint256,uint256,uint256)
+          handler: handleMarketPlaceMint
+        - event: SaleModelFinished(uint256)
+          handler: handleModelFinished
+      file: ./src/mappings/MarketPlace.ts   
