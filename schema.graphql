@@ -356,6 +356,7 @@ type Withdraw @entity {
   reason: String!
   destAddress: String!
   amount: BigInt!
+  transactionHash: String!
   createdAt: BigInt!
 }
 

@@ -106,6 +106,7 @@ export function handleBalanceWithdrew(event: BalanceWithdrew): void {
     withdraw.destAddress = event.params.account.toHexString();
     withdraw.createdAt = event.block.timestamp as BigInt;
     withdraw.amount = event.params.amount as BigInt;
+    withdraw.transactionHash = event.transaction.hash.toHexString();
     withdraw.save();
 
     let tpf = TotalPlanterFund.load('0');
