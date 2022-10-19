@@ -1,4 +1,4 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import {
     ProjectedEarningUpdated,
     IPlanterFund as PlanterFundContract,
@@ -6,7 +6,7 @@ import {
     BalanceWithdrew
 } from "../../generated/PlanterFund/IPlanterFund";
 import { Planter, PlanterPayment, TotalPlanterFund, TreePlanterFinance, Withdraw } from "../../generated/schema";
-import { getCount_planterPayment, COUNTER_ID, getCount_withdraws } from "../helpers";
+import { getCount_planterPayment, COUNTER_ID, getCount_withdraws, addAddressHistory } from "../helpers";
 export function handleProjectedEarningUpdated(event: ProjectedEarningUpdated): void {
     let totalPlanterFund = TotalPlanterFund.load('0');
     if (!totalPlanterFund) totalPlanterFund = new TotalPlanterFund('0');
@@ -26,6 +26,8 @@ export function handleProjectedEarningUpdated(event: ProjectedEarningUpdated): v
     tpf.createdAt = event.block.timestamp as BigInt;
     tpf.updatedAt = event.block.timestamp as BigInt;
     tpf.save();
+
+
 }
 
 export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdated): void {
@@ -84,6 +86,16 @@ export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdat
         pp.isRefferal = true;
         pp.save();
     }
+
+
+    addAddressHistory(planter.id,
+        'PlanterTotalClaimedUpdated',
+        'planterFund',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, event.params.amount, BigInt.fromI32(0));
 }
 
 
@@ -103,10 +115,23 @@ export function handleBalanceWithdrew(event: BalanceWithdrew): void {
     }
 
     let planter = Planter.load(withdraw.destAddress);
-    if (planter) {
-        let planterFundContract = PlanterFundContract.bind(event.address);
+    if (!planter) {
+        log.error("Planter not found {}", [withdraw.destAddress]);
+        return;
+    }
+
+    let planterFundContract = PlanterFundContract.bind(event.address);
         planter.balance = planterFundContract.balances(event.params.account);
         planter.save();
-    }
+
+
+    addAddressHistory(withdraw.destAddress,
+        'BalanceWithdrew',
+        'planterFund',
+        withdraw.destAddress,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, event.params.amount, BigInt.fromI32(0));
 
 }

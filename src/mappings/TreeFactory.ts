@@ -17,7 +17,7 @@ import {
     ITreeFactory__treeUpdatesResult, ITreeFactory as TreeFactoryContract
 } from '../../generated/TreeFactory/ITreeFactory';
 import { BigInt, JSONValue, log, Value, ipfs, json, Bytes, store, JSONValueKind } from '@graphprotocol/graph-ts';
-import { COUNTER_ID, getCount_treeSpecs, getCount_treeUpdates, ZERO_ADDRESS, addTreeHistory } from '../helpers';
+import { COUNTER_ID, getCount_treeSpecs, getCount_treeUpdates, ZERO_ADDRESS, addTreeHistory, addAddressHistory } from '../helpers';
 
 function setTempTreeData(tempTree: TempTree | null, c_tempTree: ITreeFactory__tempTreesResult): void {
     if (tempTree === null) return;
@@ -566,6 +566,15 @@ export function handleTreePlanted(event: TreePlanted): void {
         }
         planter.updatedAt = event.block.timestamp as BigInt;
         planter.save();
+
+        addAddressHistory(planter.id,
+            'TreePlanted',
+            'treeFactory',
+            event.params.treeId.toHexString(),
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
     }
 
     handleTreeSpecs(tempTree.treeSpecs, tempTree.id, 'tempTree');
@@ -686,6 +695,21 @@ export function handleTreeUpdated(event: TreeUpdated): void {
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
+
+
+    if(tree.planter && tree.planter != null) {
+
+        addAddressHistory(tree.planter as string,
+            'TreeUpdated',
+            'treeFactory',
+            event.params.treeId.toHexString(),
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+
+    }
+
 
     handleUpdateSpecs(treeUpdate.updateSpecs, treeUpdate.id);
 

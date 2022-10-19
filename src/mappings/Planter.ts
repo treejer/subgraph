@@ -10,7 +10,7 @@ import {
     OrganizationMemberShareUpdated
 } from '../../generated/Planter/IPlanter';
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { getGlobalData, ZERO_ADDRESS } from '../helpers';
+import { addAddressHistory, getGlobalData, ZERO_ADDRESS } from '../helpers';
 
 
 function setPlanterFields(planter: Planter | null, net_planter: IPlanter__plantersResult): void {
@@ -90,6 +90,15 @@ export function handlePlanterJoined(event: PlanterJoined): void {
         gb.independentPlanterCount = gb.independentPlanterCount.plus(BigInt.fromI32(1));
     }
     gb.save();
+
+    addAddressHistory(planter.id,
+        'PlanterJoined',
+        'planter',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0));
 }
 export function handleOrganizationJoined(event: OrganizationJoined): void {
     let planter = new Planter(event.params.organization.toHex());
@@ -124,6 +133,16 @@ export function handleOrganizationJoined(event: OrganizationJoined): void {
     let gb = getGlobalData();
     gb.organizationCount = gb.organizationCount.plus(BigInt.fromI32(1));
     gb.save();
+
+
+    addAddressHistory(planter.id,
+        'OrganizationJoined',
+        'planter',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0));
 
 }
 
@@ -165,6 +184,16 @@ export function handlePlanterUpdated(event: PlanterUpdated): void {
     planter.updatedAt = event.block.timestamp as BigInt;
 
     planter.save();
+
+
+    addAddressHistory(planter.id,
+        'PlanterUpdated',
+        'planter',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0));
 }
 
 export function handleAcceptedByOrganization(event: AcceptedByOrganization): void {
@@ -195,6 +224,15 @@ export function handleAcceptedByOrganization(event: AcceptedByOrganization): voi
     planter.updatedAt = event.block.timestamp as BigInt;
 
     planter.save();
+
+    addAddressHistory(planter.id,
+        'AcceptedByOrganization',
+        'planter',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0));
 }
 
 export function handleRejectedByOrganization(event: RejectedByOrganization): void {
@@ -214,6 +252,15 @@ export function handleRejectedByOrganization(event: RejectedByOrganization): voi
     let gb = getGlobalData();
     gb.independentPlanterCount = gb.independentPlanterCount.plus(BigInt.fromI32(1));
     gb.save();
+
+    addAddressHistory(planter.id,
+        'RejectedByOrganization',
+        'planter',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(0));
 }
 
 export function handleOrganizationMemberShareUpdated(event: OrganizationMemberShareUpdated): void {
@@ -226,4 +273,13 @@ export function handleOrganizationMemberShareUpdated(event: OrganizationMemberSh
     planter.organizationShare = planterContract.organizationMemberShare(Address.fromString(planter.memberOf as string), Address.fromString(planter.id)) as BigInt;
     planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
+
+    addAddressHistory(planter.id,
+        'OrganizationMemberShareUpdated',
+        'planter',
+        planter.id,
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, planter.organizationShare, BigInt.fromI32(0));
 }
