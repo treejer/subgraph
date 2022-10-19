@@ -6,6 +6,7 @@ export const COUNTER_ID = "0001";
 export const INCREMENTAL_SELL_ID = "0001";
 export const CONTRACT_TREE_ADDRESS = "0x263579189B97732ae455E6981d2fBa435060ba84";
 export const CONTRACT_REGULAR_SELL_ADDRESS = "0xc7b164c26eb3c08fC6F303D17228E3150C5D8B3a";
+export const CONTRACT_DAI_TOKEN_ADDRESS = "0xdc31Ee1784292379Fbb2964b3B9C4124D8F89C60";
 
 
 function newCounter(id: string): Counter {
@@ -21,6 +22,7 @@ function newCounter(id: string): Counter {
     counter.assignedFunds = _zero;
     counter.treeHistory = _zero;
     counter.addressHistory = _zero;
+    counter.ERC20History = _zero;
 
     counter.treeSpecs = _zero;
     counter.communityGift = _zero;
@@ -166,6 +168,22 @@ export function getCount_addressHistory(id: string): BigInt {
     counter.save();
     return BigInt.fromI32(0);
 }
+
+
+export function getCount_ERC20History(id: string): BigInt {
+    let counter = Counter.load(id);
+    if (counter) {
+        let cnt: BigInt = counter.ERC20History as BigInt;
+        counter.ERC20History = cnt.plus(BigInt.fromI32(1));
+        counter.save();
+        return cnt;
+    }
+    counter = newCounter(id);
+    counter.ERC20History = BigInt.fromI32(1);
+    counter.save();
+    return BigInt.fromI32(0);
+}
+
 
 export function addTreeHistory(
     treeId: string,

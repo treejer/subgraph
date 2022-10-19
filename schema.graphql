@@ -12,6 +12,7 @@ type Counter @entity {
   communityGift: BigInt!
   treeHistory: BigInt!
   addressHistory: BigInt!
+  ERC20History: BigInt!
 }
 
 type Planter @entity {
@@ -443,4 +444,16 @@ type Model @entity {
   lastReservePlant: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
+}
+
+type ERC20History @entity {
+  id: ID!
+  token: String!
+  from: String!
+  to: String!
+  event: String!
+  transactionHash: String!
+  blockNumber: BigInt!
+  amount: BigInt!
+  createdAt: BigInt!
 }
