@@ -419,6 +419,16 @@ export function handleTreeAssigned(event: TreeAssigned): void {
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
+
+
+    addAddressHistory(tree.planter as string,
+        'TreeAssigned',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
 }
 
 
@@ -465,6 +475,16 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
 
+
+    addAddressHistory(tree.planter as string,
+        'AssignedTreePlanted',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+
 }
 
 export function handleAssignedTreeVerified(event: AssignedTreeVerified): void {
@@ -506,6 +526,16 @@ export function handleAssignedTreeVerified(event: AssignedTreeVerified): void {
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
 
+    addAddressHistory(tree.planter as string,
+        'AssignedTreeVerified',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+
+
 }
 
 export function handleAssignedTreeRejected(event: AssignedTreeRejected): void {
@@ -544,6 +574,16 @@ export function handleAssignedTreeRejected(event: AssignedTreeRejected): void {
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
+
+
+    addAddressHistory(tree.planter as string,
+        'AssignedTreeRejected',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
 }
 
 export function handleTreePlanted(event: TreePlanted): void {
@@ -610,6 +650,16 @@ export function handleTreeVerified(event: TreeVerified): void {
     event.block.timestamp as BigInt, new BigInt(0));
 
 
+    addAddressHistory(tree.planter as string,
+        'TreeVerified',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+
+
     // let tempTree = TempTree.load(event.params.treeId.toHexString());
     // if(!tempTree){
     //     return;
@@ -663,9 +713,21 @@ export function handleTreeRejected(event: TreeRejected): void {
         }
         planter.updatedAt = event.block.timestamp as BigInt;
         planter.save();
+
+        addAddressHistory(planter.id,
+            'TreeRejected',
+            'treeFactory',
+            event.params.treeId.toHexString(),
+            event.transaction.from.toHexString(),
+            event.transaction.hash.toHexString(),
+            event.block.number as BigInt,
+            event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
     }
 
     store.remove('TempTree', event.params.treeId.toHexString());
+
+
+
 }
 
 
@@ -751,6 +813,16 @@ export function handleTreeUpdatedVerified(event: TreeUpdatedVerified): void {
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
 
+
+    addAddressHistory(tree.planter as string,
+        'TreeUpdatedVerified',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+
 }
 
 export function handleTreeUpdateRejected(event: TreeUpdateRejected): void {
@@ -778,6 +850,16 @@ export function handleTreeUpdateRejected(event: TreeUpdateRejected): void {
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
     event.block.timestamp as BigInt, new BigInt(0));
+
+
+    addAddressHistory(tree.planter as string,
+        'TreeUpdateRejected',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
 }
 
 
