@@ -5,7 +5,7 @@ import {
     PlanterTotalClaimedUpdated,
     BalanceWithdrew
 } from "../../generated/PlanterFund/IPlanterFund";
-import { Planter, PlanterPayment, TotalPlanterFund, TreePlanterFinance, Withdraw } from "../../generated/schema";
+import { Planter, PlanterPayment, TotalPlanterFund, Tree, TreePlanterFinance, Withdraw } from "../../generated/schema";
 import { getCount_planterPayment, COUNTER_ID, getCount_withdraws, addAddressHistory } from "../helpers";
 export function handleProjectedEarningUpdated(event: ProjectedEarningUpdated): void {
     let totalPlanterFund = TotalPlanterFund.load('0');
@@ -28,6 +28,37 @@ export function handleProjectedEarningUpdated(event: ProjectedEarningUpdated): v
     tpf.save();
 
 
+    let tree = Tree.load(event.params.treeId.toHexString());
+    if(!tree) {
+        log.error("Tree not found {}", [event.params.treeId.toHexString()]);
+        return;
+    }
+
+    if(!tree.planter) {
+        log.error("Tree planter not found {}", [event.params.treeId.toHexString()]);
+        return;
+    }
+
+    let planter = Planter.load(tree.planter as string);
+    if(!planter) { 
+        log.error("Planter not found {}", [event.params.treeId.toHexString()]);
+        return;
+    }
+    
+    planter.balance = planterFundContract.balances(Address.fromString(planter.id));
+    planter.balanceProjected = planter.balanceProjected.plus(event.params.planterAmount);
+    planter.updatedAt = event.block.timestamp as BigInt;
+    planter.save();
+
+    addAddressHistory(planter.id,
+        'ProjectedEarningUpdated',
+        'planterFund',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, event.params.planterAmount, BigInt.fromI32(0));
+
 }
 
 export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdated): void {
@@ -35,9 +66,12 @@ export function handlePlanterTotalClaimedUpdated(event: PlanterTotalClaimedUpdat
 
     let planter = Planter.load(event.params.planter.toHexString());
     if (!planter) {
+        log.error("PlanterTotalClaimedUpdated Planter not found: {}", [event.params.planter.toHexString()]);
         return;
     }
     planter.balance = planterFundContract.balances(Address.fromString(planter.id));
+    planter.balanceProjected = planter.balanceProjected.minus(event.params.amount);
+    planter.updatedAt = event.block.timestamp as BigInt;
     planter.save();
 
     let planterPayment = new PlanterPayment(getCount_planterPayment(COUNTER_ID).toHexString());

@@ -33,6 +33,7 @@ type Planter @entity {
   memberCount: BigInt!
   invitedCount: BigInt!
   balance: BigInt!
+  balanceProjected: BigInt!
   createdAt: BigInt!
   updatedAt: BigInt!
   trees: [Tree!] @derivedFrom(field: "planter")
@@ -52,6 +53,7 @@ type Tree @entity {
   planter: Planter
   funder: Funder
   owner: Owner
+  model: Model
   species: BigInt!
   countryCode: String!
   saleType: BigInt!
@@ -163,6 +165,7 @@ type UpdateSpec @entity {
 type TempTree @entity {
   id: ID!
   planter: Planter!
+  model: Model
   countryCode: String!
   status: BigInt!
   plantDate: BigInt!

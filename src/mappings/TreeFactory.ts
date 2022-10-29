@@ -468,6 +468,8 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
         }
     }
 
+    
+
     addTreeHistory(event.params.treeId.toHexString(),
     'AssignedTreePlanted',
     event.transaction.from.toHexString(),
@@ -615,6 +617,14 @@ export function handleTreePlanted(event: TreePlanted): void {
             event.transaction.hash.toHexString(),
             event.block.number as BigInt,
             event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+    }
+
+    let treeModelId = treeFactoryContract.try_tempTreesModel(event.params.treeId);
+    if (treeModelId.reverted) {
+        log.info('tempTreesModel reverted {}', [event.params.treeId.toHexString()])
+    }
+    else {
+        tempTree.model = treeModelId.value.toHexString();
     }
 
     handleTreeSpecs(tempTree.treeSpecs, tempTree.id, 'tempTree');

@@ -11,8 +11,11 @@ import {
   TreeFunded,
   MarketPlace__modelsResult
 } from '../../generated/MarketPlace/MarketPlace'
-import { BigInt, log, store } from '@graphprotocol/graph-ts'
-import { addTreeHistory, getGlobalData, addAddressHistory, newFunder } from '../helpers'
+import {
+  IPlanterFund as PlanterFundContract
+} from "../../generated/MarketPlace/IPlanterFund";
+import { Address, BigInt, log, store } from '@graphprotocol/graph-ts'
+import { addTreeHistory, getGlobalData, addAddressHistory, newFunder, CONTRACT_PLANTER_FUND_ADDRESS } from '../helpers'
 import { updateReferrer } from '../helpers/referrer'
 
 function setModelData(model: Model | null, c_model: MarketPlace__modelsResult): void {
@@ -184,8 +187,13 @@ export function handleMarketPlaceMint(event: MarketPlaceMint): void {
   funder.updatedAt = event.block.timestamp as BigInt
   funder.save()
 
+
+  let planterFundContract = PlanterFundContract.bind(Address.fromString(CONTRACT_PLANTER_FUND_ADDRESS));
+
+
   for (let i = BigInt.fromI32(0); i.lt(event.params.count); i = i.plus(BigInt.fromI32(1))) {
-    let treeId = event.params.start.plus(i).toHexString()
+    let treeIdBigInt = event.params.start.plus(i);
+    let treeId = treeIdBigInt.toHexString()
 
     let tree = Tree.load(treeId)
     if (!tree) {
@@ -197,7 +205,27 @@ export function handleMarketPlaceMint(event: MarketPlaceMint): void {
     tree.updatedAt = event.block.timestamp as BigInt
     tree.soldType = BigInt.fromI32(6)
     tree.saleType = BigInt.fromI32(0)
+    tree.model = model.id
     tree.save()
+
+    if(!tree.planter) {
+
+      let planter = Planter.load(model.planter)
+      
+      if(planter) {
+        tree.planter = model.planter;
+        tree.save()
+
+
+        // planter.balance = planterFundContract.balances(Address.fromString(planter.id));
+        planter.balanceProjected = planter.balanceProjected.plus( planterFundContract.treeToPlanterProjectedEarning(treeIdBigInt) );
+        planter.updatedAt = event.block.timestamp as BigInt;
+        planter.save();
+      }
+      
+
+
+    }
 
     addTreeHistory(
       treeId,

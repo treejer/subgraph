@@ -57,6 +57,7 @@ export function handlePlanterJoined(event: PlanterJoined): void {
     planter.memberCount = BigInt.fromI32(0);
     planter.invitedCount = BigInt.fromI32(0);
     planter.balance = BigInt.fromI32(0);
+    planter.balanceProjected = BigInt.fromI32(0);
 
 
     planter.verifiedPlantedCount = BigInt.fromI32(0);
@@ -116,6 +117,7 @@ export function handleOrganizationJoined(event: OrganizationJoined): void {
     planter.memberCount = BigInt.fromI32(0);
     planter.invitedCount = BigInt.fromI32(0);
     planter.balance = BigInt.fromI32(0);
+    planter.balanceProjected = BigInt.fromI32(0);
 
 
     planter.verifiedPlantedCount = BigInt.fromI32(0);

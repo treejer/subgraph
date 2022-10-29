@@ -380,6 +380,8 @@ dataSources:
       abis:
         - name: MarketPlace
           file: ./abis/MarketPlace.json
+        - name: IPlanterFund
+          file: ./abis/IPlanterFund.json
       eventHandlers:
         - event: ModelAdded(uint256,uint8,uint8,uint256,uint256,address,uint256,uint256,uint256,uint256)
           handler: handleModelAdded
