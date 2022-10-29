@@ -448,6 +448,7 @@ type Model @entity {
 
 type ERC20History @entity {
   id: ID!
+  address: String!
   token: String!
   from: String!
   to: String!
