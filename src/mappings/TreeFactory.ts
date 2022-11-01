@@ -1,4 +1,4 @@
-import { Planter, TempTree, Tree, TreeSpec, TreeUpdate, UpdateSpec } from '../../generated/schema';
+import { Planter, TempTree, TempTree, TempTree, Tree, TreeSpec, TreeUpdate, UpdateSpec } from '../../generated/schema';
 import {
     TreeListed,
     TreeAssigned,
@@ -597,6 +597,15 @@ export function handleTreePlanted(event: TreePlanted): void {
     tempTree.status = BigInt.fromI32(0);
     tempTree.createdAt = event.block.timestamp as BigInt;
     tempTree.updatedAt = event.block.timestamp as BigInt;
+
+    let treeModelId = treeFactoryContract.try_tempTreesModel(event.params.treeId);
+    if (!treeModelId.reverted) {
+        let modelId = treeFactoryContract.tempTreesModel(event.params.treeId);
+        if(modelId.gt(BigInt.fromI32(0))){
+            tempTree.model = modelId.toHexString();
+        }
+    }
+
     tempTree.save();
 
 
@@ -619,13 +628,8 @@ export function handleTreePlanted(event: TreePlanted): void {
             event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
     }
 
-    let treeModelId = treeFactoryContract.try_tempTreesModel(event.params.treeId);
-    if (treeModelId.reverted) {
-        log.info('tempTreesModel reverted {}', [event.params.treeId.toHexString()])
-    }
-    else {
-        tempTree.model = treeModelId.value.toHexString();
-    }
+
+    
 
     handleTreeSpecs(tempTree.treeSpecs, tempTree.id, 'tempTree');
 
@@ -643,6 +647,11 @@ export function handleTreeVerified(event: TreeVerified): void {
 
 
     setTreeData(tree, c_tree);
+
+    let tempTree = TempTree.load(event.params.tempTreeId.toHexString());
+    if(tempTree && tempTree.model) {
+        tree.model = tempTree.model;
+    }
 
     tree.updatedAt = event.block.timestamp as BigInt;
     tree.createdAt = event.block.timestamp as BigInt;
