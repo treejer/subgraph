@@ -48,6 +48,8 @@ export function handleTreeFunded(event: TreeFunded): void {
         funder.marketPlaceCount = BigInt.fromI32(0);
         funder.spentWeth = BigInt.fromI32(0);
         funder.incrementalCount = BigInt.fromI32(0);
+        funder.marketPlaceCount = BigInt.fromI32(0);
+        funder.marketPlaceSpent = BigInt.fromI32(0);
         funder.auctionCount = BigInt.fromI32(0);
         funder.rank = BigInt.fromI32(0);
         funder.auctionSpent = BigInt.fromI32(0);
