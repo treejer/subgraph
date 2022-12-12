@@ -35,6 +35,7 @@ export function handleResearchBalanceWithdrew(event: ResearchBalanceWithdrew): v
     withdraw.createdAt = event.block.timestamp as BigInt;
     withdraw.destAddress = event.params.account.toHexString();
     withdraw.reason = event.params.reason;
+    withdraw.transactionHash = event.transaction.hash.toHexString();
     withdraw.save();
 
     let dfc = DaiFundcontract.bind(event.address);
@@ -54,6 +55,7 @@ export function handleLocalDevelopmentBalanceWithdrew(event: LocalDevelopmentBal
     withdraw.createdAt = event.block.timestamp as BigInt;
     withdraw.destAddress = event.params.account.toHexString();
     withdraw.reason = event.params.reason;
+    withdraw.transactionHash = event.transaction.hash.toHexString();
     withdraw.save();
     let totalFunds = getTotalFund();
     if (totalFunds) {
@@ -72,6 +74,7 @@ export function handleInsuranceBalanceWithdrew(event: InsuranceBalanceWithdrew):
     withdraw.createdAt = event.block.timestamp as BigInt;
     withdraw.destAddress = event.params.account.toHexString();
     withdraw.reason = event.params.reason;
+    withdraw.transactionHash = event.transaction.hash.toHexString();
     withdraw.save();
     let totalFunds = getTotalFund();
     if (totalFunds) {
@@ -89,6 +92,7 @@ export function handleTreasuryBalanceWithdrew(event: TreasuryBalanceWithdrew): v
     withdraw.createdAt = event.block.timestamp as BigInt;
     withdraw.destAddress = event.params.account.toHexString();
     withdraw.reason = event.params.reason;
+    withdraw.transactionHash = event.transaction.hash.toHexString();
     withdraw.save();
     let totalFunds = getTotalFund();
     if (totalFunds) {

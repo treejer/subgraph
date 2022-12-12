@@ -33,6 +33,7 @@ function newFunder(id: string): Funder {
     funder.auctionCount = BigInt.fromI32(0);
     funder.regularCount = BigInt.fromI32(0);
     funder.marketPlaceCount = BigInt.fromI32(0);
+    funder.marketPlaceSpent = BigInt.fromI32(0);
     funder.incrementalCount = BigInt.fromI32(0);
     funder.auctionSpent = BigInt.fromI32(0);
     funder.regularSpent = BigInt.fromI32(0);
