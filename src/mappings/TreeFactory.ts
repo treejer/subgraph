@@ -46,6 +46,12 @@ function setTreeUpdateData(treeUpdate: TreeUpdate | null, c_treeUpdate: ITreeFac
     treeUpdate.updateSpecs = c_treeUpdate.value0.toString();
     treeUpdate.updateStatus = c_treeUpdate.value1 as BigInt;
 }
+
+function setTreeUpdateDataOffchain(treeUpdate: TreeUpdate | null, c_tree: ITreeFactory__treeUpdatesResult): void {
+    treeUpdate.updateSpecs = c_tree.value7.toString();
+    treeUpdate.updateStatus = c_tree.value4 as BigInt;
+}
+
 function copyTree(t1: Tree | null, t2: Tree | null): void {
     if (t1 === null || t2 === null) return;
     t1.birthDate = t2.birthDate;
@@ -455,7 +461,6 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
     tree.save();
 
     
-
     if (tree.planter != null) {
         let planter = Planter.load(tree.planter as string);
         if (planter != null) {
@@ -469,7 +474,6 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
     }
 
     
-
     addTreeHistory(event.params.treeId.toHexString(),
     'AssignedTreePlanted',
     event.transaction.from.toHexString(),
@@ -480,6 +484,97 @@ export function handleAssignedTreePlanted(event: AssignedTreePlanted): void {
 
     addAddressHistory(tree.planter as string,
         'AssignedTreePlanted',
+        'treeFactory',
+        event.params.treeId.toHexString(),
+        event.transaction.from.toHexString(),
+        event.transaction.hash.toHexString(),
+        event.block.number as BigInt,
+        event.block.timestamp as BigInt, BigInt.fromI32(0), BigInt.fromI32(1));
+
+}
+
+export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerified):void {
+
+    let treeFactoryContract = TreeFactoryContract.bind(event.address);
+
+
+    let c_tree = treeFactoryContract.trees(event.params.treeId);
+
+    let tree = Tree.load(event.params.treeId.toHexString());
+
+
+
+
+    if (tree == null) {
+        return;
+    }
+
+
+    let treeUpdate = new TreeUpdate(getCount_treeUpdates(COUNTER_ID).toHexString());
+
+    if (treeUpdate != null){
+        setTreeUpdateDataOffchain(treeUpdate, c_tree);
+    
+        treeUpdate.tree = event.params.treeId;
+    
+        treeUpdate.createdAt = event.block.timestamp as BigInt;
+        treeUpdate.updatedAt = event.block.timestamp as BigInt;
+    
+        treeUpdate.save();
+    } 
+
+    setTreeData(tree, c_tree);
+
+    tree.updatedAt = event.block.timestamp as BigInt;
+
+    tree.save();
+
+
+    // if (tree.lastUpdate != null) {
+    //     let treeUpdate = TreeUpdate.load(tree.lastUpdate as string);
+    //     if (treeUpdate != null) {
+    //         treeUpdate.updateStatus = BigInt.fromI32(3);
+    //         treeUpdate.updatedAt = event.block.timestamp as BigInt;
+    //         treeUpdate.save();
+    //     }
+    // }
+
+
+    if (tree.planter != null) {
+        let planter = Planter.load(tree.planter as string);
+        if (planter != null) {
+            planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1));
+            if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
+                planter.status = BigInt.fromI32(2);
+            }
+            planter.updatedAt = event.block.timestamp as BigInt;
+            planter.save();
+        }
+    }
+
+    if (tree.planter != null) {
+        let planter = Planter.load(tree.planter as string);
+
+        if (planter != null) {
+            planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1));
+            planter.updatedAt = event.block.timestamp as BigInt;
+            planter.save();
+        }
+    }
+
+    handleTreeSpecs(tree.treeSpecs, tree.id, 'tree');
+
+
+    addTreeHistory(event.params.treeId.toHexString(),
+    'AssignedTreeVerified',
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt, new BigInt(0));
+
+
+    addAddressHistory(tree.planter as string,
+        'AssignedTreeVerified',
         'treeFactory',
         event.params.treeId.toHexString(),
         event.transaction.from.toHexString(),
@@ -744,8 +839,6 @@ export function handleTreeRejected(event: TreeRejected): void {
     }
 
     store.remove('TempTree', event.params.treeId.toHexString());
-
-
 
 }
 

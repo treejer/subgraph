@@ -45,7 +45,8 @@ type Planter @entity {
   regularPlantedCount: BigInt!
   regularVerifiedPlantedCount: BigInt!
   organizationRegularPlantedCount: BigInt!
-  organizationRegularVerifiedPlantedCount: BigInt!
+  organizationRegularVerifiedPlantedCount: BigInt!  
+  plantersNonce: BigInt!
 }
 
 type Tree @entity {
