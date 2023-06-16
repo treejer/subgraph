@@ -68,7 +68,7 @@ export function handlePlanterJoined(event: PlanterJoined): void {
     planter.organizationRegularPlantedCount = BigInt.fromI32(0);
     planter.organizationRegularVerifiedPlantedCount = BigInt.fromI32(0);
 
-    planter.plantersNonce = BigInt.fromI32(0);
+    planter.nonce = BigInt.fromI32(0);
 
     planter.save();
 

@@ -23,6 +23,7 @@ export function handleTreeRangeSet(event: TreeRangeSet): void {
     let hTreeContract = HonoraryTreeContract.bind(event.address);
 
     let startTreeId = hTreeContract.currentTreeId();
+    
     let endTreeId = hTreeContract.upTo();
 
     let blockTimestamp = event.block.timestamp as BigInt;
