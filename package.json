@@ -1,5 +1,6 @@
 {
   "name": "treejer-subgraph",
+  "license": "UNLICENSED",
   "version": "1.0.0",
   "scripts": {
     "build-contract": "solc contracts/Gravity.sol --abi -o abis --overwrite && solc contracts/Gravity.sol --bin -o bin --overwrite",
@@ -25,10 +26,11 @@
     "build-deploy:goerli": "npm run prepare:goerli; npm run codegen; npm run build; npm run deploy:goerli; rm subgraph.yaml"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.29.0",
-    "@graphprotocol/graph-ts": "^0.26.0"
+    "@graphprotocol/graph-cli": "0.51.1",
+    "@graphprotocol/graph-ts": "^0.31.0",
+    "matchstick-as": "^0.5.2"
   },
   "dependencies": {
-    "mustache": "^4.2.0"
+    "mustache": "4.2.0"
   }
 }

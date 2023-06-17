@@ -103,6 +103,13 @@ dataSources:
           handler: handleTreeUpdateRejected
         - event: TreeSpecsUpdated(uint256,string)
           handler: handleTreeSpecsUpdated
+        - event: AssignedTreeVerifiedWithSign(uint256)
+          handler: handleAssignedTreeVerifiedOffchain
+        - event: TreeUpdatedVerifiedWithSign(uint256)
+          handler: TreeUpdatedVerifiedWithSign
+        - event: TreeVerifiedWithSign(uint256,address,uint256)
+          handler: handleTreeVerifiedOffchain
+
       file: ./src/mappings/TreeFactory.ts
 
   - kind: ethereum/contract
