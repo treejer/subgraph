@@ -32,7 +32,6 @@ import {
 } from '../../generated/Planter/IPlanter';
 import { Planter, TempTree, Tree, TreeSpec, TreeUpdate, UpdateSpec } from '../../generated/schema'
 import { COUNTER_ID, addAddressHistory, addTreeHistory, getCount_treeSpecs, getCount_treeUpdates } from '../helpers'
-import { logStore } from 'matchstick-as';
 
 function setTempTreeData(tempTree: TempTree | null, c_tempTree: ITreeFactory__tempTreesResult): void {
   if (tempTree === null) return
@@ -959,12 +958,21 @@ export function handleTreeSpecsUpdated(event: TreeSpecsUpdated): void {
 export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerifiedWithSign): void {
   let treeFactoryContract = TreeFactoryContract.bind(event.address)
 
+
+  log.info(event.params.treeId.toString(), [])
+  log.info(event.address.toHexString(), [])
+  
+  
   let c_tree = treeFactoryContract.trees(event.params.treeId)
+
+  log.info(c_tree.value7.toString(), [])
 
   let tree = Tree.load(event.params.treeId.toHexString()) as Tree
   
   let nonce = treeFactoryContract.plantersNonce(Address.fromString(tree.planter as string))
   
+  log.info(nonce.toString(), [])
+
 
   let treeUpdate = new TreeUpdate(getCount_treeUpdates(COUNTER_ID).toHexString())
   
@@ -986,49 +994,49 @@ export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerifiedWi
 
   tree.save()
 
-  
+  log.info(tree.planter as string, [])
 
   let planter = Planter.load(tree.planter as string) as Planter
 
 
-  planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1))
+  // planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1))
 
-  planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1))
+  // planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1))
 
-  if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
-    planter.status = BigInt.fromI32(2)
-  }
+  // if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
+  //   planter.status = BigInt.fromI32(2)
+  // }
 
-  planter.updatedAt = event.block.timestamp as BigInt
-  planter.nonce = nonce as BigInt
-  planter.save()
+  // planter.updatedAt = event.block.timestamp as BigInt
+  // planter.nonce = nonce as BigInt
+  // planter.save()
 
   
 
-  handleTreeSpecs(tree.treeSpecs, tree.id, 'tree')
+  // handleTreeSpecs(tree.treeSpecs, tree.id, 'tree')
 
-  addTreeHistory(
-    event.params.treeId.toHexString(),
-    'AssignedTreeVerified',
-    event.transaction.from.toHexString(),
-    event.transaction.hash.toHexString(),
-    event.block.number as BigInt,
-    event.block.timestamp as BigInt,
-    new BigInt(0)
-  )
+  // addTreeHistory(
+  //   event.params.treeId.toHexString(),
+  //   'AssignedTreeVerified',
+  //   event.transaction.from.toHexString(),
+  //   event.transaction.hash.toHexString(),
+  //   event.block.number as BigInt,
+  //   event.block.timestamp as BigInt,
+  //   new BigInt(0)
+  // )
 
-  addAddressHistory(
-    tree.planter as string,
-    'AssignedTreeVerified',
-    'treeFactory',
-    event.params.treeId.toHexString(),
-    event.transaction.from.toHexString(),
-    event.transaction.hash.toHexString(),
-    event.block.number as BigInt,
-    event.block.timestamp as BigInt,
-    BigInt.fromI32(0),
-    BigInt.fromI32(1)
-  )
+  // addAddressHistory(
+  //   tree.planter as string,
+  //   'AssignedTreeVerified',
+  //   'treeFactory',
+  //   event.params.treeId.toHexString(),
+  //   event.transaction.from.toHexString(),
+  //   event.transaction.hash.toHexString(),
+  //   event.block.number as BigInt,
+  //   event.block.timestamp as BigInt,
+  //   BigInt.fromI32(0),
+  //   BigInt.fromI32(1)
+  // )
 }
 
 

@@ -129,8 +129,7 @@ export function handleOrganizationJoined(event: OrganizationJoined): void {
     planter.regularVerifiedPlantedCount = BigInt.fromI32(0);
     planter.organizationRegularPlantedCount = BigInt.fromI32(0);
     planter.organizationRegularVerifiedPlantedCount = BigInt.fromI32(0);
-
-    planter.plantersNonce = BigInt.fromI32(0);
+    planter.nonce = BigInt.fromI32(0);
 
     planter.save();
     handleInviteBy(invitedBy);
