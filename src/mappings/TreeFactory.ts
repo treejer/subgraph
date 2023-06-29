@@ -540,6 +540,8 @@ export function handleAssignedTreeVerified(event: AssignedTreeVerified): void {
     }
   }
 
+  log.info(tree.id,[])
+
   handleTreeSpecs(tree.treeSpecs, tree.id, 'tree')
 
   addTreeHistory(
@@ -959,26 +961,20 @@ export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerifiedWi
   let treeFactoryContract = TreeFactoryContract.bind(event.address)
 
 
-  log.info(event.params.treeId.toString(), [])
-  log.info(event.address.toHexString(), [])
-  
-  
+  let treeId = event.params.treeId.toHexString()
+
+
   let c_tree = treeFactoryContract.trees(event.params.treeId)
 
-  log.info(c_tree.value7.toString(), [])
-
-  let tree = Tree.load(event.params.treeId.toHexString()) as Tree
+  let tree = Tree.load(treeId) as Tree
   
   let nonce = treeFactoryContract.plantersNonce(Address.fromString(tree.planter as string))
   
-  log.info(nonce.toString(), [])
-
-
   let treeUpdate = new TreeUpdate(getCount_treeUpdates(COUNTER_ID).toHexString())
   
   setTreeUpdateDataOffchain(treeUpdate, c_tree)
 
-  treeUpdate.tree = event.params.treeId.toString()
+  treeUpdate.tree = treeId
 
   treeUpdate.createdAt = event.block.timestamp as BigInt
   treeUpdate.updatedAt = event.block.timestamp as BigInt
@@ -994,60 +990,66 @@ export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerifiedWi
 
   tree.save()
 
-  log.info(tree.planter as string, [])
 
-  let planter = Planter.load(tree.planter as string) as Planter
+  let planter  = Planter.load(tree.planter as string) as Planter
 
 
-  // planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1))
 
-  // planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1))
+  planter.verifiedPlantedCount = planter.verifiedPlantedCount.plus(BigInt.fromI32(1))
 
-  // if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
-  //   planter.status = BigInt.fromI32(2)
-  // }
+  planter.plantedCount = planter.plantedCount.plus(BigInt.fromI32(1))
 
-  // planter.updatedAt = event.block.timestamp as BigInt
-  // planter.nonce = nonce as BigInt
-  // planter.save()
+  if (planter.plantedCount.equals(planter.supplyCap as BigInt)) {
+    planter.status = BigInt.fromI32(2)
+  }
+
+  planter.updatedAt = event.block.timestamp as BigInt
+  planter.nonce = nonce as BigInt
+  planter.save()
 
   
 
-  // handleTreeSpecs(tree.treeSpecs, tree.id, 'tree')
+  handleTreeSpecs(tree.treeSpecs, tree.id, 'tree')
 
-  // addTreeHistory(
-  //   event.params.treeId.toHexString(),
-  //   'AssignedTreeVerified',
-  //   event.transaction.from.toHexString(),
-  //   event.transaction.hash.toHexString(),
-  //   event.block.number as BigInt,
-  //   event.block.timestamp as BigInt,
-  //   new BigInt(0)
-  // )
+  addTreeHistory(
+    event.params.treeId.toHexString(),
+    'AssignedTreeVerified',
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt,
+    new BigInt(0)
+  )
 
-  // addAddressHistory(
-  //   tree.planter as string,
-  //   'AssignedTreeVerified',
-  //   'treeFactory',
-  //   event.params.treeId.toHexString(),
-  //   event.transaction.from.toHexString(),
-  //   event.transaction.hash.toHexString(),
-  //   event.block.number as BigInt,
-  //   event.block.timestamp as BigInt,
-  //   BigInt.fromI32(0),
-  //   BigInt.fromI32(1)
-  // )
+  addAddressHistory(
+    tree.planter as string,
+    'AssignedTreeVerified',
+    'treeFactory',
+    event.params.treeId.toHexString(),
+    event.transaction.from.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number as BigInt,
+    event.block.timestamp as BigInt,
+    BigInt.fromI32(0),
+    BigInt.fromI32(1)
+  )
 }
 
 
 export function handleTreeVerifiedOffchain(event: TreeVerifiedWithSign): void { 
-  let tree = new Tree(event.params.treeId.toHexString())
+
+
+  let treeId = event.params.treeId.toHexString()
+
+
+  let tree = new Tree(treeId)
 
   let treeFactoryContract = TreeFactoryContract.bind(event.address)
   
   let c_tree = treeFactoryContract.trees(event.params.treeId)
   
-  let nonce = treeFactoryContract.plantersNonce(tree.planter as unknown as Address)
+
+  let nonce = treeFactoryContract.plantersNonce(event.params.planter)
 
 
 
@@ -1058,7 +1060,7 @@ export function handleTreeVerifiedOffchain(event: TreeVerifiedWithSign): void {
   
   setTreeUpdateDataOffchain(treeUpdate, c_tree)
 
-  treeUpdate.tree = event.params.treeId.toString()
+  treeUpdate.tree = treeId
 
   treeUpdate.createdAt = event.block.timestamp as BigInt
   treeUpdate.updatedAt = event.block.timestamp as BigInt
@@ -1121,13 +1123,17 @@ export function handleTreeVerifiedOffchain(event: TreeVerifiedWithSign): void {
 
 
 export function handleTreeUpdatedVerifiedOffchain(event: TreeUpdatedVerifiedWithSign): void {
-  let tree = Tree.load(event.params.treeId.toHexString()) as Tree
+
+  let treeId = event.params.treeId.toHexString()
+
+  
+  let tree = Tree.load(treeId) as Tree
   
   let treeFactoryContract = TreeFactoryContract.bind(event.address)
 
   let c_tree = treeFactoryContract.trees(event.params.treeId)
 
-  let nonce = treeFactoryContract.plantersNonce(tree.planter as unknown as Address)
+  let nonce = treeFactoryContract.plantersNonce(Address.fromString(tree.planter as string))
 
 
   //---------------------> tree update section
@@ -1136,7 +1142,7 @@ export function handleTreeUpdatedVerifiedOffchain(event: TreeUpdatedVerifiedWith
 
   setTreeUpdateDataOffchain(treeUpdate, c_tree)
 
-  treeUpdate.tree = tree.id
+  treeUpdate.tree = treeId
   treeUpdate.createdAt = event.block.timestamp as BigInt
   treeUpdate.updatedAt = event.block.timestamp as BigInt
   treeUpdate.updateSpecEntity = treeUpdate.id
