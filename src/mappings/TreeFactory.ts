@@ -1013,7 +1013,7 @@ export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerifiedWi
 
   addTreeHistory(
     event.params.treeId.toHexString(),
-    'AssignedTreeVerified',
+    'AssignedTreeVerifiedWithSign',
     event.transaction.from.toHexString(),
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
@@ -1023,7 +1023,7 @@ export function handleAssignedTreeVerifiedOffchain(event: AssignedTreeVerifiedWi
 
   addAddressHistory(
     tree.planter as string,
-    'AssignedTreeVerified',
+    'AssignedTreeVerifiedWithSign',
     'treeFactory',
     event.params.treeId.toHexString(),
     event.transaction.from.toHexString(),
@@ -1099,7 +1099,7 @@ export function handleTreeVerifiedOffchain(event: TreeVerifiedWithSign): void {
 
   addTreeHistory(
     event.params.treeId.toHexString(),
-    'TreeVerified',
+    'TreeVerifiedWithSign',
     event.transaction.from.toHexString(),
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
@@ -1109,7 +1109,7 @@ export function handleTreeVerifiedOffchain(event: TreeVerifiedWithSign): void {
 
   addAddressHistory(
     tree.planter as string,
-    'TreeVerified',
+    'TreeVerifiedWithSign',
     'treeFactory',
     event.params.treeId.toHexString(),
     event.transaction.from.toHexString(),
@@ -1145,7 +1145,6 @@ export function handleTreeUpdatedVerifiedOffchain(event: TreeUpdatedVerifiedWith
   treeUpdate.tree = treeId
   treeUpdate.createdAt = event.block.timestamp as BigInt
   treeUpdate.updatedAt = event.block.timestamp as BigInt
-  treeUpdate.updateSpecEntity = treeUpdate.id
   
   treeUpdate.save()
 
@@ -1168,7 +1167,7 @@ export function handleTreeUpdatedVerifiedOffchain(event: TreeUpdatedVerifiedWith
 
   addTreeHistory(
     event.params.treeId.toHexString(),
-    'TreeUpdatedVerified',
+    'TreeUpdatedVerifiedWithSign',
     event.transaction.from.toHexString(),
     event.transaction.hash.toHexString(),
     event.block.number as BigInt,
@@ -1178,7 +1177,7 @@ export function handleTreeUpdatedVerifiedOffchain(event: TreeUpdatedVerifiedWith
 
   addAddressHistory(
     tree.planter as string,
-    'TreeUpdatedVerified',
+    'TreeUpdatedVerifiedWithSign',
     'treeFactory',
     event.params.treeId.toHexString(),
     event.transaction.from.toHexString(),
